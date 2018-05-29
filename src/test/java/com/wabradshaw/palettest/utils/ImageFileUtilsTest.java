@@ -97,6 +97,33 @@ public class ImageFileUtilsTest {
     }
 
     /**
+     * Tests the asImage function works.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testAsImage() throws IOException {
+        BufferedImage original = ImageIO.read(this.getClass().getResourceAsStream("/sampleImages/maps/Rome.png"));
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(original, "png", outputStream);
+        outputStream.flush();
+        byte[] array = outputStream.toByteArray();
+
+        BufferedImage result = ImageFileUtils.asImage(array);
+        assertEquals(original.getData().toString(), result.getData().toString());
+    }
+
+    /**
+     * Tests the asImage function works.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testAsImage_null() throws IOException {
+        assertThrows(IllegalArgumentException.class, ()-> ImageFileUtils.asImage(null));
+    }
+
+    /**
      * Creates a File object in a temporary folder. This folder will be cleared up after the test runs. Does not
      * instantiate the file on disk, only as a Java object.
      *
