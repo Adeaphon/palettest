@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
+import static com.wabradshaw.palettest.utils.ImageFileUtils.loadImageResource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -33,38 +34,29 @@ public class AssertDimensionsTest {
 
     /**
      * Tests assertDimensions used correctly on a 1x1 BufferedImage.
-     *
-     * @throws IOException - If the file with the test image can't be loaded.
      */
     @Test
-    void testOnImage_matching1x1() throws IOException {
-        String name = "/sampleImages/dimensions/1x1.png";
-        BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+    void testOnImage_matching1x1(){
+        BufferedImage image = loadImageResource("/sampleImages/dimensions/1x1.png");
         assertDimensions(image, 1, 1);
     }
 
     /**
      * Tests assertDimensions used correctly on a 4x4 BufferedImage.
-     *
-     * @throws IOException - If the file with the test image can't be loaded.
      */
     @Test
-    void testOnImage_matching4x4() throws IOException {
-        String name = "/sampleImages/dimensions/4x4.png";
-        BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+    void testOnImage_matching4x4() {
+        BufferedImage image = loadImageResource("/sampleImages/dimensions/4x4.png");
         assertDimensions(image, 4, 4);
     }
 
     /**
      * Tests assertDimensions used on a 1x4 BufferedImage, when it was expected to have a different width.
-     *
-     * @throws IOException - If the file with the test image can't be loaded.
      */
     @Test
-    void testOnImage_differentWidth() throws IOException {
+    void testOnImage_differentWidth(){
         try {
-            String name = "/sampleImages/dimensions/1x4.png";
-            BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+            BufferedImage image = loadImageResource("/sampleImages/dimensions/1x4.png");
             assertDimensions(image, 4, 4);
             fail("Should have thrown an exception.");
         } catch (AssertionFailedError e){
@@ -76,14 +68,11 @@ public class AssertDimensionsTest {
 
     /**
      * Tests assertDimensions used on a 4x1 BufferedImage, when it was expected to have a different width.
-     *
-     * @throws IOException - If the file with the test image can't be loaded.
      */
     @Test
-    void testOnImage_differentHeight() throws IOException {
+    void testOnImage_differentHeight() {
         try {
-            String name = "/sampleImages/dimensions/4x1.png";
-            BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+            BufferedImage image = loadImageResource("/sampleImages/dimensions/4x1.png");
             assertDimensions(image, 4, 4);
             fail("Should have thrown an exception.");
         } catch (AssertionFailedError e){
@@ -95,14 +84,11 @@ public class AssertDimensionsTest {
 
     /**
      * Tests assertDimensions used on a 1x1 BufferedImage, when it was expected to have a different width and height.
-     *
-     * @throws IOException - If the file with the test image can't be loaded.
      */
     @Test
-    void testOnImage_differentBoth() throws IOException {
+    void testOnImage_differentBoth(){
         try {
-            String name = "/sampleImages/dimensions/1x1.png";
-            BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+            BufferedImage image = loadImageResource("/sampleImages/dimensions/1x1.png");
             assertDimensions(image, 4, 4);
             fail("Should have thrown an exception.");
         } catch (AssertionFailedError e){
@@ -139,8 +125,7 @@ public class AssertDimensionsTest {
      */
     @Test
     void testOnArray_matching4x4() throws IOException {
-        String name = "/sampleImages/dimensions/4x4.png";
-        BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+        BufferedImage image = loadImageResource("/sampleImages/dimensions/4x4.png");
         assertDimensions(toArray(image), 4, 4);
     }
 
@@ -152,8 +137,7 @@ public class AssertDimensionsTest {
     @Test
     void testOnArray_differentWidth() throws IOException {
         try {
-            String name = "/sampleImages/dimensions/1x4.png";
-            BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+            BufferedImage image = loadImageResource("/sampleImages/dimensions/1x4.png");
             assertDimensions(toArray(image), 4, 4);
             fail("Should have thrown an exception.");
         } catch (AssertionFailedError e){
@@ -171,8 +155,7 @@ public class AssertDimensionsTest {
     @Test
     void testOnArray_differentHeight() throws IOException {
         try {
-            String name = "/sampleImages/dimensions/4x1.png";
-            BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+            BufferedImage image = loadImageResource("/sampleImages/dimensions/4x1.png");
             assertDimensions(toArray(image), 4, 4);
             fail("Should have thrown an exception.");
         } catch (AssertionFailedError e){
@@ -190,8 +173,7 @@ public class AssertDimensionsTest {
     @Test
     void testOnArray_differentBoth() throws IOException {
         try {
-            String name = "/sampleImages/dimensions/1x1.png";
-            BufferedImage image = ImageIO.read(this.getClass().getResourceAsStream(name));
+            BufferedImage image = loadImageResource("/sampleImages/dimensions/1x1.png");
             assertDimensions(toArray(image), 4, 4);
             fail("Should have thrown an exception.");
         } catch (AssertionFailedError e){
