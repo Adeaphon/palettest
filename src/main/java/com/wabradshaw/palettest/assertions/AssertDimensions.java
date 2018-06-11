@@ -43,7 +43,10 @@ public class AssertDimensions {
      * </p>
      * This assertion will fail if the byte array is null, or if either dimension does not match the target.
      * </p>
-     * @param image        The {@link BufferedImage} to test.
+     * <p>
+     * If the byte array can't be converted to an image, this will throw an exception.
+     * </p>
+     * @param image        The byte array which represents the content of an image.
      * @param targetWidth  The desired width in pixels.
      * @param targetHeight The desired height in pixels.
      */
