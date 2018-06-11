@@ -207,6 +207,215 @@ public class AssertPixelsMatchTest {
     }
 
     /**
+     * Tests assertPixelsMatch using byte arrays if both expected and actual are null.
+     */
+    @Test
+    void testOnArray_bothNull(){
+        assertPixelsMatch((byte[]) null, (byte[]) null);
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays if the expected image is null but actual isn't.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_expectedNull() throws IOException {
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        try {
+            assertPixelsMatch(null, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getIdentityHashCode(), 0);
+            assertEquals(e.getActual().getIdentityHashCode(), actualImage.hashCode());
+            assertEquals(e.getMessage(), "The expected image was null, but the actual image wasn't.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays if the actual image is null but expected isn't.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_actualNull() throws IOException {
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        try {
+            assertPixelsMatch(expectedImage, null);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getIdentityHashCode(), expectedImage.hashCode());
+            assertEquals(e.getActual().getIdentityHashCode(), 0);
+            assertEquals(e.getMessage(), "The actual image was null.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are the same object.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_identical() throws IOException{
+        byte[] image = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        assertPixelsMatch(image, image);
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * represent the same image.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_match() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        assertPixelsMatch(expectedImage, actualImage);
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * represent the same image. Specifically, they use the same complex image.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_matchComplex() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/maps/Barcelona.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/maps/Barcelona.png"));
+        assertPixelsMatch(expectedImage, actualImage);
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * represent completely different images.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_completelyDifferent() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/blue.png"));
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 0,0 differs.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * represent completely different images. Specifically, they use different complex images.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_completelyDifferentComplex() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/maps/Barcelona.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/maps/Bratislava.png"));
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), new Color(97,55,138));
+            assertEquals(e.getActual().getValue(), new Color(182,182,61));
+            assertEquals(e.getMessage(), "The pixel at 0,0 differs.");
+        }
+    }
+
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * differ horizontally. The actual image has a blue vertical stripe.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_differentHorizontally() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/redBlueVertical.png"));
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 5,0 differs.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * differ vertically. The actual image has a blue horizontal stripe.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_differentVertically() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/redBlueHorizontal.png"));
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 0,5 differs.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * differ but share the same starting area. The actual image has a blue corner.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_differentSubsection() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/redBlueQuarter.png"));
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 5,5 differs.");
+        }
+    }
+
+
+    /**
+     * Tests assertPixelsMatch using byte arrays where the actual and expected arguments are different objects that
+     * differ but share everything except the final pixel.
+     *
+     * @throws IOException - If the file with the test image can't be loaded.
+     */
+    @Test
+    void testOnArray_differentPixel() throws IOException{
+        byte[] expectedImage = toArray(loadImageResource("/sampleImages/geometric/red.png"));
+        byte[] actualImage = toArray(loadImageResource("/sampleImages/geometric/redBluePixel.png"));
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 9,9 differs.");
+        }
+    }
+
+    /**
      * A helper method to convert a BufferedImage to a byte array.
      *
      * @param original The BufferedImage to convert.
