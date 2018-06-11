@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -59,12 +60,150 @@ public class AssertPixelsMatchTest {
     }
 
     /**
-     * Tests assertPixelsMatch using BufferedImages where the actual and expected objects are the same item.
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are the same object.
      */
     @Test
     void testOnImage_identical(){
         BufferedImage image = loadImageResource("/sampleImages/geometric/red.png");
         assertPixelsMatch(image, image);
+    }
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * represent the same image.
+     */
+    @Test
+    void testOnImage_match(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/geometric/red.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/geometric/red.png");
+        assertPixelsMatch(expectedImage, actualImage);
+    }
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * represent the same image. Specifically, they use the same complex image.
+     */
+    @Test
+    void testOnImage_matchComplex(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/maps/Barcelona.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/maps/Barcelona.png");
+        assertPixelsMatch(expectedImage, actualImage);
+    }
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * represent completely different images.
+     */
+    @Test
+    void testOnImage_completelyDifferent(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/geometric/red.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/geometric/blue.png");
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 0,0 differs.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * represent completely different images. Specifically, they use different complex images.
+     */
+    @Test
+    void testOnImage_completelyDifferentComplex(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/maps/Barcelona.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/maps/Bratislava.png");
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), new Color(97,55,138));
+            assertEquals(e.getActual().getValue(), new Color(182,182,61));
+            assertEquals(e.getMessage(), "The pixel at 0,0 differs.");
+        }
+    }
+
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * differ horizontally. The actual image has a blue vertical stripe.
+     */
+    @Test
+    void testOnImage_differentHorizontally(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/geometric/red.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/geometric/redBlueVertical.png");
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 5,0 differs.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * differ vertically. The actual image has a blue horizontal stripe.
+     */
+    @Test
+    void testOnImage_differentVertically(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/geometric/red.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/geometric/redBlueHorizontal.png");
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 0,5 differs.");
+        }
+    }
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * differ but share the same starting area. The actual image has a blue corner.
+     */
+    @Test
+    void testOnImage_differentSubsection(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/geometric/red.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/geometric/redBlueQuarter.png");
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 5,5 differs.");
+        }
+    }
+
+
+    /**
+     * Tests assertPixelsMatch using BufferedImages where the actual and expected arguments are different objects that
+     * differ but share everything except the final pixel.
+     */
+    @Test
+    void testOnImage_differentPixel(){
+        BufferedImage expectedImage = loadImageResource("/sampleImages/geometric/red.png");
+        BufferedImage actualImage = loadImageResource("/sampleImages/geometric/redBluePixel.png");
+
+        try {
+            assertPixelsMatch(expectedImage, actualImage);
+            fail("Should have thrown an exception.");
+        } catch (AssertionFailedError e){
+            assertEquals(e.getExpected().getValue(), Color.RED);
+            assertEquals(e.getActual().getValue(), Color.BLUE);
+            assertEquals(e.getMessage(), "The pixel at 9,9 differs.");
+        }
     }
 
     /**
