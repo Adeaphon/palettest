@@ -80,6 +80,7 @@ public class ImageFileUtilsTest {
 
         assertThrows(RuntimeException.class, ()-> ImageFileUtils.save(null, outputLocation.getPath(), "png"));
     }
+
     /**
      * Tests that saving a BufferedImage with a different extension to the path will still work.
      *
@@ -94,6 +95,40 @@ public class ImageFileUtilsTest {
         assertEquals(false, outputLocation.exists());
         ImageFileUtils.save(original, outputLocation.getPath(), "png");
         assertEquals(true, outputLocation.exists());
+    }
+
+    /**
+     * Tests that loadImageResource will throw an illegal argument exception if the path is null.
+     */
+    @Test
+    void testLoadImageResource_null() {
+        assertThrows(IllegalArgumentException.class, ()-> ImageFileUtils.loadImageResource(null));
+    }
+
+    /**
+     * Tests that loadImageResource will throw an illegal argument exception if the file doesn't exist.
+     */
+    @Test
+    void testLoadImageResource_nonExistent() {
+        assertThrows(RuntimeException.class, ()-> ImageFileUtils.loadImageResource("this/doesnt/exist.png"));
+    }
+
+    /**
+     * Tests that loadImageResource will throw an illegal argument exception if the file doesn't represent an image.
+     */
+    @Test
+    void testLoadImageResource_nonImage() {
+        assertThrows(RuntimeException.class, ()-> ImageFileUtils.loadImageResource("/misc/notAnImage.txt"));
+    }
+
+    /**
+     * Tests that loadImageResource can load an image.
+     */
+    @Test
+    void testLoadImageResource_loaded() {
+        BufferedImage result = ImageFileUtils.loadImageResource("/sampleImages/dimensions/2x4.png");
+        assertEquals(2, result.getWidth());
+        assertEquals(4, result.getHeight());
     }
 
     /**

@@ -2,13 +2,12 @@ package com.wabradshaw.palettest.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * A class used for simple file operations like saving a copy to disk for an actual review.
+ * The methods hide exceptions to make testing code simpler. They should only be used while testing,
+ * rather than in runtime code.
  */
 public class ImageFileUtils {
 
@@ -58,6 +57,41 @@ public class ImageFileUtils {
             } catch (IOException ex) {
                 throw new RuntimeException("Could not save the file " + path + ".", ex);
             }
+        }
+    }
+
+    /**
+     * A quick utility method to load an image from within Java resources as a {@link BufferedImage}. Note that any
+     * exception from not being able to find the resource, or if the file doesn't represent an image, will be wrapped
+     * in a RuntimeException.
+     *
+     * @param path Where the file is stored, including the path, name and extension
+     * @return     The resource loaded as a {@link BufferedImage}
+     * @throws IllegalArgumentException If the path is null.
+     * @throws RuntimeException         If the file can't be loaded as an image, such as if it can't be found
+     *                                  or is the wrong file type.
+     */
+    public static BufferedImage loadImageResource(String path) {
+        if(path == null){
+            throw new IllegalArgumentException("Could not load an image from a null path.");
+        }
+        try {
+            InputStream stream = ImageFileUtils.class.getResourceAsStream(path);
+            if(stream == null){
+                throw new RuntimeException("Could not find a file at " + path);
+            }
+
+            BufferedImage result = ImageIO.read(stream);
+
+            //ImageIO will happily try and load a non image file, but if it fails it will just return null.
+            if(result == null){
+                throw new RuntimeException("Loaded file could not be converted to an image.");
+            } else {
+                return result;
+            }
+
+        } catch(IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
