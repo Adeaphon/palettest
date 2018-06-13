@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * A set of tests for the {@link Tone} class.
@@ -76,5 +77,13 @@ public class ToneTest {
     public void testMainConstructor_WithoutName(){
         Tone tone = new Tone(null, new Color(222,250,206));
         assertEquals("#deface", tone.getName());
+    }
+
+    /**
+     * Tests the main constructor will supply a name of its own if the name is null.
+     */
+    @Test
+    public void testNullColor(){
+        assertThrows(IllegalArgumentException.class, () -> new Tone("Red", null));
     }
 }

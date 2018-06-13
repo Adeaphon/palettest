@@ -40,9 +40,13 @@ public class Tone {
      * ARGB or RGBA.
      * </p>
      * @param name  The name given to the {@link Color}
-     * @param color The {@link Color} being named.
+     * @param color The {@link Color} being named. Cannot be null.
      */
     public Tone(String name, Color color){
+        if(color == null){
+            throw new IllegalArgumentException("A Tone called " + name + " was created without a Color.");
+        }
+        
         this.name = name != null ? name :  '#' + Integer.toHexString(color.getRGB()).substring(2);
         this.color = color;
     }
@@ -57,7 +61,7 @@ public class Tone {
      * will get the same name. This is done to avoid confusion about whether the code is ARGB or RGBA.
      * </p>
      *
-     * @param color The {@link Color} being named.
+     * @param color The {@link Color} being named. Cannot be null.
      */
     public Tone(Color color){
         this(null, color);
