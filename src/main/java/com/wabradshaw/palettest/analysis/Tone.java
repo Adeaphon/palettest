@@ -50,6 +50,7 @@ public class Tone {
         this.name = name != null ? name :  '#' + Integer.toHexString(color.getRGB()).substring(2);
         this.color = color;
 
+        //See https://en.wikipedia.org/wiki/HSL_and_HSV for conversion formulae
         double r = color.getRed() / 255.0;
         double g = color.getGreen() / 255.0;
         double b = color.getBlue() / 255.0;
@@ -59,7 +60,9 @@ public class Tone {
         double chroma = max - min;
 
         double rawHue;
-        if(r == max){
+        if(chroma == 0){
+            rawHue = 0;
+        } else if(r == max){
             rawHue = (g-b)/chroma;
         } else if(g == max) {
             rawHue = 2.0 + ((b-r)/chroma);

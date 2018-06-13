@@ -122,4 +122,13 @@ public class ToneTest {
         Tone tone = new Tone("test", new Color(222,250,206));
         assertEquals(98.1818, tone.getHue(), 0.0001);
     }
+
+    /**
+     * Tests that the getHue method will define black/no color as 0.
+     */
+    @Test
+    public void testGetHue_NoColor(){
+        Tone tone = new Tone("test", new Color(50,50,50));
+        assertEquals(0, tone.getHue(), 0.0001);
+    }
 }
