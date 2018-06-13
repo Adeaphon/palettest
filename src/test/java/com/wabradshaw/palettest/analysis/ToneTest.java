@@ -86,4 +86,40 @@ public class ToneTest {
     public void testNullColor(){
         assertThrows(IllegalArgumentException.class, () -> new Tone("Red", null));
     }
+
+    /**
+     * Tests that the getRed method will get the red value.
+     */
+    @Test
+    public void testGetRed(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(222, tone.getRed());
+    }
+
+    /**
+     * Tests that the getGreen method will get the green value.
+     */
+    @Test
+    public void testGetGreen(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(250, tone.getGreen());
+    }
+
+    /**
+     * Tests that the getBlue method will get the blue value.
+     */
+    @Test
+    public void testGetBlue(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(206, tone.getBlue());
+    }
+
+    /**
+     * Tests that the getHue method will correctly calculate the hue of the Tone.
+     */
+    @Test
+    public void testGetHue(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(98.1818, tone.getHue(), 0.0001);
+    }
 }

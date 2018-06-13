@@ -22,7 +22,7 @@ import java.awt.*;
 public class Tone {
     private final String name;
     private final Color color;
-//  private final double hue;
+    private final double hue;
 //  private final double saturationL;
 //  private final double saturationV;
 //  private final double lightness;
@@ -46,9 +46,27 @@ public class Tone {
         if(color == null){
             throw new IllegalArgumentException("A Tone called " + name + " was created without a Color.");
         }
-        
+
         this.name = name != null ? name :  '#' + Integer.toHexString(color.getRGB()).substring(2);
         this.color = color;
+
+        double r = color.getRed() / 255.0;
+        double g = color.getGreen() / 255.0;
+        double b = color.getBlue() / 255.0;
+
+        double max = Math.max(r, Math.max(g,b));
+        double min = Math.min(r, Math.min(g,b));
+        double chroma = max - min;
+
+        double rawHue;
+        if(r == max){
+            rawHue = (g-b)/chroma;
+        } else if(g == max) {
+            rawHue = 2.0 + ((b-r)/chroma);
+        } else {
+            rawHue = 4.0 + ((r-g)/chroma);
+        }
+        this.hue = (rawHue * 60) % 360;
     }
 
     /**
@@ -83,5 +101,36 @@ public class Tone {
      */
     public Color getColor(){
         return this.color;
+    }
+
+    /**
+     * Gets the Red component of the Color, as a value from 0 to 255.
+     *
+     * @return The Red component of the Color, as a value from 0 to 255.
+     */
+    public int getRed() {
+        return this.color.getRed();
+    }
+
+    /**
+     * Gets the Green component of the Color, as a value from 0 to 255.
+     *
+     * @return The Green component of the Color, as a value from 0 to 255.
+     */
+    public int getGreen() {
+        return this.color.getGreen();
+    }
+
+    /**
+     * Gets the Blue component of the Color, as a value from 0 to 255.
+     *
+     * @return The Blue component of the Color, as a value from 0 to 255.
+     */
+    public int getBlue() {
+        return this.color.getBlue();
+    }
+
+    public double getHue() {
+        return hue;
     }
 }
