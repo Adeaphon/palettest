@@ -25,7 +25,7 @@ public class Tone {
     private final double hue;
 //  private final double saturationL;
 //  private final double saturationV;
-//  private final double lightness;
+    private final double lightness;
 //  private final double value;
 
     /**
@@ -69,7 +69,9 @@ public class Tone {
         } else {
             rawHue = 4.0 + ((r-g)/chroma);
         }
+
         this.hue = (rawHue * 60) % 360;
+        this.lightness = 0.5 * (max + min);
     }
 
     /**
@@ -146,5 +148,16 @@ public class Tone {
      */
     public double getHue() {
         return hue;
+    }
+
+    /**
+     * <p>
+     * Gets the lightness of the color, representing the brightness relative to white. This is represented from 0 to 1,
+     * where 1 represents pure white and 0 represents pure black.
+     * </p>
+     * @return The lightness of the color as a value from 0 to 1, inclusive.
+     */
+    public double getLightness(){
+        return lightness;
     }
 }
