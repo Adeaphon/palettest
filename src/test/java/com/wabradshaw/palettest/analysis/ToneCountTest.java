@@ -8,6 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * A set of tests for the {@link ToneCount} object.
@@ -47,6 +48,23 @@ public class ToneCountTest {
         assertEquals(null, toneCount.getTone());
     }
 
+    /**
+     * Tests that a null pixel count map will throw an illegal argument exception.
+     */
+    @Test
+    public void testNullPixelCount(){
+        Tone red = new Tone("red", Color.RED);
+
+        assertThrows(IllegalArgumentException.class, () -> new ToneCount(red, null));
+    }
+
+    /**
+     * Tests that a null pixel count map (and tone) will throw an illegal argument exception.
+     */
+    @Test
+    public void testNullPixelCountAndTone(){
+        assertThrows(IllegalArgumentException.class, () -> new ToneCount(null, null));
+    }
     /**
      * Tests that changes to the pixel count used in the constructor are not reflected in the ToneCount.
      */

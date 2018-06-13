@@ -33,14 +33,21 @@ public class ToneCount {
      * </p>
      * <p>
      * A {@link ToneCount} is still valid if the {@link Tone} is null. This can be used to represent situations where
-     * pixels do not match with any of the defined {@link Color}s.
+     * pixels do not match with any of the defined {@link Color}s. However, the pixelCounts map may not be null. 
      * </p>
      *
      * @param tone        The {@link Tone} this object is counting.
      * @param pixelCounts A map of {@link Color}s that are considered as part of this {@link Tone}, and the number
      *                    of times they each occurred. This map is copied to keep the {@link ToneCount} immutable.
+     *                    Cannot be null.
      */
     public ToneCount(Tone tone, Map<Color, Integer> pixelCounts){
+        if(pixelCounts == null){
+            throw new IllegalArgumentException("A ToneCount was instantiated for " +
+                    tone == null ? "null" : tone.getName() +
+                    " with a null pixel counts map.");
+        }
+
         this.tone = tone;
         this.pixelCounts = new HashMap<>(pixelCounts);
         this.count = pixelCounts.values().stream().reduce(0, (sum, x) -> x == null ? sum : sum + x);
