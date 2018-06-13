@@ -23,7 +23,7 @@ import java.util.Map;
 public class ToneCount {
 
     private final Tone tone;
-    //private final int count;
+    private final int count;
     private final Map<Color, Integer> pixelCounts;
 
     /**
@@ -37,6 +37,7 @@ public class ToneCount {
     public ToneCount(Tone tone, Map<Color, Integer> pixelCounts){
         this.tone = tone;
         this.pixelCounts = new HashMap<>(pixelCounts);
+        this.count = pixelCounts.values().stream().reduce(0, (sum, x) -> x == null ? sum : sum + x);
     }
 
     /**
@@ -46,6 +47,15 @@ public class ToneCount {
      */
     public Tone getTone(){
         return this.tone;
+    }
+
+    /**
+     * Gets the number of pixels which have this {@link Tone}, or are close enough to be classed as it.
+     *
+     * @return The number of pixels which have this {@link Tone}.
+     */
+    public int getCount(){
+        return this.count;
     }
 
     /**
