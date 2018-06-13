@@ -23,7 +23,7 @@ public class Tone {
     private final String name;
     private final Color color;
     private final double hue;
-//  private final double saturationL;
+    private final double saturationL;
 //  private final double saturationV;
     private final double lightness;
     private final double value;
@@ -73,6 +73,7 @@ public class Tone {
         this.hue = (rawHue * 60) % 360;
         this.lightness = 0.5 * (max + min);
         this.value = max;
+        this.saturationL = this.lightness == 0 ? 0 : chroma / (1 - Math.abs(2*this.lightness - 1));
     }
 
     /**
@@ -149,6 +150,20 @@ public class Tone {
      */
     public double getHue() {
         return hue;
+    }
+
+    /**
+     * <p>
+     * Gets the colorfulness of the tone, relative to its own brightness, when using an HSL color model. This is
+     * represented as a value between 0 to 1 where 0 represents colorless, and 1 is a pure primary color.
+     * </p>
+     * <p>
+     * Please note that saturation differs between HSL and HSV. This is for HSL. For HSV, see getSaturationV.
+     * </p>
+     * @return The HSL saturation value of the color as a value from 0 to 1, inclusive.
+     */
+    public double getSaturationL(){
+        return saturationL;
     }
 
     /**

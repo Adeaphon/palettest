@@ -133,6 +133,15 @@ public class ToneTest {
     }
 
     /**
+     * Tests that the getSaturationL method will correctly calculate the saturation value of the Tone in the HSL model.
+     */
+    @Test
+    public void testGetSaturationL(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(0.8148, tone.getSaturationL(), 0.0001);
+    }
+
+    /**
      * Tests that the getLightness method will correctly calculate the lightness of the Tone.
      */
     @Test
