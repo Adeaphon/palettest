@@ -26,7 +26,7 @@ public class Tone {
 //  private final double saturationL;
 //  private final double saturationV;
     private final double lightness;
-//  private final double value;
+    private final double value;
 
     /**
      * <p>
@@ -72,6 +72,7 @@ public class Tone {
 
         this.hue = (rawHue * 60) % 360;
         this.lightness = 0.5 * (max + min);
+        this.value = max;
     }
 
     /**
@@ -159,5 +160,16 @@ public class Tone {
      */
     public double getLightness(){
         return lightness;
+    }
+
+    /**
+     * <p>
+     * Gets the brightness value of the color, representing the brightness of the largest primary color. This is
+     * represented from 0 to 1, where 1 is a clear version of the colour and 0 represents black.
+     * </p>
+     * @return The brightness value of the color as a value from 0 to 1, inclusive.
+     */
+    public double getValue(){
+        return value;
     }
 }

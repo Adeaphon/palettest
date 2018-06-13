@@ -140,4 +140,13 @@ public class ToneTest {
         Tone tone = new Tone("test", new Color(222,250,206));
         assertEquals(0.8941, tone.getLightness(), 0.0001);
     }
+
+    /**
+     * Tests that the getValue method will correctly calculate the brightness value of the Tone.
+     */
+    @Test
+    public void testGetValue(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(0.9804, tone.getValue(), 0.0001);
+    }
 }
