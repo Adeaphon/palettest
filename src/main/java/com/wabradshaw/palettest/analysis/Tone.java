@@ -107,32 +107,43 @@ public class Tone {
     }
 
     /**
-     * Gets the Red component of the Color, as a value from 0 to 255.
+     * Gets the Red component of the {@link Color}, as a value from 0 to 255.
      *
-     * @return The Red component of the Color, as a value from 0 to 255.
+     * @return The Red component of the {@link Color}r, as a value from 0 to 255.
      */
     public int getRed() {
         return this.color.getRed();
     }
 
     /**
-     * Gets the Green component of the Color, as a value from 0 to 255.
+     * Gets the Green component of the {@link Color}, as a value from 0 to 255.
      *
-     * @return The Green component of the Color, as a value from 0 to 255.
+     * @return The Green component of the {@link Color}, as a value from 0 to 255.
      */
     public int getGreen() {
         return this.color.getGreen();
     }
 
     /**
-     * Gets the Blue component of the Color, as a value from 0 to 255.
+     * Gets the Blue component of the {@link Color}, as a value from 0 to 255.
      *
-     * @return The Blue component of the Color, as a value from 0 to 255.
+     * @return The Blue component of the {@link Color}, as a value from 0 to 255.
      */
     public int getBlue() {
         return this.color.getBlue();
     }
 
+    /**
+     * <p>
+     * Gets the hue of the color, representing which primary color it is closest to. This is represented as a degree
+     * from 0 to 360, with 0 or 360 representing red, green at 120, and blue at 240.
+     * </p>
+     * <p>
+     * Strictly speaking, greyscale colors have no hue, but they are given a hue of 0 for convenience.
+     * </p>
+     *
+     * @return The hue as a value from 0 (inclusive) to 360 (exclusive).
+     */
     public double getHue() {
         return hue;
     }
