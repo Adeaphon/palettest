@@ -31,6 +31,22 @@ public class ToneCountTest {
         assertEquals(pixelCounts, toneCount.getPixelCounts());
     }
 
+
+    /**
+     * Tests that a null Tone is okay. In some situations we may want a null Tone to cover {@link Color}s too far from
+     * the defined palette.
+     */
+    @Test
+    public void testNullTone(){
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(null, pixelCounts);
+        assertEquals(null, toneCount.getTone());
+    }
+
     /**
      * Tests that changes to the pixel count used in the constructor are not reflected in the ToneCount.
      */
