@@ -139,6 +139,15 @@ public class Tone {
     }
 
     /**
+     * Gets the opacity of the {@link Color}, as a value from 0 to 100.
+     *
+     * @return The opacity of the {@link Color}, as a value from 0 to 100.
+     */
+    public int getAlpha() {
+        return this.color.getAlpha();
+    }
+
+    /**
      * <p>
      * Gets the hue of the color, representing which primary color it is closest to. This is represented as a degree
      * from 0 to 360, with 0 or 360 representing red, green at 120, and blue at 240.

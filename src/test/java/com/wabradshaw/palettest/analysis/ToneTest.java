@@ -115,6 +115,15 @@ public class ToneTest {
     }
 
     /**
+     * Tests that the getBlue method will get the blue value.
+     */
+    @Test
+    public void testGetAlpha(){
+        Tone tone = new Tone("test", new Color(222,250,206, 50));
+        assertEquals(50, tone.getAlpha());
+    }
+
+    /**
      * Tests that the getHue method will correctly calculate the hue of the Tone.
      */
     @Test
