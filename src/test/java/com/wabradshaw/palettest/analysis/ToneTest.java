@@ -142,6 +142,15 @@ public class ToneTest {
     }
 
     /**
+     * Tests that the getSaturationV method will correctly calculate the saturation value of the Tone in the HSV model.
+     */
+    @Test
+    public void testGetSaturationV(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(0.1760, tone.getSaturationV(), 0.0001);
+    }
+
+    /**
      * Tests that the getLightness method will correctly calculate the lightness of the Tone.
      */
     @Test
