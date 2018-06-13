@@ -29,13 +29,21 @@ public class Tone {
 //  private final double value;
 
     /**
+     * <p>
      * Main constructor defining a particular {@link Color} and the name that should represent it.
-     *
+     * </p>
+     * <p>
+     * If name is null, then a new name will be created based on its RGB makeup.
+     * For example, pure red will become '#ff0000', green will be '#00ff00', and purple will be '#ff00ff'.
+     * Please note that if name is not supplied, two {@code Tones} with the same red, green, and blue, but with
+     * different alpha components will get the same name. This is done to avoid confusion about whether the code is
+     * ARGB or RGBA.
+     * </p>
      * @param name  The name given to the {@link Color}
      * @param color The {@link Color} being named.
      */
     public Tone(String name, Color color){
-        this.name = name;
+        this.name = name != null ? name :  '#' + Integer.toHexString(color.getRGB()).substring(2);
         this.color = color;
     }
 
@@ -52,8 +60,7 @@ public class Tone {
      * @param color The {@link Color} being named.
      */
     public Tone(Color color){
-        this.color = color;
-        this.name = '#' + Integer.toHexString(color.getRGB()).substring(2);
+        this(null, color);
     }
 
     /**
