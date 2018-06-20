@@ -41,6 +41,6 @@ public class PaletteDistribution {
      * @return the {@link ToneCount}s in insertion order.
      */
     public List<ToneCount> getDistribution(){
-        return this.counts;
+        return new ArrayList<>(this.counts);
     }
 }

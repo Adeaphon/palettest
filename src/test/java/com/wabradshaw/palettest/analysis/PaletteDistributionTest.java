@@ -62,6 +62,26 @@ public class PaletteDistributionTest {
     }
 
     /**
+     * Tests that changes made to a list of ToneCounts from getDistribution will not be respected.
+     */
+    @Test
+    public void testGetDistributionImmutable(){
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(toneCount("blue", Color.BLUE, 5));
+        original.add(toneCount("red", Color.RED, 9));
+        original.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        List<ToneCount> firstGet = distribution.getDistribution();
+        firstGet.add(toneCount("purple", Color.MAGENTA, 1));
+
+        assertNotEquals(firstGet, distribution.getDistribution());
+    }
+
+    /**
      * A mock method to make it easier to create a ToneCount during testing.
      *
      * @param name  The name of the tone.
