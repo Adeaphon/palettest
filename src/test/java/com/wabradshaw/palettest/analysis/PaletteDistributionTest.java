@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -39,6 +40,25 @@ public class PaletteDistributionTest {
     @Test
     public void testNullConstructor(){
         assertThrows(IllegalArgumentException.class, () -> new PaletteDistribution(null));
+    }
+
+    /**
+     * Tests that changes made to the list of ToneCounts used to instantiate the object will not be respected.
+     */
+    @Test
+    public void testSetDistributionImmutable(){
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(toneCount("blue", Color.BLUE, 5));
+        original.add(toneCount("red", Color.RED, 9));
+        original.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        original.add(toneCount("purple", Color.MAGENTA, 1));
+
+        assertNotEquals(original, distribution.getDistribution());
     }
 
     /**
