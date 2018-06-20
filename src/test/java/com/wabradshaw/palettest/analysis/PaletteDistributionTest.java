@@ -66,7 +66,7 @@ public class PaletteDistributionTest {
      *
      * @param name  The name of the tone.
      * @param color The color of the tone.
-     * @param count How many times it apparerntly appeared.
+     * @param count How many times it apparently appeared.
      * @return      A ToneCount containing the supplied information.
      */
     private ToneCount toneCount(String name, Color color, int count){
