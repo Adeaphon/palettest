@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -175,5 +176,94 @@ public class ToneTest {
     public void testGetValue(){
         Tone tone = new Tone("test", new Color(222,250,206));
         assertEquals(0.9804, tone.getValue(), 0.0001);
+    }
+
+    /**
+     * Tests that a tone is equal to itself.
+     */
+    @Test
+    public void testEquals_sameItem(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertEquals(tone, tone);
+    }
+
+    /**
+     * Tests that a tone is not equal to null.
+     */
+    @Test
+    public void testEquals_nullItem(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertNotEquals(null, tone);
+    }
+
+    /**
+     * Tests that a tone is not equal to a completely different object.
+     */
+    @Test
+    public void testEquals_differentItem(){
+        Tone tone = new Tone("test", new Color(222,250,206));
+        assertNotEquals(new StringBuilder(), tone);
+    }
+
+    /**
+     * Tests that a tone is equal to an identical copy of itself.
+     */
+    @Test
+    public void testEquals_matchingItems(){
+        Tone toneA = new Tone("test", new Color(222,250,206));
+        Tone toneB = new Tone("test", new Color(222,250,206));
+        assertEquals(toneA, toneB);
+    }
+
+
+    /**
+     * Tests that tones are equal if they share the same color, but not the same name.
+     */
+    @Test
+    public void testEquals_matchingColors(){
+        Tone toneA = new Tone("expected", new Color(222,250,206));
+        Tone toneB = new Tone("actual", new Color(222,250,206));
+        assertEquals(toneA, toneB);
+    }
+
+    /**
+     * Tests that a tone is not equal to a tone with a different color.
+     */
+    @Test
+    public void testEquals_differentColors(){
+        Tone toneA = new Tone("test", Color.RED);
+        Tone toneB = new Tone("test", Color.BLUE);
+        assertNotEquals(toneA, toneB);
+    }
+
+    /**
+     * Tests that a tone's hashcode is equal to an identical copy of itself.
+     */
+    @Test
+    public void testHashCode_matchingItems(){
+        Tone toneA = new Tone("test", new Color(222,250,206));
+        Tone toneB = new Tone("test", new Color(222,250,206));
+        assertEquals(toneA.hashCode(), toneB.hashCode());
+    }
+
+
+    /**
+     * Tests that tones's hashcodes are equal if they share the same color, but not the same name.
+     */
+    @Test
+    public void testHashCode_matchingColors(){
+        Tone toneA = new Tone("expected", new Color(222,250,206));
+        Tone toneB = new Tone("actual", new Color(222,250,206));
+        assertEquals(toneA.hashCode(), toneB.hashCode());
+    }
+
+    /**
+     * Tests that a tone's hashcode is not equal to a tone with a different color.
+     */
+    @Test
+    public void testHashCode_differentColors(){
+        Tone toneA = new Tone("test", Color.RED);
+        Tone toneB = new Tone("test", Color.BLUE);
+        assertNotEquals(toneA.hashCode(), toneB.hashCode());
     }
 }

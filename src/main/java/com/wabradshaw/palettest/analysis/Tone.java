@@ -1,6 +1,7 @@
 package com.wabradshaw.palettest.analysis;
 
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * <p>
@@ -212,5 +213,21 @@ public class Tone {
      */
     public double getValue(){
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        } else if (!(o instanceof Tone)){
+            return false;
+        } else {
+            return Objects.equals(this.color, ((Tone) o).getColor());
+        }
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hashCode(this.color);
     }
 }
