@@ -48,7 +48,7 @@ public class Tone {
             throw new IllegalArgumentException("A Tone called " + name + " was created without a Color.");
         }
 
-        this.name = name != null ? name :  '#' + Integer.toHexString(color.getRGB()).substring(2);
+        this.name = name != null ? name :  getHexName(color);
         this.color = color;
 
         //See https://en.wikipedia.org/wiki/HSL_and_HSV for conversion formulae
@@ -215,6 +215,16 @@ public class Tone {
         return value;
     }
 
+    /**
+     * A method to generate a readable name for the underlying color's RBG values.
+     *
+     * @param color The color to name.
+     * @return      The color in the format #rrggbb.
+     */
+    private String getHexName(Color color){
+        return '#' + Integer.toHexString(color.getRGB()).substring(2);
+    }
+
     @Override
     public boolean equals(Object o){
         if(o == this){
@@ -229,5 +239,10 @@ public class Tone {
     @Override
     public int hashCode(){
         return Objects.hashCode(this.color);
+    }
+
+    @Override
+    public String toString(){
+        return this.name + " (" + getHexName(this.color) + ")";
     }
 }

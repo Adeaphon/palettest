@@ -266,4 +266,11 @@ public class ToneTest {
         Tone toneB = new Tone("test", Color.BLUE);
         assertNotEquals(toneA.hashCode(), toneB.hashCode());
     }
+
+    @Test
+    public void testToString(){
+        Tone red = new Tone("red", Color.RED);
+
+        assertEquals("red (#ff0000)", red.toString());
+    }
 }
