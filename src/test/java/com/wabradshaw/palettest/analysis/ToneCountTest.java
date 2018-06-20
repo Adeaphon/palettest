@@ -152,4 +152,18 @@ public class ToneCountTest {
         ToneCount toneCount = new ToneCount(red, pixelCounts);
         assertEquals(15, toneCount.getCount());
     }
+
+    @Test
+    public void testToString(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertEquals("red: 16", toneCount.toString());
+    }
 }

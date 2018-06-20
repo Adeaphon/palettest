@@ -80,4 +80,9 @@ public class ToneCount {
     public Map<Color, Integer> getPixelCounts(){
         return new HashMap<>(pixelCounts);
     }
+
+    @Override
+    public String toString(){
+        return this.getTone().getName() + ": " + this.count;
+    }
 }
