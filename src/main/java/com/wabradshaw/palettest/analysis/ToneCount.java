@@ -44,7 +44,7 @@ public class ToneCount {
     public ToneCount(Tone tone, Map<Color, Integer> pixelCounts){
         if(pixelCounts == null){
             throw new IllegalArgumentException("A ToneCount was instantiated for " +
-                    tone == null ? "null" : tone.getName() +
+                    (tone == null ? "null" : tone.getName()) +
                     " with a null pixel counts map.");
         }
 
