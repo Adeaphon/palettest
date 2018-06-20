@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * A set of test methods for the {@link PaletteDistribution} class.
@@ -30,6 +31,14 @@ public class PaletteDistributionTest {
         PaletteDistribution distribution = new PaletteDistribution(original);
 
         assertEquals(original, distribution.getDistribution());
+    }
+
+    /**
+     * Tests that creating a PaletteDistribution with a null list of ToneCounts will throw an exception.
+     */
+    @Test
+    public void testNullConstructor(){
+        assertThrows(IllegalArgumentException.class, () -> new PaletteDistribution(null));
     }
 
     /**

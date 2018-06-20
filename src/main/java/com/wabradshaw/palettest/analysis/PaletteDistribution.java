@@ -19,6 +19,9 @@ public class PaletteDistribution {
      * @param counts The list of {@link ToneCount}s that make up the distribution
      */
     public PaletteDistribution(List<ToneCount> counts){
+        if(counts == null){
+            throw new IllegalArgumentException("A PaletteDistribution was created with a null list of counts.");
+        }
         this.counts = counts;
     }
 
