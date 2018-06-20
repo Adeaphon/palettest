@@ -43,4 +43,9 @@ public class PaletteDistribution {
     public List<ToneCount> getDistribution(){
         return new ArrayList<>(this.counts);
     }
+
+    @Override
+    public String toString(){
+        return this.counts.toString();
+    }
 }

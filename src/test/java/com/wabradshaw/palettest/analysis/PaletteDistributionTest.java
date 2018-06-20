@@ -81,6 +81,19 @@ public class PaletteDistributionTest {
         assertNotEquals(firstGet, distribution.getDistribution());
     }
 
+    @Test
+    public void testToString(){
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(toneCount("blue", Color.BLUE, 5));
+        original.add(toneCount("red", Color.RED, 9));
+        original.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals("[blue: 5, red: 9, green: 2]", distribution.toString());
+    }
+
     /**
      * A mock method to make it easier to create a ToneCount during testing.
      *
