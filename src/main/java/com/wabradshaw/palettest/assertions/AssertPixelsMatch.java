@@ -1,5 +1,7 @@
 package com.wabradshaw.palettest.assertions;
 
+import com.wabradshaw.palettest.utils.GraphicsUtils;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -71,8 +73,8 @@ public class AssertPixelsMatch {
     private static void checkPixelsMatch(BufferedImage expected, BufferedImage actual) {
         assertDimensions(actual, expected.getWidth(), expected.getHeight());
 
-        BufferedImage argbExpected = createArgbCopy(expected);
-        BufferedImage argbActual = createArgbCopy(actual);
+        BufferedImage argbExpected = GraphicsUtils.createCopy(expected);
+        BufferedImage argbActual = GraphicsUtils.createCopy(actual);
 
         for(int x = 0; x < argbExpected.getWidth(); x++){
             for(int y = 0; y < argbExpected.getHeight(); y++){
@@ -86,20 +88,5 @@ public class AssertPixelsMatch {
                 }
             }
         }
-    }
-
-    /**
-     * Creates a copy of an image restricted to the ARGB colour space. Done as BufferedImages can use different image
-     * types, including custom types. See https://stackoverflow.com/a/22391951
-     *
-     * @param image The image to copy
-     * @return      An ARGB copy of the image
-     */
-    private static BufferedImage createArgbCopy(BufferedImage image) {
-        BufferedImage copy = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = copy.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return copy;
     }
 }
