@@ -2,12 +2,13 @@ package com.wabradshaw.palettest.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
  * A {@link PaletteDistribution} is a record of the different {@link Tone}s used in an image. It stores all of the
  * {@link Tone}s that have been used alongside how many times they were used as {@link ToneCount}s. The counts can be
- * retrieved through various sorting methods such as by count, by red, or by hue.
+ * retrieved through various sorting methods such as {@link #byCount()}, by red, or by hue.
  * </p>
  * <p>
  * Please note that {@link PaletteDistribution}s are immutable. If the list of counts changes after the distribution
@@ -42,6 +43,17 @@ public class PaletteDistribution {
      */
     public List<ToneCount> getDistribution(){
         return new ArrayList<>(this.counts);
+    }
+
+    /**
+     * Gets the distribution sorted by the number of times each {@link Tone} appeared (descending).
+     *
+     * @return The distribution sorted by the number of times each {@link Tone} appeared (descending).
+     */
+    public List<ToneCount> byCount(){
+        return this.counts.stream()
+                          .sorted((o1, o2) -> (o2.getCount() - o1.getCount()))
+                          .collect(Collectors.toList());
     }
 
     @Override

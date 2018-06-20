@@ -81,6 +81,33 @@ public class PaletteDistributionTest {
         assertNotEquals(firstGet, distribution.getDistribution());
     }
 
+    /**
+     * Tests that byCount will return the original items in count order.
+     */
+    @Test
+    public void testByCount(){
+
+        ToneCount blue = toneCount("blue", Color.BLUE, 5);
+        ToneCount red = toneCount("red", Color.RED, 9);
+        ToneCount green = toneCount("green", Color.GREEN, 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue);
+        original.add(red);
+        original.add(green);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        List<ToneCount> target = new ArrayList<>();
+
+        target.add(red);
+        target.add(blue);
+        target.add(green);
+
+        assertEquals(target, distribution.byCount());
+    }
+
     @Test
     public void testToString(){
         List<ToneCount> original = new ArrayList<>();
