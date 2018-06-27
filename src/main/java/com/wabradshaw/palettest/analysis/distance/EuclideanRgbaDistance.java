@@ -13,6 +13,7 @@ import com.wabradshaw.palettest.analysis.Tone;
  * For example, completely transparent red and completely transparent blue will have a high distance despite being
  * identical.
  * </p>
+ * @see <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean distance</a>
  */
 public class EuclideanRgbaDistance implements ColorDistanceFunction {
 
