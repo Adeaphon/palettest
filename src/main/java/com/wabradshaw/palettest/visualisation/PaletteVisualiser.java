@@ -72,6 +72,9 @@ public class PaletteVisualiser {
 
                 g.setPaint(cell.getColor());
                 g.fillRect(xPosition, yPosition, columnWidth, rowHeight);
+
+                g.setPaint(Color.WHITE);
+                g.drawString(cell.getName(), xPosition + 5, yPosition + 15);
             }
         }
         g.dispose();
