@@ -1,6 +1,7 @@
 package com.wabradshaw.palettest.visualisation;
 
 import com.wabradshaw.palettest.analysis.Tone;
+import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -46,7 +47,6 @@ public class PaletteVisualiserTest {
         assertDimensions(result, 200, 150);
     }
 
-
     /**
      * Tests that the image returned when used on five colors in two columns will be equivalent to three rows of two.
      */
@@ -78,4 +78,23 @@ public class PaletteVisualiserTest {
 
         assertDimensions(result, 26, 33);
     }
+
+    //TODO: Remove this
+    /**
+     * Tests that the image returned when used on five colors in two columns will be equivalent to three rows of two.
+     */
+    @Test
+    public void testLook(){
+        List<Tone> palette = Arrays.asList(new Tone(Color.red),    new Tone(Color.blue),
+                new Tone(Color.green),  new Tone(Color.yellow),
+                new Tone(Color.orange), new Tone(Color.magenta));
+
+        PaletteVisualiser visualiser = new PaletteVisualiser();
+
+        BufferedImage result = visualiser.visualise(palette, 2);
+
+        ImageFileUtils.save(result, "example.png", "png");
+
+    }
+
 }
