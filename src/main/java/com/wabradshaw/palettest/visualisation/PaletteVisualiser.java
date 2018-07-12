@@ -59,6 +59,10 @@ public class PaletteVisualiser {
      */
     public BufferedImage visualise(List<Tone> palette, int columns) {
 
+        if(columns <= 0){
+            throw new IllegalArgumentException("Visualise was called with a non-positive number of columns (" + columns +").");
+        }
+
         AtomicInteger counter = new AtomicInteger();
         Map<Integer, List<Tone>> rows = palette.stream()
                                                .collect(groupingBy(x -> (Integer) (counter.getAndIncrement() / columns))) ;

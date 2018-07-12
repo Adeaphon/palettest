@@ -14,6 +14,7 @@ import java.util.List;
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
 import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
 import static com.wabradshaw.palettest.utils.ImageFileUtils.save;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * A set of tests for the {@link PaletteVisualiser} class.
@@ -113,6 +114,29 @@ public class PaletteVisualiserTest {
         assertPixelsMatch(target, result);
     }
 
+    /**
+     * Tests that calling visualise with no columns will throw an exception.
+     */
+    @Test
+    public void testNoColumns(){
+        List<Tone> palette = Arrays.asList(new Tone(Color.red));
+
+        PaletteVisualiser visualiser = new PaletteVisualiser();
+
+        assertThrows(IllegalArgumentException.class, () -> visualiser.visualise(palette, 0));
+    }
+
+    /**
+     * Tests that calling visualise with a negative number of columns will throw an exception.
+     */
+    @Test
+    public void testNegativeColumns(){
+        List<Tone> palette = Arrays.asList(new Tone(Color.red));
+
+        PaletteVisualiser visualiser = new PaletteVisualiser();
+
+        assertThrows(IllegalArgumentException.class, () -> visualiser.visualise(palette, -4));
+    }
 
     //TODO - Remove
     //@Test
