@@ -1,6 +1,7 @@
 package com.wabradshaw.palettest.visualisation;
 
 import com.wabradshaw.palettest.analysis.Tone;
+import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
+import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
+import static com.wabradshaw.palettest.utils.ImageFileUtils.save;
 
 /**
  * A set of tests for the {@link PaletteVisualiser} class.
@@ -79,22 +82,48 @@ public class PaletteVisualiserTest {
         assertDimensions(result, 26, 33);
     }
 
-    //TODO: Remove this
     /**
-     * Tests that the image returned when used on five colors in two columns will be equivalent to three rows of two.
+     * Tests that the palette visualiser can produce the reference image for a palette. This includes multiple colors,
+     * some of which should have white letters and some that should have black.
      */
     @Test
-    public void testLook(){
-        List<Tone> palette = Arrays.asList(new Tone(Color.red),    new Tone(Color.blue),
-                new Tone(Color.green),  new Tone(Color.yellow),
-                new Tone(Color.orange), new Tone(Color.magenta));
+    public void testDrawing(){
+        List<Tone> palette = StandardPalettes.RAINBOW_BW;
 
         PaletteVisualiser visualiser = new PaletteVisualiser();
 
-        BufferedImage result = visualiser.visualise(palette, 2);
+        BufferedImage target = ImageFileUtils.loadImageResource("/palettes/rainbow_bw.png");
+        BufferedImage result = visualiser.visualise(palette, 3);
 
-        ImageFileUtils.save(result, "example.png", "png");
+        assertPixelsMatch(target, result);
+    }
 
+    /**
+     * Tests that empty cells will be drawn using alpha.
+     */
+    @Test
+    public void testDrawingWithAlpha(){
+        List<Tone> palette = StandardPalettes.RAINBOW;
+
+        PaletteVisualiser visualiser = new PaletteVisualiser();
+
+        BufferedImage target = ImageFileUtils.loadImageResource("/palettes/rainbow.png");
+        BufferedImage result = visualiser.visualise(palette, 3);
+
+        assertPixelsMatch(target, result);
+    }
+
+
+    //TODO - Remove
+    //@Test
+    private void manuallyPrintPalette(){
+        List<Tone> palette = StandardPalettes.JAVA_COLORS;
+
+        PaletteVisualiser visualiser = new PaletteVisualiser();
+
+        BufferedImage result = visualiser.visualise(palette, 5);
+
+        save(result, "java_colors.png", "png");
     }
 
 }

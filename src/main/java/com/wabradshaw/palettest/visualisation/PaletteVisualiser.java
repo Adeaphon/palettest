@@ -2,6 +2,8 @@ package com.wabradshaw.palettest.visualisation;
 
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Tone;
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
+import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,8 +22,12 @@ import static java.util.stream.Collectors.toList;
  */
 public class PaletteVisualiser {
 
-    private int rowHeight;
-    private int columnWidth;
+    private final int rowHeight;
+    private final int columnWidth;
+
+    private final ColorDistanceFunction distanceFunction;
+    private final Tone WHITE = new Tone(Color.WHITE);
+    private final Tone BLACK = new Tone(Color.BLACK);
 
     /**
      * Default constructor. Sets up a PaletteVisualiser with the default cell sizes. This is a row height of
@@ -40,6 +46,7 @@ public class PaletteVisualiser {
     public PaletteVisualiser(int rowHeight, int columnWidth) {
         this.rowHeight = rowHeight;
         this.columnWidth = columnWidth;
+        this.distanceFunction = new EuclideanRgbaDistance();
     }
 
     /**
@@ -73,7 +80,12 @@ public class PaletteVisualiser {
                 g.setPaint(cell.getColor());
                 g.fillRect(xPosition, yPosition, columnWidth, rowHeight);
 
-                g.setPaint(Color.WHITE);
+                if(distanceFunction.getDistance(BLACK, cell) >
+                        distanceFunction.getDistance(WHITE, cell)) {
+                    g.setPaint(Color.BLACK);
+                } else {
+                    g.setPaint(Color.WHITE);
+                }
                 g.drawString(cell.getName(), xPosition + 5, yPosition + 15);
             }
         }
