@@ -4,6 +4,7 @@ import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.ToneCount;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -33,6 +34,34 @@ public class DistributionPainter {
      */
     public BufferedImage paintTones(List<ToneCount> orderedDistribution, int targetWidth, int targetHeight){
         BufferedImage result = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = result.createGraphics();
+
+        int currentX = 0;
+        int currentY = 0;
+
+        for(ToneCount toneCount : orderedDistribution){
+            g.setPaint(toneCount.getTone().getColor());
+
+            int pixels = toneCount.getCount();
+            while(pixels > 0){
+                int remainingYPixels = targetHeight - currentY;
+                if(pixels < remainingYPixels){
+                    g.drawLine(currentX, currentY, currentX, currentY + pixels);
+
+                    currentY += pixels;
+                    pixels = 0;
+                } else {
+                    g.drawLine(currentX, currentY, currentX, targetHeight);
+
+                    pixels -= remainingYPixels;
+                    currentY = 0;
+                    currentX ++;
+                }
+            }
+        }
+
+        g.dispose();
 
         return result;
     }
