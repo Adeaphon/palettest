@@ -3,6 +3,7 @@ package com.wabradshaw.palettest.analysis;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -84,5 +85,20 @@ public class ToneCount {
     @Override
     public String toString(){
         return this.getTone().getName() + ": " + this.count;
+    }
+
+    @Override
+    public boolean equals(Object candidate){
+        if(candidate instanceof ToneCount){
+            ToneCount cast = (ToneCount) candidate;
+            return this.tone.equals(cast.tone) && this.getCount() == cast.getCount();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.count, this.tone);
     }
 }

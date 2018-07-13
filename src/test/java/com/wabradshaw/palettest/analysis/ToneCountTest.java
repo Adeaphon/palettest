@@ -6,9 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A set of tests for the {@link ToneCount} object.
@@ -168,5 +166,251 @@ public class ToneCountTest {
         ToneCount toneCount = new ToneCount(red, pixelCounts);
 
         assertEquals("red: 16", toneCount.toString());
+    }
+
+    /**
+     * Tests the equals method will fail when used on null.
+     */
+    @Test
+    public void testEquals_null(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertFalse(toneCount.equals(null));
+    }
+
+    /**
+     * Tests the equals method will fail when used on a different type of object.
+     */
+    @Test
+    public void testEquals_otherType(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertFalse(toneCount.equals("red: 16"));
+    }
+
+
+    /**
+     * Tests the equals method will pass when used on the same object.
+     */
+    @Test
+    public void testEquals_identity(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertTrue(toneCount.equals(toneCount));
+    }
+
+    /**
+     * Tests the equals method will succeed if the objects use the same tone and count.
+     */
+    @Test
+    public void testEquals_equivalent(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red, pixelCounts);
+        ToneCount toneCount2 = new ToneCount(red, pixelCounts);
+
+        assertTrue(toneCount1.equals(toneCount2));
+    }
+
+    /**
+     * Tests the equals method will succeed if the objects use equivalent tones and counts.
+     */
+    @Test
+    public void testEquals_equivalentDifferentObjects(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.red, 10);
+        pixelCounts2.put(Color.orange, 5);
+        pixelCounts2.put(Color.pink, 1);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertTrue(toneCount1.equals(toneCount2));
+    }
+
+    /**
+     * Tests the equals method will fail if the tone is different.
+     */
+    @Test
+    public void testEquals_differentTone(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", new Color(200, 0, 10));
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.red, 10);
+        pixelCounts2.put(Color.orange, 5);
+        pixelCounts2.put(Color.pink, 1);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertFalse(toneCount1.equals(toneCount2));
+    }
+
+    /**
+     * Tests the equals method will fail if the count is different.
+     */
+    @Test
+    public void testEquals_differentCount(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.red, 3);
+        pixelCounts2.put(Color.orange, 2);
+        pixelCounts2.put(Color.pink, 1);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertFalse(toneCount1.equals(toneCount2));
+    }
+
+    /**
+     * Tests the equals method will succeed if the objects use equivalent tones and counts, but have different
+     * individual pixel counts.
+     */
+    @Test
+    public void testEquals_equivalentDifferentPixels(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.MAGENTA, 4);
+        pixelCounts2.put(Color.orange, 9);
+        pixelCounts2.put(Color.pink, 3);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertTrue(toneCount1.equals(toneCount2));
+    }
+
+    /**
+     * Tests the hashcode method will return the same value for equivalent objects.
+     */
+    @Test
+    public void testHashCode_same(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.MAGENTA, 4);
+        pixelCounts2.put(Color.orange, 9);
+        pixelCounts2.put(Color.pink, 3);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertEquals(toneCount1.hashCode(), toneCount2.hashCode());
+    }
+
+    /**
+     * Tests the hashcode method will return different values if they have different tones.
+     */
+    @Test
+    public void testHashCode_differentTone(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", new  Color(200, 0 , 10));
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.MAGENTA, 4);
+        pixelCounts2.put(Color.orange, 9);
+        pixelCounts2.put(Color.pink, 3);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertNotEquals(toneCount1.hashCode(), toneCount2.hashCode());
+    }
+
+    /**
+     * Tests the hashcode method will return different values if they have different counts.
+     */
+    @Test
+    public void testHashCode_differentCounts(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.MAGENTA, 400);
+        pixelCounts2.put(Color.orange, 900);
+        pixelCounts2.put(Color.pink, 300);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertNotEquals(toneCount1.hashCode(), toneCount2.hashCode());
     }
 }
