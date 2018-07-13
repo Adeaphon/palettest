@@ -2,6 +2,7 @@ package com.wabradshaw.palettest.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -59,5 +60,21 @@ public class PaletteDistribution {
     @Override
     public String toString(){
         return this.counts.toString();
+    }
+
+    @Override
+    public boolean equals(Object candidate){
+        if(candidate instanceof PaletteDistribution){
+            List<ToneCount> a = this.byCount();
+            List<ToneCount> b = ((PaletteDistribution) candidate).byCount();
+            return a.containsAll(b) && b.containsAll(a);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hashCode(this.byCount());
     }
 }

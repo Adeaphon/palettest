@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A set of test methods for the {@link PaletteDistribution} class.
@@ -119,6 +117,188 @@ public class PaletteDistributionTest {
         PaletteDistribution distribution = new PaletteDistribution(original);
 
         assertEquals("[blue: 5, red: 9, green: 2]", distribution.toString());
+    }
+
+    /**
+     * Tests that the equals method will return false when passed a null.
+     */
+    @Test
+    public void testEquals_null(){
+        List<ToneCount> counts = new ArrayList<>();
+
+        counts.add(toneCount("blue", Color.BLUE, 5));
+        counts.add(toneCount("red", Color.RED, 9));
+        counts.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution = new PaletteDistribution(counts);
+
+        assertFalse(distribution.equals(null));
+    }
+
+    /**
+     * Tests that the equals method will return false when passed a different object type.
+     */
+    @Test
+    public void testEquals_differentType(){
+        List<ToneCount> counts = new ArrayList<>();
+
+        counts.add(toneCount("blue", Color.BLUE, 5));
+        counts.add(toneCount("red", Color.RED, 9));
+        counts.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution = new PaletteDistribution(counts);
+
+        assertFalse(distribution.equals("[red: 9, blue: 5, green: 2]"));
+    }
+
+    /**
+     * Tests that the equals method will return true when passed itself.
+     */
+    @Test
+    public void testEquals_identity(){
+        List<ToneCount> counts = new ArrayList<>();
+
+        counts.add(toneCount("blue", Color.BLUE, 5));
+        counts.add(toneCount("red", Color.RED, 9));
+        counts.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution = new PaletteDistribution(counts);
+
+        assertTrue(distribution.equals(distribution));
+    }
+
+    /**
+     * Tests that the equals method will return true when passed the same tone counts.
+     */
+    @Test
+    public void testEquals_equivalent(){
+        List<ToneCount> counts = new ArrayList<>();
+
+        counts.add(toneCount("blue", Color.BLUE, 5));
+        counts.add(toneCount("red", Color.RED, 9));
+        counts.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution1 = new PaletteDistribution(counts);
+        PaletteDistribution distribution2 = new PaletteDistribution(counts);
+
+        assertTrue(distribution1.equals(distribution2));
+    }
+
+    /**
+     * Tests that the equals method will return true when passed the same tone counts in
+     * a different list.
+     */
+    @Test
+    public void testEquals_equivalentDifferentObjects(){
+        List<ToneCount> counts1 = new ArrayList<>();
+
+        counts1.add(toneCount("blue", Color.BLUE, 5));
+        counts1.add(toneCount("red", Color.RED, 9));
+        counts1.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution1 = new PaletteDistribution(counts1);
+
+        List<ToneCount> counts2 = new ArrayList<>();
+
+        counts2.add(toneCount("blue", Color.BLUE, 5));
+        counts2.add(toneCount("red", Color.RED, 9));
+        counts2.add(toneCount("green", Color.GREEN, 2));
+        PaletteDistribution distribution2 = new PaletteDistribution(counts2);
+
+        assertTrue(distribution1.equals(distribution2));
+    }
+
+    /**
+     * Tests that the equals method will return true when passed the same tone counts in
+     * a differently ordered list.
+     */
+    @Test
+    public void testEquals_equivalentDifferentOrder(){
+        List<ToneCount> counts1 = new ArrayList<>();
+
+        counts1.add(toneCount("blue", Color.BLUE, 5));
+        counts1.add(toneCount("red", Color.RED, 9));
+        counts1.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution1 = new PaletteDistribution(counts1);
+
+        List<ToneCount> counts2 = new ArrayList<>();
+
+        counts2.add(toneCount("green", Color.GREEN, 2));
+        counts2.add(toneCount("blue", Color.BLUE, 5));
+        counts2.add(toneCount("red", Color.RED, 9));
+        PaletteDistribution distribution2 = new PaletteDistribution(counts2);
+
+        assertTrue(distribution1.equals(distribution2));
+    }
+
+    /**
+     * Tests that the equals method will return false if the counts don't match up.
+     */
+    @Test
+    public void testEquals_differentCounts(){
+        List<ToneCount> counts1 = new ArrayList<>();
+
+        counts1.add(toneCount("blue", Color.BLUE, 5));
+        counts1.add(toneCount("red", Color.RED, 9));
+        counts1.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution1 = new PaletteDistribution(counts1);
+
+        List<ToneCount> counts2 = new ArrayList<>();
+
+        counts2.add(toneCount("green", Color.GREEN, 6));
+        counts2.add(toneCount("blue", Color.BLUE, 1));
+        counts2.add(toneCount("red", Color.RED, 3));
+        PaletteDistribution distribution2 = new PaletteDistribution(counts2);
+
+        assertFalse(distribution1.equals(distribution2));
+    }
+
+    /**
+     * Tests that the hashcode method will return the same hash for equivalent objects.
+     */
+    @Test
+    public void testHashCode_same(){
+        List<ToneCount> counts1 = new ArrayList<>();
+
+        counts1.add(toneCount("blue", Color.BLUE, 5));
+        counts1.add(toneCount("red", Color.RED, 9));
+        counts1.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution1 = new PaletteDistribution(counts1);
+
+        List<ToneCount> counts2 = new ArrayList<>();
+
+        counts2.add(toneCount("green", Color.GREEN, 2));
+        counts2.add(toneCount("blue", Color.BLUE, 5));
+        counts2.add(toneCount("red", Color.RED, 9));
+        PaletteDistribution distribution2 = new PaletteDistribution(counts2);
+
+        assertEquals(distribution1.hashCode(), distribution2.hashCode());
+    }
+
+    /**
+     * Tests that the equals method will return different hashes for different objects.
+     */
+    @Test
+    public void testHashCode_different(){
+        List<ToneCount> counts1 = new ArrayList<>();
+
+        counts1.add(toneCount("blue", Color.BLUE, 5));
+        counts1.add(toneCount("red", Color.RED, 9));
+        counts1.add(toneCount("green", Color.GREEN, 2));
+
+        PaletteDistribution distribution1 = new PaletteDistribution(counts1);
+
+        List<ToneCount> counts2 = new ArrayList<>();
+
+        counts2.add(toneCount("green", Color.GREEN, 6));
+        counts2.add(toneCount("blue", Color.BLUE, 1));
+        counts2.add(toneCount("red", Color.RED, 3));
+        PaletteDistribution distribution2 = new PaletteDistribution(counts2);
+
+        assertNotEquals(distribution1.hashCode(), distribution2.hashCode());
     }
 
     /**
