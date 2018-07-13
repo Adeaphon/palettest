@@ -153,6 +153,9 @@ public class ToneCountTest {
         assertEquals(15, toneCount.getCount());
     }
 
+    /**
+     * Tests the toString method works appropriately.
+     */
     @Test
     public void testToString(){
         Tone red = new Tone("red", Color.RED);
