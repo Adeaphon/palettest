@@ -413,4 +413,175 @@ public class ToneCountTest {
 
         assertNotEquals(toneCount1.hashCode(), toneCount2.hashCode());
     }
+
+    /**
+     * Tests the deep equals method will fail when used on null.
+     */
+    @Test
+    public void testDeepEquals_null(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertFalse(toneCount.deepEquals(null));
+    }
+
+    /**
+     * Tests the deep equals method will fail when used on a different type of object.
+     */
+    @Test
+    public void testDeepEquals_otherType(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertFalse(toneCount.deepEquals("red: 16"));
+    }
+
+
+    /**
+     * Tests the deep equals method will pass when used on the same object.
+     */
+    @Test
+    public void testDeepEquals_identity(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        assertTrue(toneCount.deepEquals(toneCount));
+    }
+
+    /**
+     * Tests the deep equals method will succeed if the objects use the same tone and count.
+     */
+    @Test
+    public void testDeepEquals_equivalent(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.red, 10);
+        pixelCounts.put(Color.orange, 5);
+        pixelCounts.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red, pixelCounts);
+        ToneCount toneCount2 = new ToneCount(red, pixelCounts);
+
+        assertTrue(toneCount1.deepEquals(toneCount2));
+    }
+
+    /**
+     * Tests the deep equals method will succeed if the objects use equivalent tones and counts.
+     */
+    @Test
+    public void testDeepEquals_equivalentDifferentObjects(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.red, 10);
+        pixelCounts2.put(Color.orange, 5);
+        pixelCounts2.put(Color.pink, 1);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertTrue(toneCount1.deepEquals(toneCount2));
+    }
+
+    /**
+     * Tests the deep equals method will fail if the tone is different.
+     */
+    @Test
+    public void testDeepEquals_differentTone(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", new Color(200, 0, 10));
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.red, 10);
+        pixelCounts2.put(Color.orange, 5);
+        pixelCounts2.put(Color.pink, 1);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertFalse(toneCount1.deepEquals(toneCount2));
+    }
+
+    /**
+     * Tests the deep equals method will fail if the count is different.
+     */
+    @Test
+    public void testDeepEquals_differentCount(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.red, 3);
+        pixelCounts2.put(Color.orange, 2);
+        pixelCounts2.put(Color.pink, 1);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertFalse(toneCount1.deepEquals(toneCount2));
+    }
+
+    /**
+     * Tests the deep equals method will fail if the objects use equivalent tones and counts, but have different
+     * individual pixel counts. This is different to equals.
+     */
+    @Test
+    public void testDeepEquals_equivalentDifferentPixels(){
+        Tone red1 = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts1 = new HashMap<>();
+        pixelCounts1.put(Color.red, 10);
+        pixelCounts1.put(Color.orange, 5);
+        pixelCounts1.put(Color.pink, 1);
+
+        ToneCount toneCount1 = new ToneCount(red1, pixelCounts1);
+
+        Tone red2 = new Tone("reddish", Color.RED);
+
+        Map<Color, Integer> pixelCounts2 = new HashMap<>();
+        pixelCounts2.put(Color.MAGENTA, 4);
+        pixelCounts2.put(Color.orange, 9);
+        pixelCounts2.put(Color.pink, 3);
+        ToneCount toneCount2 = new ToneCount(red2, pixelCounts2);
+
+        assertFalse(toneCount1.deepEquals(toneCount2));
+    }
 }

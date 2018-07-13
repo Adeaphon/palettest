@@ -20,6 +20,11 @@ import java.util.Objects;
  * Please note that ToneCounts are immutable. If the pixel count map changes after the ToneCount has been created, it
  * will not reflect those changes.
  * </p>
+ * <p>
+ * ToneCounts are considered equal if, and only if, the Tones and overall counts are the same. They do not take into
+ * account the individual pixel counts when testing regular equality. The deepEquals method is provided to check for
+ * pixel count equality.
+ * </p>
  */
 public class ToneCount {
 
@@ -100,5 +105,23 @@ public class ToneCount {
     @Override
     public int hashCode(){
         return Objects.hash(this.count, this.tone);
+    }
+
+    /**
+     * An equality method that checks that everything about the two ToneCounts are equal. In practice this means that
+     * the Tones, the overall counts, and the individual pixel counts are equal.
+     *
+     * @param candidate The object to compare.
+     * @return          Whether or not the Tones, overall counts, and individual pixel counts are equal.
+     */
+    public boolean deepEquals(Object candidate){
+        if(candidate instanceof ToneCount){
+            ToneCount cast = (ToneCount) candidate;
+            return this.tone.equals(cast.tone) &&
+                   this.getCount() == cast.getCount() &&
+                   this.getPixelCounts().equals(cast.getPixelCounts());
+        } else {
+            return false;
+        }
     }
 }
