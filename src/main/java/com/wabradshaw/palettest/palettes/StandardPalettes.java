@@ -15,6 +15,7 @@ import java.util.List;
  * <li>RAINBOW - The colors of the rainbow.</li>
  * <li>RAINBOW_BW - The colors of the rainbow, as well as black and white.</li>
  * <li>X11_NUMBERED - The colors of the X11 standard, including numbered variants.</li>
+ * <li>PWG_STANDARD - The colors of the Printer Working Group 5101.1 standard.</li>
  * </ul>
  */
 public class StandardPalettes {
@@ -572,4 +573,91 @@ public class StandardPalettes {
             new Tone("Yellow", new Color(205, 205, 0)),
             new Tone("Yellow", new Color(139, 139, 0)),
             new Tone("Yellow-Green", new Color(154, 205, 50)));
+
+    /**
+     * A palette containing the colors defined by the Printer Working Group (PWG) Standard 5101.1. This standard
+     * contains a range of colors, with all colors apart from black and white having four variants: original, clear (50%
+     * transparency), dark, and light.
+     * @see <a href="https://www.w3schools.com/colors/colors_x11.asp">Color codes</a>
+     * @see <a href="https://en.wikipedia.org/wiki/X11_color_names#Derived_lists">Description</a>
+     */
+    public static final List<Tone> PWG_STANDARD = Arrays.asList(
+            new Tone("Black", new Color(0, 0, 0, 255)),
+            new Tone("Clear Black", new Color(0, 0, 0, 127)),
+            new Tone("Light Black", new Color(128, 128, 128, 255)),
+            new Tone("Transparent", new Color(255, 255, 255, 0)),
+            new Tone("Blue", new Color(0, 0, 255, 255)),
+            new Tone("Clear Blue", new Color(0, 0, 255, 127)),
+            new Tone("Dark Blue", new Color(0, 0, 139, 255)),
+            new Tone("Light Blue", new Color(173, 216, 230, 255)),
+            new Tone("Brown", new Color(165, 42, 42, 255)),
+            new Tone("Clear Brown", new Color(165, 42, 42, 127)),
+            new Tone("Dark Brown", new Color(92, 64, 51, 255)),
+            new Tone("Light Brown", new Color(153, 102, 255, 255)),
+            new Tone("Buff", new Color(240, 220, 130, 255)),
+            new Tone("Clear Buff", new Color(240, 220, 130, 127)),
+            new Tone("Dark Buff", new Color(151, 102, 56, 255)),
+            new Tone("Light Buff", new Color(236, 217, 176, 255)),
+            new Tone("Cyan", new Color(0, 255, 255, 255)),
+            new Tone("Clear Cyan", new Color(0, 255, 255, 127)),
+            new Tone("Dark Cyan", new Color(0, 139, 139, 255)),
+            new Tone("Light Cyan", new Color(224, 255, 255, 255)),
+            new Tone("Gold", new Color(255, 215, 0, 255)),
+            new Tone("Clear Gold", new Color(255, 215, 0, 127)),
+            new Tone("Dark Gold", new Color(238, 188, 29, 255)),
+            new Tone("Light Gold", new Color(241, 229, 172, 255)),
+            new Tone("Goldenrod", new Color(218, 165, 32, 255)),
+            new Tone("Clear Goldenrod", new Color(218, 165, 32, 127)),
+            new Tone("Dark Goldenrod", new Color(184, 134, 11, 255)),
+            new Tone("Light Goldenrod", new Color(255, 236, 139, 255)),
+            new Tone("Gray", new Color(128, 128, 128, 255)),
+            new Tone("Clear Gray", new Color(128, 128, 128, 127)),
+            new Tone("Dark Gray", new Color(64, 64, 64, 255)),
+            new Tone("Light Gray", new Color(211, 211, 211, 255)),
+            new Tone("Green", new Color(0, 128, 0, 255)),
+            new Tone("Clear Green", new Color(0, 128, 0, 127)),
+            new Tone("Dark Green", new Color(0, 100, 0, 255)),
+            new Tone("Light Green", new Color(144, 238, 144, 255)),
+            new Tone("Ivory", new Color(255, 255, 240, 255)),
+            new Tone("Clear Ivory", new Color(255, 255, 240, 127)),
+            new Tone("Dark Ivory", new Color(242, 229, 143, 255)),
+            new Tone("Light Ivory", new Color(255, 248, 201, 255)),
+            new Tone("Magenta", new Color(255, 0, 255, 255)),
+            new Tone("Clear Magenta", new Color(255, 0, 255, 127)),
+            new Tone("Dark Magenta", new Color(139, 0, 139, 255)),
+            new Tone("Light Magenta", new Color(255, 119, 255, 255)),
+            new Tone("Mustard", new Color(255, 219, 88, 255)),
+            new Tone("Clear Mustard", new Color(255, 219, 88, 127)),
+            new Tone("Dark Mustard", new Color(124, 124, 64, 255)),
+            new Tone("Light Mustard", new Color(238, 221, 98, 255)),
+            new Tone("Orange", new Color(255, 165, 0, 255)),
+            new Tone("Clear Orange", new Color(255, 165, 0, 127)),
+            new Tone("Dark Orange", new Color(255, 140, 0, 255)),
+            new Tone("Light Orange", new Color(217, 164, 101, 255)),
+            new Tone("Pink", new Color(255, 192, 203, 255)),
+            new Tone("Clear Pink", new Color(255, 192, 203, 127)),
+            new Tone("Dark Pink", new Color(231, 84, 128, 255)),
+            new Tone("Light Pink", new Color(255, 182, 193, 255)),
+            new Tone("Red", new Color(255, 0, 0, 255)),
+            new Tone("Clear Red", new Color(255, 0, 0, 127)),
+            new Tone("Dark Red", new Color(139, 0, 255, 255)),
+            new Tone("Light Red", new Color(255, 51, 51, 255)),
+            new Tone("Silver", new Color(192, 192, 192, 255)),
+            new Tone("Clear Silver", new Color(192, 192, 192, 127)),
+            new Tone("Dark Silver", new Color(175, 175, 175, 255)),
+            new Tone("Light Silver", new Color(225, 225, 225, 255)),
+            new Tone("Turquoise", new Color(48, 213, 200, 255)),
+            new Tone("Clear Turquoise", new Color(48, 213, 200, 127)),
+            new Tone("Dark Turquoise", new Color(0, 206, 209, 255)),
+            new Tone("Light Turquoise", new Color(175, 228, 222, 255)),
+            new Tone("Violet", new Color(238, 130, 238, 255)),
+            new Tone("Clear Violet", new Color(238, 130, 238, 127)),
+            new Tone("Dark Violet", new Color(148, 0, 211, 255)),
+            new Tone("Light Violet", new Color(122, 82, 153, 255)),
+            new Tone("Yellow", new Color(255, 255, 0, 255)),
+            new Tone("Clear Yellow", new Color(255, 255, 0, 127)),
+            new Tone("Dark Yellow", new Color(255, 204, 0, 255)),
+            new Tone("Light Yellow", new Color(255, 255, 224, 255)),
+            new Tone("White", new Color(255, 255, 255, 255)),
+            new Tone("Clear White", new Color(255, 255, 255, 127)));
 }
