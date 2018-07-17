@@ -579,7 +579,7 @@ public class StandardPalettes {
      * A palette containing the colors defined by the Printer Working Group (PWG) Standard 5101.1. This standard
      * contains a range of colors, with all colors apart from black and white having four variants: original, clear (50%
      * transparency), dark, and light. Contains 78 colors.
-     * @see <a href="https://www.w3schools.com/colors/colors_x11.asp">Color codes</a>
+     * @see <a href="http://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn20-20130328-5101.1.pdf">Color codes</a>
      * @see <a href="https://en.wikipedia.org/wiki/X11_color_names#Derived_lists">Description</a>
      */
     public static final List<Tone> PWG_STANDARD = Arrays.asList(
