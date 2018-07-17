@@ -14,6 +14,7 @@ import java.util.List;
  * <li>JAVA_COLORS - The standard colors available through the Color class</li>
  * <li>RAINBOW - The colors of the rainbow.</li>
  * <li>RAINBOW_BW - The colors of the rainbow, as well as black and white.</li>
+ * <li>X11_NUMBERED - The colors of the X11 standard, including numbered variants.</li>
  * </ul>
  */
 public class StandardPalettes {
@@ -105,10 +106,10 @@ public class StandardPalettes {
             new Tone("Cadet Blue 2", new Color(142, 229, 238)),
             new Tone("Cadet Blue 3", new Color(122, 197, 205)),
             new Tone("Cadet Blue 4", new Color(83, 134, 139)),
-            new Tone("Cartreuse 1", new Color(127, 255, 0)),
-            new Tone("Cartreuse 2", new Color(118, 238, 0)),
-            new Tone("Cartreuse 3", new Color(102, 205, 0)),
-            new Tone("Cartreuse 4", new Color(69, 139, 0)),
+            new Tone("Chartreuse 1", new Color(127, 255, 0)),
+            new Tone("Chartreuse 2", new Color(118, 238, 0)),
+            new Tone("Chartreuse 3", new Color(102, 205, 0)),
+            new Tone("Chartreuse 4", new Color(69, 139, 0)),
             new Tone("Chocolate", new Color(210, 105, 30)),
             new Tone("Chocolate 1", new Color(255, 127, 36)),
             new Tone("Chocolate 2", new Color(238, 118, 33)),
@@ -402,7 +403,7 @@ public class StandardPalettes {
             new Tone("Medium Sea Green", new Color(60, 179, 113)),
             new Tone("Medium Slate Blue", new Color(123, 104, 238)),
             new Tone("Medium Spring Green", new Color(0, 250, 154)),
-            new Tone("Medium Turquiose", new Color(72, 209, 204)),
+            new Tone("Medium Turquoise", new Color(72, 209, 204)),
             new Tone("Medium Violet-Red", new Color(199, 21, 133)),
             new Tone("Midnight Blue", new Color(25, 25, 112)),
             new Tone("Mint Cream", new Color(245, 255, 250)),
