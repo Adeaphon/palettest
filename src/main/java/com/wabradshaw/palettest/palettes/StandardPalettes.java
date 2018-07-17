@@ -11,17 +11,17 @@ import java.util.List;
  * This class contains a list of common palettes. Currently available are:
  * </p>
  * <ul>
- * <li>JAVA_COLORS - The standard colors available through the Color class</li>
- * <li>RAINBOW - The colors of the rainbow.</li>
- * <li>RAINBOW_BW - The colors of the rainbow, as well as black and white.</li>
- * <li>X11_NUMBERED - The colors of the X11 standard, including numbered variants.</li>
- * <li>PWG_STANDARD - The colors of the Printer Working Group 5101.1 standard.</li>
+ * <li>JAVA_COLORS - The standard colors available through the Color class. 13 colors. </li>
+ * <li>RAINBOW - The colors of the rainbow. 7 colors.</li>
+ * <li>RAINBOW_BW - The colors of the rainbow, as well as black and white. 9 colors.</li>
+ * <li>X11_NUMBERED - The colors of the X11 standard, including numbered variants. 505 colors.</li>
+ * <li>PWG_STANDARD - The colors of the Printer Working Group 5101.1 standard. 78 colors.</li>
  * </ul>
  */
 public class StandardPalettes {
 
     /**
-     * A palette containing the standard colors available through the Color class.
+     * A palette containing the standard colors available through the Color class. Contains 13 colors.
      */
     public static final List<Tone> JAVA_COLORS = Arrays.asList(new Tone("Red", Color.red),
                                                                new Tone("Green", Color.green),
@@ -38,7 +38,7 @@ public class StandardPalettes {
                                                                new Tone("Pink", Color.pink));
 
     /**
-     * A palette containing the colors of the rainbow. Color codes found on Webnots.com
+     * A palette containing the colors of the rainbow. Color codes found on Webnots.com. Contains 7 colors.
      * @see <a href="https://www.webnots.com/vibgyor-rainbow-color-codes/">Color codes</a>
      */
     public static final List<Tone> RAINBOW = Arrays.asList(new Tone("Violet", new Color(148,0,211)),
@@ -50,7 +50,8 @@ public class StandardPalettes {
                                                            new Tone("Red", new Color(255,0,0)));
 
     /**
-     * A palette containing the colors of the rainbow, as well as black and white. Color codes found on Webnots.com
+     * A palette containing the colors of the rainbow, as well as black and white. Color codes found on Webnots.com.
+     * Contains 9 colors.
      * @see <a href="https://www.webnots.com/vibgyor-rainbow-color-codes/">Color codes</a>
      */
     public static final List<Tone> RAINBOW_BW = Arrays.asList(new Tone("Violet", new Color(148,0,211)),
@@ -65,7 +66,7 @@ public class StandardPalettes {
 
     /**
      * A palette containing all of the colors in the X11 standard, including all numbered variants. This standard was
-     * developed at MIT for X Windows systems. Color codes found on w3schools.com
+     * developed at MIT for X Windows systems. Color codes found on w3schools.com. Contains 505 colors.
      * @see <a href="https://www.w3schools.com/colors/colors_x11.asp">Color codes</a>
      */
     public static final List<Tone> X11_NUMBERED = Arrays.asList(new Tone("Alice Blue", new Color(240, 248, 255)),
@@ -577,7 +578,7 @@ public class StandardPalettes {
     /**
      * A palette containing the colors defined by the Printer Working Group (PWG) Standard 5101.1. This standard
      * contains a range of colors, with all colors apart from black and white having four variants: original, clear (50%
-     * transparency), dark, and light.
+     * transparency), dark, and light. Contains 78 colors.
      * @see <a href="https://www.w3schools.com/colors/colors_x11.asp">Color codes</a>
      * @see <a href="https://en.wikipedia.org/wiki/X11_color_names#Derived_lists">Description</a>
      */
