@@ -218,9 +218,9 @@ public class ToneCountTest {
         Tone red = new Tone("red", Color.RED);
 
         Map<Color, Integer> pixelCounts = new HashMap<>();
-        pixelCounts.put(Color.BLUE, 1); // 10
-        pixelCounts.put(Color.RED, 5); // 0
-        pixelCounts.put(Color.MAGENTA, 4); // 2.5
+        pixelCounts.put(Color.BLUE, 1);
+        pixelCounts.put(Color.RED, 5);
+        pixelCounts.put(Color.MAGENTA, 4);
 
         ToneCount toneCount = new ToneCount(red, pixelCounts);
 
@@ -233,6 +233,68 @@ public class ToneCountTest {
                 .thenReturn(2.5);
 
         assertEquals(2.0, toneCount.getAverageDistance(function));
+    }
+
+
+    /**
+     * Tests the getMaxDistance method if there aren't any pixelCounts.
+     */
+    @Test
+    public void testGetMaxDistance_empty(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+
+        assertEquals(0, toneCount.getMaxDistance(function));
+    }
+
+    /**
+     * Tests the getMaxDistance method will return the correct distance if there is only a single pixelCount.
+     */
+    @Test
+    public void testGetMaxDistance_singleColor(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.BLUE, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.BLUE)))
+                .thenReturn(10.0);
+
+        assertEquals(10.0, toneCount.getMaxDistance(function));
+    }
+
+    /**
+     * Tests the getMaxDistance method will return the correct distance if there are multiple colors in the pixel
+     * counts.
+     */
+    @Test
+    public void testGetMaxDistance_multipleColors(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.BLUE, 1);
+        pixelCounts.put(Color.RED, 5);
+        pixelCounts.put(Color.MAGENTA, 4);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.BLUE)))
+                .thenReturn(10.0);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.RED)))
+                .thenReturn(0.0);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.MAGENTA)))
+                .thenReturn(2.5);
+
+        assertEquals(10.0, toneCount.getMaxDistance(function));
     }
 
     /**

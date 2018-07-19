@@ -3,6 +3,7 @@ package com.wabradshaw.palettest.analysis;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -107,6 +108,26 @@ public class ToneCount {
                                        .map(e -> e.getValue() * distanceFunction.getDistance(this.tone, new Tone(e.getKey())))
                                        .reduce(0.0, (a,b) -> a + b);
             return totalDistance / this.count;
+        }
+    }
+
+    /**
+     * Gets the maximum distance between the {@link Color}s assigned to this {@link Tone} and the {@link Tone} itself.
+     * If there are no Colors in the pixelCounts, then this will return 0.
+     *
+     * @param distanceFunction The {@link ColorDistanceFunction} to use to define the distance between two colors.
+     * @return                 The maximum distance between each {@link Color} and this {@link Tone}.
+     */
+    public double getMaxDistance(ColorDistanceFunction distanceFunction){
+        if(this.count == 0) {
+            return 0;
+        } else {
+            return this.getPixelCounts()
+                       .keySet()
+                       .stream()
+                       .map(color -> distanceFunction.getDistance(this.tone, new Tone(color)))
+                       .max(Comparator.comparing(Double::valueOf))
+                       .get();
         }
     }
 
