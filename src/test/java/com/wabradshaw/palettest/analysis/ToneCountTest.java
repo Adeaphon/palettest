@@ -166,7 +166,73 @@ public class ToneCountTest {
 
         ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
 
-        assertEquals(0, toneCount.getAverageDistance(null));
+        assertEquals(0, toneCount.getAverageDistance(function));
+    }
+
+    /**
+     * Tests the getAverageDistance method will return the correct distance if there is only a single pixelCount, with a
+     * single pixel in it.
+     */
+    @Test
+    public void testGetAverageDistance_oneSingleColor(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.BLUE, 1);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.BLUE)))
+               .thenReturn(10.0);
+
+        assertEquals(10.0, toneCount.getAverageDistance(function));
+    }
+
+    /**
+     * Tests the getAverageDistance method will return the correct distance if there is only a single pixelCount,
+     * which has multiple pixels within it.
+     */
+    @Test
+    public void testGetAverageDistance_multipleSingleColor(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.BLUE, 25);
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.BLUE)))
+                .thenReturn(10.0);
+
+        assertEquals(10.0, toneCount.getAverageDistance(function));
+    }
+
+    /**
+     * Tests the getAverageDistance method will return the correct distance if there are multiple colors in the pixel
+     * counts.
+     */
+    @Test
+    public void testGetAverageDistance_multipleColors(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+        pixelCounts.put(Color.BLUE, 1); // 10
+        pixelCounts.put(Color.RED, 5); // 0
+        pixelCounts.put(Color.MAGENTA, 4); // 2.5
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.BLUE)))
+                .thenReturn(10.0);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.RED)))
+                .thenReturn(0.0);
+        Mockito.when(function.getDistance(Mockito.eq(red), Mockito.argThat(tone -> tone.getColor() == Color.MAGENTA)))
+                .thenReturn(2.5);
+
+        assertEquals(2.0, toneCount.getAverageDistance(function));
     }
 
     /**

@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -97,7 +98,16 @@ public class ToneCount {
      * @return                 The mean distance between each {@link Color} and this {@link Tone}.
      */
     public double getAverageDistance(ColorDistanceFunction distanceFunction){
-        return 0;
+        if(this.count == 0) {
+            return 0;
+        } else {
+            double totalDistance = this.getPixelCounts()
+                                       .entrySet()
+                                       .stream()
+                                       .map(e -> e.getValue() * distanceFunction.getDistance(this.tone, new Tone(e.getKey())))
+                                       .reduce(0.0, (a,b) -> a + b);
+            return totalDistance / this.count;
+        }
     }
 
     @Override
