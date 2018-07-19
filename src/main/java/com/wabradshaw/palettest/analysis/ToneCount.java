@@ -1,5 +1,7 @@
 package com.wabradshaw.palettest.analysis;
 
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +87,17 @@ public class ToneCount {
      */
     public Map<Color, Integer> getPixelCounts(){
         return new HashMap<>(pixelCounts);
+    }
+
+    /**
+     * Gets the mean distance between each {@link Color} assigned to this {@link Tone} and the {@link Tone} itself.
+     * If there are no Colors in the pixelCounts, then this will return 0.
+     *
+     * @param distanceFunction The {@link ColorDistanceFunction} to use to define the distance between two colors.
+     * @return                 The mean distance between each {@link Color} and this {@link Tone}.
+     */
+    public double getAverageDistance(ColorDistanceFunction distanceFunction){
+        return 0;
     }
 
     @Override

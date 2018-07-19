@@ -1,6 +1,8 @@
 package com.wabradshaw.palettest.analysis;
 
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -149,6 +151,22 @@ public class ToneCountTest {
 
         ToneCount toneCount = new ToneCount(red, pixelCounts);
         assertEquals(15, toneCount.getCount());
+    }
+
+    /**
+     * Tests the getAverageDistance method if there aren't any pixelCounts.
+     */
+    @Test
+    public void testGetAverageDistance_empty(){
+        Tone red = new Tone("red", Color.RED);
+
+        Map<Color, Integer> pixelCounts = new HashMap<>();
+
+        ToneCount toneCount = new ToneCount(red, pixelCounts);
+
+        ColorDistanceFunction function = Mockito.mock(ColorDistanceFunction.class);
+
+        assertEquals(0, toneCount.getAverageDistance(null));
     }
 
     /**
