@@ -1,15 +1,15 @@
 package com.wabradshaw.palettest.analysis;
 
+import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
+import com.wabradshaw.palettest.analysis.clustering.WeightedKMeansClusterer;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
@@ -35,6 +35,7 @@ import static java.util.stream.Collectors.*;
 public class Palettester {
 
     private final ColorDistanceFunction distanceFunction;
+    private final ClusteringAlgorithm clusteringAlgorithm;
 
     /**
      * Default constructor. Sets up a Palettester with the default settings. Specifically that means that it will use
@@ -42,6 +43,7 @@ public class Palettester {
      */
     public Palettester(){
         this.distanceFunction = new EuclideanRgbaDistance();
+        this.clusteringAlgorithm = new WeightedKMeansClusterer();
     }
 
     /**
@@ -118,6 +120,19 @@ public class Palettester {
                                 ));
     }
 
+    private List<Tone> definePalette(BufferedImage image, int maxTones){
+        Map<Color, Integer> colorCounts = countColors(image);
+
+        Collection<Color> paletteColors;
+        if(colorCounts.keySet().size() <= maxTones){
+            paletteColors = colorCounts.keySet();
+        } else {
+            paletteColors = clusteringAlgorithm.cluster(colorCounts, maxTones);
+        }
+
+        return nameTones(paletteColors);
+    }
+
     /**
      * Converts a color count into a ToneCount which only has that color.
      *
@@ -162,5 +177,17 @@ public class Palettester {
                                                    distanceFunction.getDistance(o1, targetTone)))
                 .get();
         return new ClosestTone(resultTone, color, count);
+    }
+
+
+    //TODO - Give the option to choose names from a standard palette.
+    /**
+     * Converts a collection of {@link Color}s into a list of {@link Tone}s. Ideally they will have sensible names.
+     *
+     * @param colors The list of unnamed {@link Color}s.
+     * @return       A list of names {@link Tone}s.
+     */
+    private List<Tone> nameTones(Collection<Color> colors) {
+        return colors.stream().map(x -> new Tone(x)).collect(toList());
     }
 }
