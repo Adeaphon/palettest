@@ -38,7 +38,7 @@ public class Palettester {
 
     /**
      * Default constructor. Sets up a Palettester with the default settings. Specifically that means that it will use
-     * Euclidean RGBA distance when computing simularity. See {@link EuclideanRgbaDistance} for a full description.
+     * Euclidean RGBA distance when computing similarity. See {@link EuclideanRgbaDistance} for a full description.
      */
     public Palettester(){
         this.distanceFunction = new EuclideanRgbaDistance();
