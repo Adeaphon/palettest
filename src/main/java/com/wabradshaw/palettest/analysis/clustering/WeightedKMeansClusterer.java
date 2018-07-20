@@ -19,7 +19,7 @@ public class WeightedKMeansClusterer implements ClusteringAlgorithm {
 
 
     private final ColorDistanceFunction distanceFunction = new EuclideanRgbaDistance();
-    private final int maxAttempts = 100;
+    private final int maxAttempts = 20;
 
     @Override
     public Collection<Color> cluster(Map<Color, Integer> colorCounts, int targetClusters) {
