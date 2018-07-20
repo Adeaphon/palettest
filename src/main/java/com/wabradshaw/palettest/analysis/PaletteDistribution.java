@@ -57,6 +57,17 @@ public class PaletteDistribution {
                           .collect(Collectors.toList());
     }
 
+    /**
+     * Gets the distribution sorted alphabetically by the name of each {@link Tone} (ascending).
+     *
+     * @return The distribution sorted alphabetically by the name of each {@link Tone} (ascending).
+     */
+    public List<ToneCount> byName(){
+        return this.counts.stream()
+                .sorted((o1, o2) -> (o1.getTone().getName().compareTo(o2.getTone().getName())))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public String toString(){
         return this.counts.toString();
