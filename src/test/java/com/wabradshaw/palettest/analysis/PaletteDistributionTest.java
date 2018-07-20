@@ -132,6 +132,7 @@ public class PaletteDistributionTest {
 
         assertEquals(target, distribution.byName());
     }
+
     @Test
     public void testToString(){
         List<ToneCount> original = new ArrayList<>();
