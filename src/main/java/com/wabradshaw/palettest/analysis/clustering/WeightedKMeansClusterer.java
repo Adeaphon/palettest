@@ -34,7 +34,7 @@ public class WeightedKMeansClusterer implements ClusteringAlgorithm {
         int attempts = 0;
         List<Tone> oldClusters = new ArrayList<>();
 
-        while(attempts < maxAttempts && oldClusters != clusters){
+        while(attempts < maxAttempts && !oldClusters.containsAll(clusters)){
             oldClusters = clusters;
             attempts++;
 
