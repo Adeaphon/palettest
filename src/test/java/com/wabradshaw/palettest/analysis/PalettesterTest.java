@@ -96,6 +96,58 @@ public class PalettesterTest {
     }
 
     /**
+     * Tests analysePalette using the default palette when the image only has a single color.
+     */
+    @Test
+    public void testAnalysePalette_Default_OneColor(){
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/green.png");
+
+        PaletteDistribution result = new Palettester().analysePalette(image);
+
+        assertEquals(1, result.byCount().size());
+        assertEquals("Green", result.byCount().get(0).getTone().getName());
+        assertEquals(100, result.byCount().get(0).getCount());
+        assertEquals(1, result.byCount().get(0).getPixelCounts().size());
+        assertEquals(100, (int) result.byCount().get(0).getPixelCounts().get(Color.GREEN));
+    }
+
+    /**
+     * Tests analysePalette using the default palette on an image containing a black/white gradient. The image has five
+     * equally spaced bands. In the PWG color palette, these map to four different colors: White, Black, Silver, and
+     * Light Black x 2.
+     */
+    @Test
+    public void testAnalysePalette_Default_Greyscale(){
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/simple/blackWhiteGradient.png");
+
+        PaletteDistribution result = new Palettester().analysePalette(image);
+
+        List<ToneCount> results = result.byName();
+        assertEquals(4, results.size());
+        assertEquals("Black", results.get(0).getTone().getName());
+        assertEquals("Light Black", results.get(1).getTone().getName());
+        assertEquals("Silver", results.get(2).getTone().getName());
+        assertEquals("White", results.get(3).getTone().getName());
+    }
+
+    /**
+     * Tests analysePalette using the default palette on a complex image with a custom palette. The image is mostly
+     * light purple, dark purple and white. Analysing the pixels independently gives a huge count of subtly different
+     * shades.
+     */
+    @Test
+    public void testAnalysePalette_Default_Complex(){
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/maps/Barcelona.png");
+
+        PaletteDistribution result = new Palettester().analysePalette(image);
+
+        assertEquals(10, result.byCount().size());
+    }
+
+    /**
      * Tests analyseAllColors when the image only has a single color.
      */
     @Test

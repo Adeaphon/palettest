@@ -4,6 +4,7 @@ import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
 import com.wabradshaw.palettest.analysis.clustering.WeightedKMeansClusterer;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
+import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
 import java.awt.*;
@@ -24,24 +25,30 @@ import static java.util.stream.Collectors.*;
  * An image is tested using three main methods:
  * </p>
  * <ul>
- * <li>analysePalette(Palette, Image) - Used to count how many times each general {@link Tone} in a pre-defined
- *                                      palette is used.</li>
- * <li>analyseAllColors(Image) - Used to take a count of every single color in an image. This treats every hex code as a
- *                               separate {@link Tone}.</li>
- * <li>definePalette(Image, Clusters) - Used to define a new palette from the image, then to count how many times each
- *                                      {@link Tone} is used. Used when the palette is not known up front.</li>
+ * <li>analysePalette   - Used to count how many times each general {@link Tone} in a pre-defined palette is used.</li>
+ * <li>analyseAllColors - Used to take a count of every single color in an image. This treats every hex code as a
+ *                        separate {@link Tone}.</li>
+ * <li>definePalette    - Used to define a new palette from the image, then to count how many times each {@link Tone}
+ *                        is used. Used when the palette is not known up front.</li>
  * </ul>
  */
 public class Palettester {
 
+    private final List<Tone> defaultPalette;
     private final ColorDistanceFunction distanceFunction;
     private final ClusteringAlgorithm clusteringAlgorithm;
 
     /**
      * Default constructor. Sets up a Palettester with the default settings. Specifically that means that it will use
-     * Euclidean RGBA distance when computing similarity. See {@link EuclideanRgbaDistance} for a full description.
+     * the PWG Standard palette, {@link EuclideanRgbaDistance} when computing similarity, and
+     * {@link WeightedKMeansClusterer} to find new palettes.
+     *
+     * @see StandardPalettes#PWG_STANDARD
+     * @see EuclideanRgbaDistance
+     * @see WeightedKMeansClusterer
      */
     public Palettester(){
+        this.defaultPalette = StandardPalettes.PWG_STANDARD;
         this.distanceFunction = new EuclideanRgbaDistance();
         this.clusteringAlgorithm = new WeightedKMeansClusterer();
     }
@@ -74,6 +81,22 @@ public class Palettester {
                                                 .stream()
                                                 .map(tc -> new ToneCount(tc.getKey(), tc.getValue()))
                                                 .collect(toList()));
+    }
+
+    /**
+     * <p>
+     * Takes a {@link BufferedImage} and analyses how many times each {@link Tone} in the {@link Palettester}s color
+     * palette is used. Each individual {@link Color} in the image is mapped to the closest {@link Tone}. The results
+     * are stored as a {@link PaletteDistribution} where each {@link Tone} has a total pixel count, as well as a map of
+     * exactly which {@link Color} pixels were attributed to that {@link Tone}. Only {@link Tone}s in the palette that
+     * were also in the image will appear in the {@link PaletteDistribution}.
+     * </p>
+     * @param image   The {@link BufferedImage} to be described.
+     * @return        A {@link PaletteDistribution} containing all of the {@link Tone}s that were used in the image,
+     *                and the number of pixels that can be attributed to each {@link Tone}.
+     */
+    public PaletteDistribution analysePalette(BufferedImage image){
+        return this.analysePalette(this.defaultPalette, image);
     }
 
     /**
@@ -201,7 +224,6 @@ public class Palettester {
                 .get();
         return new ClosestTone(resultTone, color, count);
     }
-
 
     //TODO - Give the option to choose names from a standard palette.
     /**
