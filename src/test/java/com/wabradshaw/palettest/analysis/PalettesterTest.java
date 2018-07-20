@@ -1,5 +1,6 @@
 package com.wabradshaw.palettest.analysis;
 
+import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * A set of tests for the {@link Palettester} class.
@@ -145,5 +147,102 @@ public class PalettesterTest {
 
         assertEquals(255, result.getDistribution().size());
 
+    }
+
+    /**
+     * Tests definePalette on an image only containing one color
+     */
+    @Test
+    public void testDefinePalette_OneColor(){
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/green.png");
+
+        List<Tone> result = new Palettester().definePalette(image, 1);
+
+        assertEquals(1, result.size());
+        assertEquals(Color.GREEN, result.get(0).getColor());
+    }
+
+    /**
+     * Tests definePalette on a trivial image (equal parts red and blue), asking for a single cluster (so it should be
+     * purple).
+     */
+    @Test
+    public void testDefinePalette_Trivial_Fewer(){
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/redBlueHorizontal.png");
+
+        List<Tone> result = new Palettester().definePalette(image, 1);
+
+        assertEquals(1, result.size());
+        assertEquals(new Color(127, 0, 127), result.get(0).getColor());
+    }
+
+    /**
+     * Tests definePalette on a trivial image (equal parts red and blue), asking for two clusters (i.e. red and blue).
+     */
+    @Test
+    public void testDefinePalette_Trivial_Equal(){
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/redBlueHorizontal.png");
+
+        List<Tone> result = new Palettester().definePalette(image, 2);
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains(new Tone(Color.RED)));
+        assertTrue(result.contains(new Tone(Color.BLUE)));
+    }
+
+    /**
+     * Tests definePalette on a trivial image (equal parts red and blue), asking for several clusters. Only the
+     * present colors should appear.
+     */
+    @Test
+    public void testDefinePalette_Trivial_TooMany(){
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/redBlueHorizontal.png");
+
+        List<Tone> result = new Palettester().definePalette(image, 20);
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains(new Tone(Color.RED)));
+        assertTrue(result.contains(new Tone(Color.BLUE)));
+    }
+
+    /**
+     * Tests definePalette on a simple image, which has about four main colors (white and three shades of green).
+     */
+    @Test
+    public void testDefinePalette_Simple(){
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/maps/Seville.png");
+
+        List<Tone> result = new Palettester().definePalette(image, 4);
+
+        assertEquals(4, result.size());
+    }
+
+    /**
+     * Tests definePalette on a simple image, which has about four main colors (white and three shades of green). This
+     * checks that the defined palette is reflected in the image.
+     */
+    @Test
+    public void testDefinePalette_Simple_ReflectsReality(){
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/maps/Seville.png");
+
+        Palettester tester = new Palettester();
+        List<Tone> palette = tester.definePalette(image, 4);
+        PaletteDistribution result = tester.analysePalette(palette, image);
+
+        result.byCount().stream().forEach(
+                x -> assertTrue(x.getAverageDistance(new EuclideanRgbaDistance()) < 50)
+        );
+    }
+
+    /**
+     * Tests definePalette on a photograph.
+     */
+    @Test
+    public void testDefinePalette_Complex() {
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/complex/rooves.jpg");
+
+        List<Tone> result = new Palettester().definePalette(image, 10);
+
+        assertEquals(10, result.size());
     }
 }
