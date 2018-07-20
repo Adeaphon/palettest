@@ -120,7 +120,7 @@ public class Palettester {
                                 ));
     }
 
-    private List<Tone> definePalette(BufferedImage image, int maxTones){
+    public List<Tone> definePalette(BufferedImage image, int maxTones){
         Map<Color, Integer> colorCounts = countColors(image);
 
         Collection<Color> paletteColors;
