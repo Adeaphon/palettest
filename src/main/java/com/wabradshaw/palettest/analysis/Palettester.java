@@ -38,6 +38,8 @@ public class Palettester {
     private final ColorDistanceFunction distanceFunction;
     private final ClusteringAlgorithm clusteringAlgorithm;
 
+    private final int MAX_NAME_DISTANCE = 75;
+
     /**
      * Default constructor. Sets up a Palettester with the default settings. Specifically that means that it will use
      * the PWG Standard palette, {@link EuclideanRgbaDistance} when computing similarity, and
@@ -225,14 +227,40 @@ public class Palettester {
         return new ClosestTone(resultTone, color, count);
     }
 
-    //TODO - Give the option to choose names from a standard palette.
     /**
-     * Converts a collection of {@link Color}s into a list of {@link Tone}s. Ideally they will have sensible names.
+     * Converts a collection of {@link Color}s into a list of {@link Tone}s. If there are similar colors in the
+     * default palette, their names will be used. If the colors are too far apart, they will get hex code names.
+     * If there are multiple colors in the input that are closest to the same color, they will get numberes appended
+     * to the end.
      *
      * @param colors The list of unnamed {@link Color}s.
      * @return       A list of names {@link Tone}s.
      */
     private List<Tone> nameTones(Collection<Color> colors) {
-        return colors.stream().map(x -> new Tone(x)).collect(toList());
+        List<Tone> results = new ArrayList<>();
+
+        Map<String, Integer> usedColors = new HashMap<>();
+
+        for(Color color : colors){
+            Tone protoTone = new Tone(color);
+            ClosestTone closest = getClosestTone(this.defaultPalette, color, 1);
+
+            if(distanceFunction.getDistance(protoTone, closest.tone) > MAX_NAME_DISTANCE){
+                results.add(protoTone);
+            } else {
+                String suggestedName = closest.tone.getName();
+                if(usedColors.containsKey(suggestedName)){
+                    int nextNumber = usedColors.get(suggestedName);
+                    results.add(new Tone(suggestedName + nextNumber, closest.color));
+                    usedColors.put(suggestedName, nextNumber + 1);
+                } else {
+                    results.add(new Tone(suggestedName, color));
+                    usedColors.put(suggestedName, 1);
+                }
+            }
+        }
+
+        return results;
     }
+
 }
