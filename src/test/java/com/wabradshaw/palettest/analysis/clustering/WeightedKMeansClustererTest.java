@@ -84,4 +84,69 @@ public class WeightedKMeansClustererTest {
         assertEquals(1, result.size());
         assertTrue(result.contains(new Color(200,0,127, (int) (255*0.75))));
     }
+
+    /**
+     * Tests that using the clusterer for the same number of clusters as colors will return the original colors.
+     */
+    @Test
+    public void testMultipleClusters_SameNumber(){
+        WeightedKMeansClusterer clusterer = new WeightedKMeansClusterer();
+
+        Map<Color, Integer> counts = new HashMap<>();
+        counts.put(Color.RED, 10);
+        counts.put(Color.BLUE, 11);
+        counts.put(Color.GREEN, 4);
+
+        Collection<Color> result = clusterer.cluster(counts, 3);
+
+        assertEquals(3, result.size());
+        assertTrue(result.contains(Color.RED));
+        assertTrue(result.contains(Color.BLUE));
+        assertTrue(result.contains(Color.GREEN));
+    }
+
+    /**
+     * Tests that using the clusterer for multiple clusters which are obvious will always find the same centroids.
+     */
+    @Test
+    public void testMultipleClusters_ClearCutAverages(){
+        WeightedKMeansClusterer clusterer = new WeightedKMeansClusterer();
+
+        Map<Color, Integer> counts = new HashMap<>();
+        counts.put(new Color(200,0,0), 10);
+        counts.put(new Color(240,0,0), 30);
+        counts.put(new Color(0, 190, 0), 20);
+        counts.put(new Color(0, 210, 0), 20);
+        counts.put(new Color(15,0,200), 50);
+        counts.put(new Color(0,15,200), 50);
+        counts.put(new Color(0,0,215), 50);
+
+        Collection<Color> result = clusterer.cluster(counts, 3);
+
+        assertEquals(3, result.size());
+        assertTrue(result.contains(new Color(230,0,0)));
+        assertTrue(result.contains(new Color(0,200,0)));
+        assertTrue(result.contains(new Color(5,5,205)));
+    }
+
+    /**
+     * Tests that using the clusterer for multiple clusters which are controversial will still finish.
+     */
+    @Test
+    public void testMultipleClusters_Complex(){
+        WeightedKMeansClusterer clusterer = new WeightedKMeansClusterer();
+
+        Map<Color, Integer> counts = new HashMap<>();
+        counts.put(new Color(200,0,0), 10);
+        counts.put(new Color(240,120,0), 30);
+        counts.put(new Color(0, 190, 70), 20);
+        counts.put(new Color(90, 140, 0), 20);
+        counts.put(new Color(159,0,200), 50);
+        counts.put(new Color(140,130,200), 50);
+        counts.put(new Color(0,0,80), 50);
+
+        Collection<Color> result = clusterer.cluster(counts, 3);
+
+        assertEquals(3, result.size());
+    }
 }
