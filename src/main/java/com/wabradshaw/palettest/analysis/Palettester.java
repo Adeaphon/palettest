@@ -99,6 +99,42 @@ public class Palettester {
     }
 
     /**
+     * <p>
+     * Takes in a {@link BufferedImage} and analyses it as the basis for a color palette. The result is a list of
+     * {@link Tone}s that cover the major colors used in the image.
+     * </p>
+     * <p>
+     * Once a palette has been created, it has two main uses: analysis and visualisation. An image can be analysed
+     * using {@link #analysePalette(List, BufferedImage)}, which shows how many pixels belong to each color of the
+     * palette. The palette itslef can also be visualised using the
+     * {@link com.wabradshaw.palettest.visualisation.PaletteVisualiser}, but this does not reflect the balance of the
+     * palette.
+     * </p>
+     * <p>
+     * The exact results are dependant on the clustering algorithm being used. However, these algorithms are frequently
+     * non-deterministic. The exact palette may change slightly between calls.
+     * </p>
+     * <p>
+     * Please note that this method can take some time for complex images.
+     * </p>
+     * @param image    The {@link BufferedImage} to be described.
+     * @param maxTones The maximum number of different color {@link Tone}s in the palette.
+     * @return         A palette of {@link Tone}s used in the image.
+     */
+    public List<Tone> definePalette(BufferedImage image, int maxTones){
+        Map<Color, Integer> colorCounts = countColors(image);
+
+        Collection<Color> paletteColors;
+        if(colorCounts.keySet().size() <= maxTones){
+            paletteColors = colorCounts.keySet();
+        } else {
+            paletteColors = clusteringAlgorithm.cluster(colorCounts, maxTones);
+        }
+
+        return nameTones(paletteColors);
+    }
+
+    /**
      * Counts the number of pixels of each Color in an image.
      *
      * @param image The image being analysed
@@ -118,19 +154,6 @@ public class Palettester {
                                     e -> new Color(e.getKey()),
                                     e -> e.getValue().intValue()
                                 ));
-    }
-
-    public List<Tone> definePalette(BufferedImage image, int maxTones){
-        Map<Color, Integer> colorCounts = countColors(image);
-
-        Collection<Color> paletteColors;
-        if(colorCounts.keySet().size() <= maxTones){
-            paletteColors = colorCounts.keySet();
-        } else {
-            paletteColors = clusteringAlgorithm.cluster(colorCounts, maxTones);
-        }
-
-        return nameTones(paletteColors);
     }
 
     /**
