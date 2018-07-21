@@ -4,6 +4,8 @@ import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
 import com.wabradshaw.palettest.analysis.clustering.WeightedKMeansClusterer;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
+import com.wabradshaw.palettest.analysis.naming.ColorNamer;
+import com.wabradshaw.palettest.analysis.naming.SimplePaletteColorNamer;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
@@ -37,22 +39,23 @@ public class Palettester {
     private final List<Tone> defaultPalette;
     private final ColorDistanceFunction distanceFunction;
     private final ClusteringAlgorithm clusteringAlgorithm;
-
-    private final int MAX_NAME_DISTANCE = 75;
+    private final ColorNamer namer;
 
     /**
      * Default constructor. Sets up a Palettester with the default settings. Specifically that means that it will use
-     * the PWG Standard palette, {@link EuclideanRgbaDistance} when computing similarity, and
-     * {@link WeightedKMeansClusterer} to find new palettes.
+     * the PWG Standard palette, {@link EuclideanRgbaDistance} when computing similarity,
+     * {@link WeightedKMeansClusterer} to find new palettes, and {@link SimplePaletteColorNamer} to name new Colors.
      *
      * @see StandardPalettes#PWG_STANDARD
      * @see EuclideanRgbaDistance
      * @see WeightedKMeansClusterer
+     * @see SimplePaletteColorNamer
      */
     public Palettester(){
         this.defaultPalette = StandardPalettes.PWG_STANDARD;
         this.distanceFunction = new EuclideanRgbaDistance();
         this.clusteringAlgorithm = new WeightedKMeansClusterer();
+        this.namer = new SimplePaletteColorNamer();
     }
 
     /**
@@ -156,7 +159,7 @@ public class Palettester {
             paletteColors = clusteringAlgorithm.cluster(colorCounts, maxTones);
         }
 
-        return nameTones(paletteColors);
+        return namer.nameTones(paletteColors, this.defaultPalette);
     }
 
     /**
@@ -226,41 +229,4 @@ public class Palettester {
                 .get();
         return new ClosestTone(resultTone, color, count);
     }
-
-    /**
-     * Converts a collection of {@link Color}s into a list of {@link Tone}s. If there are similar colors in the
-     * default palette, their names will be used. If the colors are too far apart, they will get hex code names.
-     * If there are multiple colors in the input that are closest to the same color, they will get numberes appended
-     * to the end.
-     *
-     * @param colors The list of unnamed {@link Color}s.
-     * @return       A list of names {@link Tone}s.
-     */
-    private List<Tone> nameTones(Collection<Color> colors) {
-        List<Tone> results = new ArrayList<>();
-
-        Map<String, Integer> usedColors = new HashMap<>();
-
-        for(Color color : colors){
-            Tone protoTone = new Tone(color);
-            ClosestTone closest = getClosestTone(this.defaultPalette, color, 1);
-
-            if(distanceFunction.getDistance(protoTone, closest.tone) > MAX_NAME_DISTANCE){
-                results.add(protoTone);
-            } else {
-                String suggestedName = closest.tone.getName();
-                if(usedColors.containsKey(suggestedName)){
-                    int nextNumber = usedColors.get(suggestedName);
-                    results.add(new Tone(suggestedName + nextNumber, closest.color));
-                    usedColors.put(suggestedName, nextNumber + 1);
-                } else {
-                    results.add(new Tone(suggestedName, color));
-                    usedColors.put(suggestedName, 1);
-                }
-            }
-        }
-
-        return results;
-    }
-
 }
