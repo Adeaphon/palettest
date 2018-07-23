@@ -80,6 +80,69 @@ public class PaletteDistributionTest {
     }
 
     /**
+     * Tests the get method on a name which exists in the counts.
+     */
+    @Test
+    public void testGetByName_exists(){
+        ToneCount blue = toneCount("blue", Color.BLUE, 5);
+        ToneCount red = toneCount("red", Color.RED, 9);
+        ToneCount green = toneCount("green", Color.GREEN, 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue);
+        original.add(red);
+        original.add(green);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals(blue, distribution.get("blue"));
+        assertEquals(red, distribution.get("red"));
+        assertEquals(green, distribution.get("green"));
+    }
+
+    /**
+     * Tests the get method on a name which isn't in the distribution.
+     */
+    @Test
+    public void testGetByName_doesntExists(){
+        ToneCount blue = toneCount("blue", Color.BLUE, 5);
+        ToneCount red = toneCount("red", Color.RED, 9);
+        ToneCount green = toneCount("green", Color.GREEN, 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue);
+        original.add(red);
+        original.add(green);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals(null, distribution.get("octarine"));
+    }
+
+    /**
+     * Tests the get method on a name which someone has accidentally been included multiple times will return the
+     * largest.
+     */
+    @Test
+    public void testGetByName_duplicate(){
+        ToneCount blue1 = toneCount("blue", new Color(0,0,255), 5);
+        ToneCount blue2 = toneCount("blue", new Color(0,0,200), 9);
+        ToneCount blue3 = toneCount("blue", new Color(10,20,180), 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue1);
+        original.add(blue2);
+        original.add(blue3);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals(blue2, distribution.get("blue"));
+    }
+
+    /**
      * Tests that byCount will return the original items in count order.
      */
     @Test

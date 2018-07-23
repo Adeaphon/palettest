@@ -1,8 +1,8 @@
 package com.wabradshaw.palettest.analysis;
 
-import java.util.ArrayList;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class PaletteDistribution {
 
     private final List<ToneCount> counts;
+    private final Map<String, ToneCount> countsByName;
 
     /**
      * Main constructor producing {@link PaletteDistribution}s. However, typical people should not need to call this
@@ -33,6 +34,31 @@ public class PaletteDistribution {
             throw new IllegalArgumentException("A PaletteDistribution was created with a null list of counts.");
         }
         this.counts = new ArrayList<>(counts);
+        countsByName = new HashMap<>();
+        for(ToneCount count : this.byCount()){
+            String name = count.getTone().getName();
+            if(!countsByName.containsKey(name)){
+                countsByName.put(name, count);
+            }
+        };
+    }
+
+    /**
+     * <p>
+     * Gets the {@link ToneCount} describing how many times the {@link Tone} with the supplied name appeared in the
+     * image. If no {@link Tone} with that name was used, this will return null.
+     * </p>
+     * <p>
+     * If multiple {@link Tone}s have the same name (not recommended), then only one will be returned. Specifically,
+     * this will return the {@link ToneCount} with the highest count.
+     * </p>
+     *
+     * @param name The name of the {@link Tone} to look for.
+     * @return     The {@link ToneCount} representing the number of times the named {@link Tone} was used in the
+     *             image, or null if it was never used.
+     */
+    public ToneCount get(String name){
+        return this.countsByName.get(name);
     }
 
     /**
