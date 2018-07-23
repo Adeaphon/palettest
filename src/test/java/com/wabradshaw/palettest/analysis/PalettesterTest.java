@@ -26,6 +26,29 @@ import static org.mockito.Mockito.when;
 public class PalettesterTest {
 
     /**
+     * Tests that the distance function constructor will use that distance function.
+     *
+     * Done by checking that analysePalette on a light red pixel can be forced to return blue.
+     */
+    @Test
+    public void testDistanceFunctionConstructor(){
+        ColorDistanceFunction distanceFunction = mock(ColorDistanceFunction.class);
+        when(distanceFunction.getRankingDistance(eq(new Tone(Color.RED)),any())).thenReturn(999.9);
+        when(distanceFunction.getRankingDistance(eq(new Tone(Color.BLUE)),any())).thenReturn(1.0);
+
+        Palettester tester = new Palettester(distanceFunction);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/dimensions/1x1.png");
+
+        List<Tone> palette = Arrays.asList(new Tone("Red",  Color.red), new Tone("Blue",  Color.blue));
+        PaletteDistribution result = tester.analysePalette(palette, image);
+
+        List<ToneCount> results = result.byName();
+        assertEquals(1, results.size());
+        assertEquals("Blue", results.get(0).getTone().getName());
+    }
+
+    /**
      * Tests that the default palette will be used if the custom constructor is called without a palette.
      *
      * Done by testing analysePalette using the default palette on an image containing a black/white gradient. The image

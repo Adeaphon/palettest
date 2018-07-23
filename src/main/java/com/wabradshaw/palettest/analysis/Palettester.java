@@ -58,6 +58,26 @@ public class Palettester {
 
     /**
      * <p>
+     * Shorthand constructor for a Palettester that uses a particular distance function when comparing colors.
+     * </p>
+     * <p>The Palettester will be set up with the PWG Standard palette from {@link StandardPalettes}, a
+     * {@link WeightedKMeansClusterer} to define palettes from images, and a {@link SimplePaletteColorNamer} to supply
+     * names to new {@link Color}s.
+     * </ul>
+     * @see ColorDistanceFunction
+     * @see StandardPalettes#PWG_STANDARD
+     * @see WeightedKMeansClusterer
+     * @see SimplePaletteColorNamer
+     *
+     * @param distanceFunction    A {@link ColorDistanceFunction} to use to measure the distance between different
+     *                            {@link Color}s. If null, defaults to the {@link EuclideanRgbaDistance} function.
+     */
+    public Palettester(ColorDistanceFunction distanceFunction){
+        this(null, distanceFunction, null, null);
+    }
+
+    /**
+     * <p>
      * Full configuration constructor. Sets up a completely custom {@link Palettester}. All arguments are optional, if
      * null is supplied then the deefault will be used.
      * </p>
