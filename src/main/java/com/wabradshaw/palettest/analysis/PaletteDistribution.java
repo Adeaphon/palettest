@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
  * retrieved through various sorting methods such as {@link #byCount()}, by red, or by hue.
  * </p>
  * <p>
+ * To return the count for a specific {@link Color}, you can use either {@link #get(String)} or {@link #get(Color)}
+ * to get the {@link ToneCount} for the {@link Tone} with that name or {@link Color} respectively
+ * </p>
+ * <p>
  * Please note that {@link PaletteDistribution}s are immutable. If the list of counts changes after the distribution
  * has been created, it will not reflect those changes.
  * </p>
@@ -20,6 +24,7 @@ public class PaletteDistribution {
 
     private final List<ToneCount> counts;
     private final Map<String, ToneCount> countsByName;
+    private final Map<Color, ToneCount> countsByColor;
 
     /**
      * Main constructor producing {@link PaletteDistribution}s. However, typical people should not need to call this
@@ -34,13 +39,20 @@ public class PaletteDistribution {
             throw new IllegalArgumentException("A PaletteDistribution was created with a null list of counts.");
         }
         this.counts = new ArrayList<>(counts);
+
         countsByName = new HashMap<>();
+        countsByColor = new HashMap<>();
+
         for(ToneCount count : this.byCount()){
             String name = count.getTone().getName();
+            Color color = count.getTone().getColor();
             if(!countsByName.containsKey(name)){
                 countsByName.put(name, count);
             }
-        };
+            if(!countsByColor.containsKey(color)){
+                countsByColor.put(color, count);
+            }
+        }
     }
 
     /**
@@ -59,6 +71,24 @@ public class PaletteDistribution {
      */
     public ToneCount get(String name){
         return this.countsByName.get(name);
+    }
+
+    /**
+     * <p>
+     * Gets the {@link ToneCount} describing how many times the {@link Tone} with the supplied {@link Color} appeared
+     * in the image. If no {@link Tone} with that {@link Color} was used, this will return null.
+     * </p>
+     * <p>
+     * If multiple {@link Tone}s have the same {@link Color} (not recommended), then only one will be returned.
+     * Specifically, this will return the {@link ToneCount} with the highest count.
+     * </p>
+     *
+     * @param color The {@link Color} of the {@link Tone} to look for.
+     * @return      The {@link ToneCount} representing the number of times the indicated {@link Tone} was used in the
+     *             image, or null if it was never used.
+     */
+    public ToneCount get(Color color){
+        return this.countsByColor.get(color);
     }
 
     /**

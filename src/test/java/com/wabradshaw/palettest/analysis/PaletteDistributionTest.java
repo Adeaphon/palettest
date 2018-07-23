@@ -143,6 +143,69 @@ public class PaletteDistributionTest {
     }
 
     /**
+     * Tests the get method on a color which exists in the counts.
+     */
+    @Test
+    public void testGetByColor_exists(){
+        ToneCount blue = toneCount("blue", Color.BLUE, 5);
+        ToneCount red = toneCount("red", Color.RED, 9);
+        ToneCount green = toneCount("green", Color.GREEN, 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue);
+        original.add(red);
+        original.add(green);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals(blue, distribution.get(Color.BLUE));
+        assertEquals(red, distribution.get(Color.RED));
+        assertEquals(green, distribution.get(Color.GREEN));
+    }
+
+    /**
+     * Tests the get method on a color which isn't in the distribution.
+     */
+    @Test
+    public void testGetByColor_doesntExists(){
+        ToneCount blue = toneCount("blue", Color.BLUE, 5);
+        ToneCount red = toneCount("red", Color.RED, 9);
+        ToneCount green = toneCount("green", Color.GREEN, 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue);
+        original.add(red);
+        original.add(green);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals(null, distribution.get(Color.WHITE));
+    }
+
+    /**
+     * Tests the get method on a color which someone has accidentally been included multiple times will return the
+     * largest.
+     */
+    @Test
+    public void testGetByColor_duplicate(){
+        ToneCount blue1 = toneCount("bleu", Color.BLUE, 5);
+        ToneCount blue2 = toneCount("blue", Color.BLUE, 9);
+        ToneCount blue3 = toneCount("blau", Color.BLUE, 2);
+
+        List<ToneCount> original = new ArrayList<>();
+
+        original.add(blue1);
+        original.add(blue2);
+        original.add(blue3);
+
+        PaletteDistribution distribution = new PaletteDistribution(original);
+
+        assertEquals(blue2, distribution.get(Color.BLUE));
+    }
+
+    /**
      * Tests that byCount will return the original items in count order.
      */
     @Test
