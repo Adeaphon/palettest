@@ -25,6 +25,26 @@ import static org.mockito.Mockito.when;
  */
 public class PalettesterTest {
 
+
+    /**
+     * Tests that the default palette constructor will use that palette as the default.
+     *
+     * Done by checking that analysePalette on a green image can be forced to use a named red palette.
+     */
+    @Test
+    public void testDefaultPaletteConstructor(){
+
+        List<Tone> palette = Arrays.asList(new Tone("Rouge", Color.RED));
+        Palettester tester = new Palettester(palette);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/green.png");
+
+        PaletteDistribution result = tester.analysePalette(image);
+
+        assertEquals(1, result.byCount().size());
+        assertEquals("Rouge", result.byCount().get(0).getTone().getName());
+    }
+
     /**
      * Tests that the distance function constructor will use that distance function.
      *

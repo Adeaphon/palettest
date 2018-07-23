@@ -58,11 +58,31 @@ public class Palettester {
 
     /**
      * <p>
+     * Shorthand constructor for a Palettester that uses a specific default palette. This Palette is used when analysing
+     * palettes or to supply base names when naming new colors.
+     * </p>
+     * <p>The Palettester will be set up with the {@link EuclideanRgbaDistance} function to compare {@link Color}s, a
+     * {@link WeightedKMeansClusterer} to define palettes from images, and a {@link SimplePaletteColorNamer} to supply
+     * names to new {@link Color}s. To control these, use the full configuration constructor.
+     * </ul>
+     * @see EuclideanRgbaDistance
+     * @see WeightedKMeansClusterer
+     * @see SimplePaletteColorNamer
+     *
+     * @param defaultPalette      A list of {@link Tone}s to serve as the default color palette for analysis and naming.
+     *                            If null, defaults to the PWG Standard palette.
+     */
+    public Palettester(List<Tone> defaultPalette){
+        this(defaultPalette, null, null, null);
+    }
+
+    /**
+     * <p>
      * Shorthand constructor for a Palettester that uses a particular distance function when comparing colors.
      * </p>
      * <p>The Palettester will be set up with the PWG Standard palette from {@link StandardPalettes}, a
      * {@link WeightedKMeansClusterer} to define palettes from images, and a {@link SimplePaletteColorNamer} to supply
-     * names to new {@link Color}s.
+     * names to new {@link Color}s. To control these, use the full configuration constructor.
      * </ul>
      * @see ColorDistanceFunction
      * @see StandardPalettes#PWG_STANDARD
