@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -42,7 +43,7 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals("Rouge", result.byCount().get(0).getTone().getName());
+        assertEquals(100, result.get("Rouge").getCount());
     }
 
     /**
@@ -63,9 +64,8 @@ public class PalettesterTest {
         List<Tone> palette = Arrays.asList(new Tone("Red",  Color.red), new Tone("Blue",  Color.blue));
         PaletteDistribution result = tester.analysePalette(palette, image);
 
-        List<ToneCount> results = result.byName();
-        assertEquals(1, results.size());
-        assertEquals("Blue", results.get(0).getTone().getName());
+        assertEquals(1, result.byName().size());
+        assertEquals(1, result.get(Color.BLUE).getCount());
     }
 
     /**
@@ -83,12 +83,11 @@ public class PalettesterTest {
 
         PaletteDistribution result = tester.analysePalette(image);
 
-        List<ToneCount> results = result.byName();
-        assertEquals(4, results.size());
-        assertEquals("Black", results.get(0).getTone().getName());
-        assertEquals("Light Black", results.get(1).getTone().getName());
-        assertEquals("Silver", results.get(2).getTone().getName());
-        assertEquals("White", results.get(3).getTone().getName());
+        assertEquals(4, result.byCount().size());
+        assertNotNull(result.get("Black"));
+        assertNotNull(result.get("Light Black"));
+        assertNotNull(result.get("Silver"));
+        assertNotNull(result.get("White"));
     }
 
     /**
@@ -106,9 +105,8 @@ public class PalettesterTest {
 
         PaletteDistribution result = tester.analysePalette(image);
 
-        List<ToneCount> results = result.byName();
-        assertEquals(1, results.size());
-        assertEquals("Rouge", results.get(0).getTone().getName());
+        assertEquals(1, result.byCount().size());
+        assertEquals(100, result.get(Color.RED).getCount());
     }
 
     /**
@@ -126,9 +124,8 @@ public class PalettesterTest {
         List<Tone> palette = Arrays.asList(new Tone("Red",  Color.red), new Tone("Blue",  Color.blue));
         PaletteDistribution result = tester.analysePalette(palette, image);
 
-        List<ToneCount> results = result.byName();
-        assertEquals(1, results.size());
-        assertEquals("Red", results.get(0).getTone().getName());
+        assertEquals(1, result.byCount().size());
+        assertEquals(1, result.get("Red").getCount());
     }
 
     /**
@@ -149,9 +146,8 @@ public class PalettesterTest {
         List<Tone> palette = Arrays.asList(new Tone("Red",  Color.red), new Tone("Blue",  Color.blue));
         PaletteDistribution result = tester.analysePalette(palette, image);
 
-        List<ToneCount> results = result.byName();
-        assertEquals(1, results.size());
-        assertEquals("Blue", results.get(0).getTone().getName());
+        assertEquals(1, result.byCount().size());
+        assertEquals(1, result.get("Blue").getCount());
     }
 
     /**
@@ -247,10 +243,9 @@ public class PalettesterTest {
         PaletteDistribution result = new Palettester().analysePalette(palette, image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals("Green", result.byCount().get(0).getTone().getName());
-        assertEquals(100, result.byCount().get(0).getCount());
-        assertEquals(1, result.byCount().get(0).getPixelCounts().size());
-        assertEquals(100, (int) result.byCount().get(0).getPixelCounts().get(Color.GREEN));
+        assertEquals(100, result.get("Green").getCount());
+        assertEquals(1, result.get("Green").getPixelCounts().size());
+        assertEquals(100, (int) result.get("Green").getPixelCounts().get(Color.GREEN));
     }
 
     /**
@@ -270,20 +265,18 @@ public class PalettesterTest {
 
         assertEquals(2, result.byCount().size());
 
-        ToneCount firstColor = result.byCount().get(0);
-        assertEquals("White", firstColor.getTone().getName());
-        assertEquals(60, firstColor.getCount());
-        assertEquals(3, firstColor.getPixelCounts().size());
-        assertEquals(20, (int) firstColor.getPixelCounts().get(Color.WHITE));
-        assertEquals(20, (int) firstColor.getPixelCounts().get(new Color(191,191,191)));
-        assertEquals(20, (int) firstColor.getPixelCounts().get(new Color(150,150,150)));
+        ToneCount white = result.get("White");
+        assertEquals(60, white.getCount());
+        assertEquals(3, white.getPixelCounts().size());
+        assertEquals(20, (int) white.getPixelCounts().get(Color.WHITE));
+        assertEquals(20, (int) white.getPixelCounts().get(new Color(191,191,191)));
+        assertEquals(20, (int) white.getPixelCounts().get(new Color(150,150,150)));
 
-        ToneCount secondColor = result.byCount().get(1);
-        assertEquals("Black", secondColor.getTone().getName());
-        assertEquals(40, secondColor.getCount());
-        assertEquals(2, secondColor.getPixelCounts().size());
-        assertEquals(20, (int) secondColor.getPixelCounts().get(Color.BLACK));
-        assertEquals(20, (int) secondColor.getPixelCounts().get(new Color(124,124,124)));
+        ToneCount black = result.get("Black");
+        assertEquals(40, black.getCount());
+        assertEquals(2, black.getPixelCounts().size());
+        assertEquals(20, (int) black.getPixelCounts().get(Color.BLACK));
+        assertEquals(20, (int) black.getPixelCounts().get(new Color(124,124,124)));
     }
 
     /**
@@ -320,10 +313,9 @@ public class PalettesterTest {
         PaletteDistribution result = new Palettester().analysePalette(image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals("Green", result.byCount().get(0).getTone().getName());
-        assertEquals(100, result.byCount().get(0).getCount());
-        assertEquals(1, result.byCount().get(0).getPixelCounts().size());
-        assertEquals(100, (int) result.byCount().get(0).getPixelCounts().get(Color.GREEN));
+        assertEquals(100, result.get("Green").getCount());
+        assertEquals(1, result.get("Green").getPixelCounts().size());
+        assertEquals(100, (int) result.get("Green").getPixelCounts().get(Color.GREEN));
     }
 
     /**
@@ -372,10 +364,9 @@ public class PalettesterTest {
         PaletteDistribution result = new Palettester().analyseAllColors(image);
 
         assertEquals(1, result.getDistribution().size());
-        assertEquals("#00ff00", result.getDistribution().get(0).getTone().getName());
-        assertEquals(100, result.getDistribution().get(0).getCount());
-        assertEquals(1, result.getDistribution().get(0).getPixelCounts().size());
-        assertEquals(100, (int) result.getDistribution().get(0).getPixelCounts().get(Color.GREEN));
+        assertEquals(100, result.get("#00ff00").getCount());
+        assertEquals(1, result.get("#00ff00").getPixelCounts().size());
+        assertEquals(100, (int) result.get("#00ff00").getPixelCounts().get(Color.GREEN));
     }
 
     /**
@@ -390,15 +381,13 @@ public class PalettesterTest {
 
         assertEquals(2, result.getDistribution().size());
 
-        assertEquals("#ff0000", result.getDistribution().get(0).getTone().getName());
-        assertEquals(75, result.getDistribution().get(0).getCount());
-        assertEquals(1, result.getDistribution().get(0).getPixelCounts().size());
-        assertEquals(75, (int) result.getDistribution().get(0).getPixelCounts().get(Color.RED));
+        assertEquals(75, result.get("#ff0000").getCount());
+        assertEquals(1, result.get("#ff0000").getPixelCounts().size());
+        assertEquals(75, (int) result.get("#ff0000").getPixelCounts().get(Color.RED));
 
-        assertEquals("#0000ff", result.getDistribution().get(1).getTone().getName());
-        assertEquals(25, result.getDistribution().get(1).getCount());
-        assertEquals(1, result.getDistribution().get(1).getPixelCounts().size());
-        assertEquals(25, (int) result.getDistribution().get(1).getPixelCounts().get(Color.BLUE));
+        assertEquals(25, result.get("#0000ff").getCount());
+        assertEquals(1, result.get("#0000ff").getPixelCounts().size());
+        assertEquals(25, (int) result.get("#0000ff").getPixelCounts().get(Color.BLUE));
     }
 
     /**
