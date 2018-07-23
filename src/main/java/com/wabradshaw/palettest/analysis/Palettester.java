@@ -8,7 +8,6 @@ import com.wabradshaw.palettest.analysis.naming.ColorNamer;
 import com.wabradshaw.palettest.analysis.naming.SimplePaletteColorNamer;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
-import com.wabradshaw.palettest.visualisation.PaletteReplacer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
