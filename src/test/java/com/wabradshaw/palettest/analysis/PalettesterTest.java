@@ -1,21 +1,192 @@
 package com.wabradshaw.palettest.analysis;
 
+import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
+import com.wabradshaw.palettest.analysis.naming.ColorNamer;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * A set of tests for the {@link Palettester} class.
  */
 public class PalettesterTest {
+
+    /**
+     * Tests that the default palette will be used if the custom constructor is called without a palette.
+     *
+     * Done by testing analysePalette using the default palette on an image containing a black/white gradient. The image
+     * has five equally spaced bands. In the PWG color palette, these map to four different colors: White, Black,
+     * Silver, and Light Black x 2.
+     */
+    @Test
+    public void testCustomConstructor_NoPalette(){
+        Palettester tester = new Palettester(null, null, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/simple/blackWhiteGradient.png");
+
+        PaletteDistribution result = tester.analysePalette(image);
+
+        List<ToneCount> results = result.byName();
+        assertEquals(4, results.size());
+        assertEquals("Black", results.get(0).getTone().getName());
+        assertEquals("Light Black", results.get(1).getTone().getName());
+        assertEquals("Silver", results.get(2).getTone().getName());
+        assertEquals("White", results.get(3).getTone().getName());
+    }
+
+    /**
+     * Tests that a custom palette can be set as the default palette for a Palettester.
+     *
+     * Done by testing analysePalette using a custom palette on an image containing a black/white gradient. The image
+     * has five equally spaced bands. However, the custom palette only has one color, Rouge.
+     */
+    @Test
+    public void testCustomConstructor_CustomPalette(){
+        List<Tone> palette = Arrays.asList(new Tone("Rouge", Color.RED));
+        Palettester tester = new Palettester(palette, null, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/simple/blackWhiteGradient.png");
+
+        PaletteDistribution result = tester.analysePalette(image);
+
+        List<ToneCount> results = result.byName();
+        assertEquals(1, results.size());
+        assertEquals("Rouge", results.get(0).getTone().getName());
+    }
+
+    /**
+     * Tests that the default distance function will be used if the custom constructor is called without a distance
+     * function.
+     *
+     * Done by checking that analysePalette on a light red pixel returns red.
+     */
+    @Test
+    public void testCustomConstructor_NoDistanceFunction(){
+        Palettester tester = new Palettester(null, null, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/dimensions/1x1.png");
+
+        List<Tone> palette = Arrays.asList(new Tone("Red",  Color.red), new Tone("Blue",  Color.blue));
+        PaletteDistribution result = tester.analysePalette(palette, image);
+
+        List<ToneCount> results = result.byName();
+        assertEquals(1, results.size());
+        assertEquals("Red", results.get(0).getTone().getName());
+    }
+
+    /**
+     * Tests that a custom distance function will be used if the custom constructor is called with it.
+     *
+     * Done by checking that analysePalette on a light red pixel can be forced to return blue.
+     */
+    @Test
+    public void testCustomConstructor_CustomDistanceFunction(){
+        ColorDistanceFunction distanceFunction = mock(ColorDistanceFunction.class);
+        when(distanceFunction.getDistance(eq(new Tone(Color.RED)),any())).thenReturn(999.9);
+        when(distanceFunction.getDistance(eq(new Tone(Color.BLUE)),any())).thenReturn(1.0);
+
+        Palettester tester = new Palettester(null, distanceFunction, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/dimensions/1x1.png");
+
+        List<Tone> palette = Arrays.asList(new Tone("Red",  Color.red), new Tone("Blue",  Color.blue));
+        PaletteDistribution result = tester.analysePalette(palette, image);
+
+        List<ToneCount> results = result.byName();
+        assertEquals(1, results.size());
+        assertEquals("Blue", results.get(0).getTone().getName());
+    }
+
+    /**
+     * Tests that the default clustering algorithm will be used if the custom constructor is called without a clustering
+     * algorithm.
+     *
+     * Done by checking that definePalette (one color) on an image which is half red, half blue will return purple.
+     */
+    @Test
+    public void testCustomConstructor_NoClusteringAlgorithm(){
+        Palettester tester = new Palettester(null, null, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/redBlueHorizontal.png");
+
+        List<Tone> results = tester.definePalette(image, 1);
+
+        assertEquals(1, results.size());
+        assertEquals(new Color(127, 0, 127), results.get(0).getColor());
+    }
+
+    /**
+     * Tests that a custom clustering algorithm will be used if the custom constructor is called with it.
+     *
+     * Done by checking that definePalette (one color) on an image which is half red, half blue can be forced to
+     * return purple.
+     */
+    @Test
+    public void testCustomConstructor_CustomClusteringAlgorithm(){
+        ClusteringAlgorithm clusterer = mock(ClusteringAlgorithm.class);
+        when(clusterer.cluster(any(), eq(1))).thenReturn(Arrays.asList(Color.GREEN));
+
+        Palettester tester = new Palettester(null, null, clusterer, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/redBlueHorizontal.png");
+
+        List<Tone> results = tester.definePalette(image, 1);
+
+        assertEquals(1, results.size());
+        assertEquals(Color.GREEN, results.get(0).getColor());
+    }
+
+    /**
+     * Tests that the default color namer will be used if the custom constructor is called without a color namer.
+     *
+     * Done by checking that definePalette (one color) on an image which is red, will return a color called red.
+     */
+    @Test
+    public void testCustomConstructor_NoNamer(){
+        Palettester tester = new Palettester(null, null, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/red.png");
+
+        List<Tone> results = tester.definePalette(image, 1);
+
+        assertEquals(1, results.size());
+        assertEquals("Red", results.get(0).getName());
+    }
+
+    /**
+     * Tests that a custom color namer will be used if the custom constructor is called with it.
+     *
+     * Done by checking that definePalette (one color) on an image which is red, can be forced to call it something
+     * else.
+     */
+    @Test
+    public void testCustomConstructor_CustomNamer(){
+        ColorNamer namer = mock(ColorNamer.class);
+        when(namer.nameTones(any(), any())).thenReturn(Arrays.asList(new Tone("Octarine", Color.RED)));
+
+        Palettester tester = new Palettester(null, null, null, namer);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/red.png");
+
+        List<Tone> results = tester.definePalette(image, 1);
+
+        assertEquals(1, results.size());
+        assertEquals("Octarine", results.get(0).getName());
+    }
 
     /**
      * Tests analysePalette when the image only has a single color which is in the palette.

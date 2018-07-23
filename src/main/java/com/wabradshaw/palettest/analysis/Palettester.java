@@ -8,6 +8,7 @@ import com.wabradshaw.palettest.analysis.naming.ColorNamer;
 import com.wabradshaw.palettest.analysis.naming.SimplePaletteColorNamer;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
+import com.wabradshaw.palettest.visualisation.PaletteReplacer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -52,10 +53,44 @@ public class Palettester {
      * @see SimplePaletteColorNamer
      */
     public Palettester(){
-        this.defaultPalette = StandardPalettes.PWG_STANDARD;
-        this.distanceFunction = new EuclideanRgbaDistance();
-        this.clusteringAlgorithm = new WeightedKMeansClusterer();
-        this.namer = new SimplePaletteColorNamer();
+        this(null, null, null, null);
+    }
+
+    /**
+     * <p>
+     * Full configuration constructor. Sets up a completely custom {@link Palettester}. All arguments are optional, if
+     * null is supplied then the deefault will be used.
+     * </p>
+     * <p>The defaults are:</p>
+     * <ul>
+     * <li>defaultPalette - The PWG Standard palette from {@link StandardPalettes}.</li>
+     * <li>distanceFunction - A {@link EuclideanRgbaDistance} function to measure {@link Color} similarity.</li>
+     * <li>clusteringAlgorithm - A {@link WeightedKMeansClusterer} to define palettes from images.</li>
+     * <li>namer - A {@link SimplePaletteColorNamer} to supply names to new {@link Color}s.</li>
+     * </ul>
+     * @see StandardPalettes#PWG_STANDARD
+     * @see EuclideanRgbaDistance
+     * @see WeightedKMeansClusterer
+     * @see SimplePaletteColorNamer
+     *
+     * @param defaultPalette      A list of {@link Tone}s to serve as the default color palette for analysis and naming.
+     *                            If null, defaults to the PWG Standard palette.
+     * @param distanceFunction    A {@link ColorDistanceFunction} to use to measure the distance between different
+     *                            {@link Color}s. If null, defaults to the {@link EuclideanRgbaDistance} function.
+     * @param clusteringAlgorithm A {@link ClusteringAlgorithm} to use to define palettes from images. If null,
+     *                            defaults to a {@link WeightedKMeansClusterer}.
+     * @param namer               A {@link ColorNamer} to use to supply names for {@link Color}s when defining a new
+     *                            {@link Color} palette. If null, defaults to a {@link SimplePaletteColorNamer}.
+     */
+    public Palettester(List<Tone> defaultPalette,
+                       ColorDistanceFunction distanceFunction,
+                       ClusteringAlgorithm clusteringAlgorithm,
+                       ColorNamer namer){
+
+        this.defaultPalette = defaultPalette == null ? StandardPalettes.PWG_STANDARD : defaultPalette;
+        this.distanceFunction = distanceFunction == null ? new EuclideanRgbaDistance() : distanceFunction;
+        this.clusteringAlgorithm = clusteringAlgorithm == null ? new WeightedKMeansClusterer() : clusteringAlgorithm;
+        this.namer = namer == null ? new SimplePaletteColorNamer() : namer;
     }
 
     /**
