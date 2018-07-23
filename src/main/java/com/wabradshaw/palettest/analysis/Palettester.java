@@ -259,8 +259,8 @@ public class Palettester {
     private ClosestTone getClosestTone(List<Tone> palette, Color color, Integer count) {
         Tone targetTone = new Tone("", color);
         Tone resultTone = palette.stream()
-                .max((o1, o2) -> (int) Math.signum(distanceFunction.getDistance(o2, targetTone) -
-                                                   distanceFunction.getDistance(o1, targetTone)))
+                .max((o1, o2) -> (int) Math.signum(distanceFunction.getRankingDistance(o2, targetTone) -
+                                                   distanceFunction.getRankingDistance(o1, targetTone)))
                 .get();
         return new ClosestTone(resultTone, color, count);
     }

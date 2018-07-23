@@ -96,8 +96,8 @@ public class PalettesterTest {
     @Test
     public void testCustomConstructor_CustomDistanceFunction(){
         ColorDistanceFunction distanceFunction = mock(ColorDistanceFunction.class);
-        when(distanceFunction.getDistance(eq(new Tone(Color.RED)),any())).thenReturn(999.9);
-        when(distanceFunction.getDistance(eq(new Tone(Color.BLUE)),any())).thenReturn(1.0);
+        when(distanceFunction.getRankingDistance(eq(new Tone(Color.RED)),any())).thenReturn(999.9);
+        when(distanceFunction.getRankingDistance(eq(new Tone(Color.BLUE)),any())).thenReturn(1.0);
 
         Palettester tester = new Palettester(null, distanceFunction, null, null);
 
