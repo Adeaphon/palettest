@@ -390,7 +390,7 @@ public class PalettesterTest {
 
         PaletteDistribution result = new Palettester().analysePalette(image);
 
-        assertEquals(10, result.byCount().size());
+        assertEquals(11, result.byCount().size());
     }
 
     /**

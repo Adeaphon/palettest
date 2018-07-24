@@ -3,6 +3,7 @@ package com.wabradshaw.palettest.analysis;
 import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
 import com.wabradshaw.palettest.analysis.clustering.WeightedKMeansClusterer;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
+import com.wabradshaw.palettest.analysis.distance.CompuPhaseDistance;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.analysis.naming.ColorNamer;
 import com.wabradshaw.palettest.analysis.naming.SimplePaletteColorNamer;
@@ -43,11 +44,11 @@ public class Palettester {
 
     /**
      * Default constructor. Sets up a Palettester with the default settings. Specifically that means that it will use
-     * the PWG Standard palette, {@link EuclideanRgbaDistance} when computing similarity,
+     * the PWG Standard palette, {@link CompuPhaseDistance} when computing similarity,
      * {@link WeightedKMeansClusterer} to find new palettes, and {@link SimplePaletteColorNamer} to name new Colors.
      *
      * @see StandardPalettes#PWG_STANDARD
-     * @see EuclideanRgbaDistance
+     * @see CompuPhaseDistance
      * @see WeightedKMeansClusterer
      * @see SimplePaletteColorNamer
      */
@@ -60,11 +61,11 @@ public class Palettester {
      * Shorthand constructor for a Palettester that uses a specific default palette. This Palette is used when analysing
      * palettes or to supply base names when naming new colors.
      * </p>
-     * <p>The Palettester will be set up with the {@link EuclideanRgbaDistance} function to compare {@link Color}s, a
+     * <p>The Palettester will be set up with the {@link CompuPhaseDistance} function to compare {@link Color}s, a
      * {@link WeightedKMeansClusterer} to define palettes from images, and a {@link SimplePaletteColorNamer} to supply
      * names to new {@link Color}s. To control these, use the full configuration constructor.
      * </ul>
-     * @see EuclideanRgbaDistance
+     * @see CompuPhaseDistance
      * @see WeightedKMeansClusterer
      * @see SimplePaletteColorNamer
      *
@@ -89,7 +90,7 @@ public class Palettester {
      * @see SimplePaletteColorNamer
      *
      * @param distanceFunction    A {@link ColorDistanceFunction} to use to measure the distance between different
-     *                            {@link Color}s. If null, defaults to the {@link EuclideanRgbaDistance} function.
+     *                            {@link Color}s. If null, defaults to the {@link CompuPhaseDistance} function.
      */
     public Palettester(ColorDistanceFunction distanceFunction){
         this(null, distanceFunction, null, null);
@@ -103,7 +104,7 @@ public class Palettester {
      * <p>The defaults are:</p>
      * <ul>
      * <li>defaultPalette - The PWG Standard palette from {@link StandardPalettes}.</li>
-     * <li>distanceFunction - A {@link EuclideanRgbaDistance} function to measure {@link Color} similarity.</li>
+     * <li>distanceFunction - A {@link CompuPhaseDistance} function to measure {@link Color} similarity.</li>
      * <li>clusteringAlgorithm - A {@link WeightedKMeansClusterer} to define palettes from images.</li>
      * <li>namer - A {@link SimplePaletteColorNamer} to supply names to new {@link Color}s.</li>
      * </ul>
@@ -115,7 +116,7 @@ public class Palettester {
      * @param defaultPalette      A list of {@link Tone}s to serve as the default color palette for analysis and naming.
      *                            If null, defaults to the PWG Standard palette.
      * @param distanceFunction    A {@link ColorDistanceFunction} to use to measure the distance between different
-     *                            {@link Color}s. If null, defaults to the {@link EuclideanRgbaDistance} function.
+     *                            {@link Color}s. If null, defaults to the {@link CompuPhaseDistance} function.
      * @param clusteringAlgorithm A {@link ClusteringAlgorithm} to use to define palettes from images. If null,
      *                            defaults to a {@link WeightedKMeansClusterer}.
      * @param namer               A {@link ColorNamer} to use to supply names for {@link Color}s when defining a new
@@ -127,7 +128,7 @@ public class Palettester {
                        ColorNamer namer){
 
         this.defaultPalette = defaultPalette == null ? StandardPalettes.PWG_STANDARD : defaultPalette;
-        this.distanceFunction = distanceFunction == null ? new EuclideanRgbaDistance() : distanceFunction;
+        this.distanceFunction = distanceFunction == null ? new CompuPhaseDistance() : distanceFunction;
         this.clusteringAlgorithm = clusteringAlgorithm == null ? new WeightedKMeansClusterer(this.distanceFunction)
                                                                : clusteringAlgorithm;
         this.namer = namer == null ? new SimplePaletteColorNamer(this.distanceFunction) : namer;

@@ -2,6 +2,7 @@ package com.wabradshaw.palettest.analysis.clustering;
 
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
+import com.wabradshaw.palettest.analysis.distance.CompuPhaseDistance;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 
 import java.awt.Color;
@@ -21,11 +22,11 @@ public class WeightedKMeansClusterer implements ClusteringAlgorithm {
     private final int maxAttempts = 20;
 
     /**
-     * Default constructor. Sets up a {@link WeightedKMeansClusterer} which uses {@link EuclideanRgbaDistance} to
+     * Default constructor. Sets up a {@link WeightedKMeansClusterer} which uses {@link CompuPhaseDistance} to
      * measure the distance between {@link Color}s.
      */
     public WeightedKMeansClusterer(){
-        this(new EuclideanRgbaDistance());
+        this(new CompuPhaseDistance());
     }
 
     /**

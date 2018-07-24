@@ -2,7 +2,7 @@ package com.wabradshaw.palettest.analysis.naming;
 
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
-import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
+import com.wabradshaw.palettest.analysis.distance.CompuPhaseDistance;
 
 import java.awt.*;
 import java.util.*;
@@ -28,10 +28,10 @@ public class SimplePaletteColorNamer implements ColorNamer {
 
     /**
      * Default constructor. Creates a {@link SimplePaletteColorNamer} with the default settings. Practically this means
-     * that it uses {@link EuclideanRgbaDistance} to measure distance, and has a maximum naming distance of 50.
+     * that it uses {@link CompuPhaseDistance} to measure distance, and has a maximum naming distance of 50.
      */
     public SimplePaletteColorNamer(){
-        this(new EuclideanRgbaDistance());
+        this(new CompuPhaseDistance());
     }
 
     /**
