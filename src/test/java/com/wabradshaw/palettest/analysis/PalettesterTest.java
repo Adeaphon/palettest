@@ -1,7 +1,6 @@
 package com.wabradshaw.palettest.analysis;
 
 import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
-import com.wabradshaw.palettest.analysis.clustering.WeightedKMeansClusterer;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.analysis.naming.ColorNamer;
@@ -16,6 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -168,6 +168,28 @@ public class PalettesterTest {
 
         verify(distanceFunction, atLeastOnce()).getDistance(any(), any());
     }
+
+    /**
+     * Tests that a custom distance function will be used by the naming algorithm.
+     *
+     * Done by getting the namer to  incorrectly call a red pixel blue.
+     */
+    @Test
+    public void testCustomConstructor_CustomDistanceFunction_UsedForNameer(){
+        ColorDistanceFunction distanceFunction = mock(ColorDistanceFunction.class);
+        when(distanceFunction.getDistance(not(eq(new Tone(Color.BLUE))), any())).thenReturn(999.9);
+        when(distanceFunction.getDistance(eq(new Tone(Color.BLUE)), any())).thenReturn(1.0);
+
+        Palettester tester = new Palettester(null, distanceFunction, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/geometric/red.png");
+
+        List<Tone> results = tester.definePalette(image, 1);
+
+        assertEquals(1, results.size());
+        assertEquals("Blue", results.get(0).getName());
+    }
+
     /**
      * Tests that the default clustering algorithm will be used if the custom constructor is called without a clustering
      * algorithm.

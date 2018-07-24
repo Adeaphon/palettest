@@ -130,7 +130,7 @@ public class Palettester {
         this.distanceFunction = distanceFunction == null ? new EuclideanRgbaDistance() : distanceFunction;
         this.clusteringAlgorithm = clusteringAlgorithm == null ? new WeightedKMeansClusterer(this.distanceFunction)
                                                                : clusteringAlgorithm;
-        this.namer = namer == null ? new SimplePaletteColorNamer() : namer;
+        this.namer = namer == null ? new SimplePaletteColorNamer(this.distanceFunction) : namer;
     }
 
     /**
