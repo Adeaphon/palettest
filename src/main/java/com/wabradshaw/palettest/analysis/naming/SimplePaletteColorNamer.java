@@ -56,7 +56,7 @@ public class SimplePaletteColorNamer implements ColorNamer {
             Tone protoTone = new Tone(color);
             Tone closest = getClosestTone(basePalette, protoTone);
 
-            if(distanceFunction.getDistance(protoTone, closest) > max_name_distance){
+            if(distanceFunction.getDistance(closest, protoTone) > max_name_distance){
                 results.add(protoTone);
             } else {
                 String suggestedName = closest.getName();
