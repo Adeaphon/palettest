@@ -17,9 +17,26 @@ import static java.util.stream.Collectors.toMap;
  */
 public class WeightedKMeansClusterer implements ClusteringAlgorithm {
 
-
-    private final ColorDistanceFunction distanceFunction = new EuclideanRgbaDistance();
+    private final ColorDistanceFunction distanceFunction;
     private final int maxAttempts = 20;
+
+    /**
+     * Default constructor. Sets up a {@link WeightedKMeansClusterer} which uses {@link EuclideanRgbaDistance} to
+     * measure the distance between {@link Color}s.
+     */
+    public WeightedKMeansClusterer(){
+        this(new EuclideanRgbaDistance());
+    }
+
+    /**
+     * Distance function constructor. Sets up a {@link WeightedKMeansClusterer} which uses the supplied
+     * {@link ColorDistanceFunction} to measure the difference between {@link Color}s.
+     *
+     * @param distanceFunction The function to use when measuring the distance between {@link Color}s.
+     */
+    public WeightedKMeansClusterer(ColorDistanceFunction distanceFunction){
+        this.distanceFunction = distanceFunction;
+    }
 
     @Override
     public Collection<Color> cluster(Map<Color, Integer> colorCounts, int targetClusters) {

@@ -1,5 +1,7 @@
 package com.wabradshaw.palettest.analysis.clustering;
 
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
+import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -9,6 +11,10 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 /**
  * A set of tests for the {@link WeightedKMeansClusterer}.
@@ -148,5 +154,26 @@ public class WeightedKMeansClustererTest {
         Collection<Color> result = clusterer.cluster(counts, 3);
 
         assertEquals(3, result.size());
+    }
+
+    /**
+     * Tests that the distance function constructor will use the supplied distance function.
+     *
+     * Because this is a heuristic based algorithm, it's difficult to predict exact behaviour with the distance
+     * function, so a mockito spy is used to validate it's being called.
+     */
+    @Test
+    public void testSuppliedDistanceFunction(){
+        ColorDistanceFunction distanceFunction = spy(new EuclideanRgbaDistance());
+
+        WeightedKMeansClusterer clusterer = new WeightedKMeansClusterer(distanceFunction);
+
+        Map<Color, Integer> counts = new HashMap<>();
+        counts.put(Color.RED, 10);
+        counts.put(Color.BLUE, 10);
+
+        Collection<Color> result = clusterer.cluster(counts, 2);
+
+        verify(distanceFunction, atLeastOnce()).getDistance(any(), any());
     }
 }
