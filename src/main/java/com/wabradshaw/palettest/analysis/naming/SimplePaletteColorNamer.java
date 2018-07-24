@@ -31,7 +31,18 @@ public class SimplePaletteColorNamer implements ColorNamer {
      * that it uses {@link EuclideanRgbaDistance} to measure distance, and has a maximum naming distance of 50.
      */
     public SimplePaletteColorNamer(){
-        this.distanceFunction = new EuclideanRgbaDistance();
+        this(new EuclideanRgbaDistance());
+    }
+
+    /**
+     * Distance function constructor. Creates a {@link SimplePaletteColorNamer} which uses the supplied distance
+     * function to compare {@link Color}s. This has a maximum naming distance of 50.
+     *
+     * @param distanceFunction The {@link ColorDistanceFunction} to use when comparing a {@link Color} to name and
+     *                         a {@link Tone} in the palette.
+     */
+    public SimplePaletteColorNamer(ColorDistanceFunction distanceFunction){
+        this.distanceFunction = distanceFunction;
         this.max_name_distance = 50;
     }
 

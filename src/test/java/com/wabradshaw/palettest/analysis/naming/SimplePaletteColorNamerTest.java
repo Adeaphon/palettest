@@ -1,15 +1,19 @@
 package com.wabradshaw.palettest.analysis.naming;
 
 import com.wabradshaw.palettest.analysis.Tone;
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * A set of tests for the {@link SimplePaletteColorNamer}.
@@ -126,5 +130,28 @@ public class SimplePaletteColorNamerTest {
         assertEquals("Red2", result.get(3).getName());
         assertEquals("Green2", result.get(4).getName());
         assertEquals("Green3", result.get(5).getName());
+    }
+
+    /**
+     * Tests that the distance function constructor will actually use the supplied distance function.
+     *
+     * Done by forcing the distance function to think that blue is closer to red than red is.
+     */
+    @Test
+    public void testDistanceFunctionConstructor(){
+        ColorDistanceFunction distanceFunction = mock(ColorDistanceFunction.class);
+
+        ColorNamer namer = new SimplePaletteColorNamer(distanceFunction);
+
+        Collection<Color> colors = Arrays.asList(Color.RED);
+        List<Tone> basePalette = Arrays.asList(new Tone("Red", Color.RED), new Tone("Blue", Color.BLUE));
+
+        when(distanceFunction.getDistance(eq(new Tone(Color.RED)), eq(new Tone(Color.RED)))).thenReturn(99.9);
+        when(distanceFunction.getDistance(eq(new Tone(Color.RED)), eq(new Tone(Color.BLUE)))).thenReturn(0.0);
+
+        List<Tone> result = namer.nameTones(colors, basePalette);
+
+        assertEquals(1, result.size());
+        assertEquals("Blue", result.get(0).getName());
     }
 }
