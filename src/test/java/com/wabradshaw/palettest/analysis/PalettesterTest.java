@@ -1,6 +1,7 @@
 package com.wabradshaw.palettest.analysis;
 
 import com.wabradshaw.palettest.analysis.clustering.ClusteringAlgorithm;
+import com.wabradshaw.palettest.analysis.clustering.WeightedKMeansClusterer;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.analysis.naming.ColorNamer;
@@ -9,8 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeastOnce;
 
 /**
  * A set of tests for the {@link Palettester} class.
@@ -150,6 +150,24 @@ public class PalettesterTest {
         assertEquals(1, result.get("Blue").getCount());
     }
 
+    /**
+     * Tests that a custom distance function will be used by the clustering algorithm.
+     *
+     * Because this is a heuristic based algorithm, it's difficult to predict exact behaviour with the distance
+     * function, so a mockito spy is used to validate it's being called.
+     */
+    @Test
+    public void testCustomConstructor_CustomDistanceFunction_UsedForClusterer(){
+        ColorDistanceFunction distanceFunction = spy(new EuclideanRgbaDistance());
+
+        Palettester tester = new Palettester(null, distanceFunction, null, null);
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/maps/Barcelona.png");
+
+        tester.definePalette(image, 4);
+
+        verify(distanceFunction, atLeastOnce()).getDistance(any(), any());
+    }
     /**
      * Tests that the default clustering algorithm will be used if the custom constructor is called without a clustering
      * algorithm.

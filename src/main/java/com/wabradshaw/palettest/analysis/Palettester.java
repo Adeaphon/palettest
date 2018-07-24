@@ -128,7 +128,8 @@ public class Palettester {
 
         this.defaultPalette = defaultPalette == null ? StandardPalettes.PWG_STANDARD : defaultPalette;
         this.distanceFunction = distanceFunction == null ? new EuclideanRgbaDistance() : distanceFunction;
-        this.clusteringAlgorithm = clusteringAlgorithm == null ? new WeightedKMeansClusterer() : clusteringAlgorithm;
+        this.clusteringAlgorithm = clusteringAlgorithm == null ? new WeightedKMeansClusterer(this.distanceFunction)
+                                                               : clusteringAlgorithm;
         this.namer = namer == null ? new SimplePaletteColorNamer() : namer;
     }
 
