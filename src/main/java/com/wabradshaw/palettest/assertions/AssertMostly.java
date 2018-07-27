@@ -1,8 +1,10 @@
 package com.wabradshaw.palettest.assertions;
 
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
+import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.ToneCount;
 
+import java.awt.*;
 import java.util.stream.Collectors;
 
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.fail;
@@ -25,26 +27,65 @@ public class AssertMostly {
      * @param distribution The {@link PaletteDistribution} describing an image.
      */
     public static void assertMostly(String target, PaletteDistribution distribution){
+        checkDistribution(distribution);
+
+        ToneCount count = distribution.get(target);
+
+        checkMostly(target, distribution, count);
+    }
+
+    /**
+     * <p>
+     * Asserts that the more than 50% of the {@link PaletteDistribution} is the desired color. This finds the color
+     * using its name. Please note that this is strictly more than 50%, so an image which is half one color will fail.
+     * </p>
+     * <p>
+     * This assertion will fail if the distribution is null, or if there are no {@link ToneCount}s in the distribution.
+     * </p>
+     * @param target       The {@link java.awt.Color} which should be the majority of the image.
+     * @param distribution The {@link PaletteDistribution} describing an image.
+     */
+    public static void assertMostly(Color target, PaletteDistribution distribution){
+        checkDistribution(distribution);
+
+        ToneCount count = distribution.get(target);
+        String name = new Tone(target).getName();
+
+        checkMostly(name, distribution, count);
+    }
+
+    /**
+     * Checks that the {@link PaletteDistribution} has colors in it, and fails if it doesn't.
+     *
+     * @param distribution The {@link PaletteDistribution} under test.
+     */
+    private static void checkDistribution(PaletteDistribution distribution) {
         if(distribution == null){
             fail("Could not assess color as the supplied distribution was null.");
         } else if(distribution.byCount().isEmpty()){
             fail("Could not assess color as the supplied distribution didn't contain any colors.");
         }
+    }
 
-        ToneCount count = distribution.get(target);
-
+    /**
+     * Checks that the supplied count makes up the strict majority of the distribution.
+     *
+     * @param targetName   The name describing the color that should be the majority.
+     * @param distribution The {@link PaletteDistribution} under test.
+     * @param actualCount  The {@link ToneCount} representing the actual number of times the desired color was used.
+     */
+    private static void checkMostly(String targetName, PaletteDistribution distribution, ToneCount actualCount) {
         int totalPixels = distribution.getDistribution().stream().collect(Collectors.summingInt(ToneCount::getCount));
         int targetPixels = totalPixels > 1 ? totalPixels / 2 + 1 : 1;
 
-
-        if(count == null){
+        if(actualCount == null){
             fail("The image didn't contain the desired color.",
-                 pixels(target, targetPixels),
-                 distribution.byCount().toString());
-        } else if (count.getCount() < targetPixels){
+                    pixels(targetName, targetPixels),
+                    distribution.byCount().toString());
+        } else if (actualCount.getCount() < targetPixels){
             fail("Not enough of the image was the desired color.",
-                 pixels(target, targetPixels),
-                 distribution.byCount().toString());
+                    pixels(targetName, targetPixels),
+                    distribution.byCount().toString());
         }
     }
 
