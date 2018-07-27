@@ -1,5 +1,6 @@
 package com.wabradshaw.palettest.assertions;
 
+import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import org.opentest4j.AssertionFailedError;
 
 import static com.wabradshaw.palettest.utils.ImageFileUtils.asImage;
@@ -44,6 +45,20 @@ class AssertionHelpers {
             asImage(image);
         } catch (Exception e){
             throw new AssertionFailedError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * Checks that the {@link PaletteDistribution} has colors in it, and fails if it doesn't.
+     *
+     * @param distribution The {@link PaletteDistribution} under test.
+     */
+     static void checkDistribution(PaletteDistribution distribution) {
+        if(distribution == null){
+            fail("Could not assess color as the supplied distribution was null.");
+        } else if(distribution.byCount().isEmpty()){
+            fail("Could not assess color as the supplied distribution didn't contain any colors.");
         }
     }
 }

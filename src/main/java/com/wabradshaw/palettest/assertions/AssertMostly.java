@@ -7,6 +7,7 @@ import com.wabradshaw.palettest.analysis.ToneCount;
 import java.awt.*;
 import java.util.stream.Collectors;
 
+import static com.wabradshaw.palettest.assertions.AssertionHelpers.checkDistribution;
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.fail;
 
 /**
@@ -52,19 +53,6 @@ public class AssertMostly {
         String name = new Tone(target).getName();
 
         checkMostly(name, distribution, count);
-    }
-
-    /**
-     * Checks that the {@link PaletteDistribution} has colors in it, and fails if it doesn't.
-     *
-     * @param distribution The {@link PaletteDistribution} under test.
-     */
-    private static void checkDistribution(PaletteDistribution distribution) {
-        if(distribution == null){
-            fail("Could not assess color as the supplied distribution was null.");
-        } else if(distribution.byCount().isEmpty()){
-            fail("Could not assess color as the supplied distribution didn't contain any colors.");
-        }
     }
 
     /**
