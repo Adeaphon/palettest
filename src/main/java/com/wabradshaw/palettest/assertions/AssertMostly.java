@@ -38,7 +38,8 @@ public class AssertMostly {
     /**
      * <p>
      * Asserts that the more than 50% of the {@link PaletteDistribution} is the desired color. This finds the color
-     * using its name. Please note that this is strictly more than 50%, so an image which is half one color will fail.
+     * using its {@link Color} object. Please note that this is strictly more than 50%, so an image which is half one
+     * color will fail.
      * </p>
      * <p>
      * This assertion will fail if the distribution is null, or if there are no {@link ToneCount}s in the distribution.
