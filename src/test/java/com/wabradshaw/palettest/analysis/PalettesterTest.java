@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
+import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,8 +25,7 @@ import static org.mockito.Mockito.atLeastOnce;
  * A set of tests for the {@link Palettester} class.
  */
 public class PalettesterTest {
-
-
+    
     /**
      * Tests that the default palette constructor will use that palette as the default.
      *
@@ -43,7 +42,7 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals(100, result.get("Rouge").getCount());
+        assertContainsColor("Rouge", result);
     }
 
     /**
@@ -65,7 +64,7 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(palette, image);
 
         assertEquals(1, result.byName().size());
-        assertEquals(1, result.get(Color.BLUE).getCount());
+        assertContainsColor(Color.BLUE, result);
     }
 
     /**
@@ -84,10 +83,10 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(image);
 
         assertEquals(4, result.byCount().size());
-        assertNotNull(result.get("Black"));
-        assertNotNull(result.get("Light Black"));
-        assertNotNull(result.get("Silver"));
-        assertNotNull(result.get("White"));
+        assertContainsColor("Black", result);
+        assertContainsColor("Light Black", result);
+        assertContainsColor("Silver", result);
+        assertContainsColor("White", result);
     }
 
     /**
@@ -106,7 +105,7 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals(100, result.get(Color.RED).getCount());
+        assertContainsColor("Rouge", result);
     }
 
     /**
@@ -125,7 +124,7 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(palette, image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals(1, result.get("Red").getCount());
+        assertContainsColor("Red", result);
     }
 
     /**
@@ -147,7 +146,7 @@ public class PalettesterTest {
         PaletteDistribution result = tester.analysePalette(palette, image);
 
         assertEquals(1, result.byCount().size());
-        assertEquals(1, result.get("Blue").getCount());
+        assertContainsColor("Blue", result);
     }
 
     /**
@@ -172,7 +171,7 @@ public class PalettesterTest {
     /**
      * Tests that a custom distance function will be used by the naming algorithm.
      *
-     * Done by getting the namer to  incorrectly call a red pixel blue.
+     * Done by getting the namer to incorrectly call a red pixel blue.
      */
     @Test
     public void testCustomConstructor_CustomDistanceFunction_UsedForNameer(){
@@ -372,10 +371,10 @@ public class PalettesterTest {
 
         List<ToneCount> results = result.byName();
         assertEquals(4, results.size());
-        assertEquals("Black", results.get(0).getTone().getName());
-        assertEquals("Light Black", results.get(1).getTone().getName());
-        assertEquals("Silver", results.get(2).getTone().getName());
-        assertEquals("White", results.get(3).getTone().getName());
+        assertContainsColor("Black", result);
+        assertContainsColor("Light Black", result);
+        assertContainsColor("Silver", result);
+        assertContainsColor("White", result);
     }
 
     /**
