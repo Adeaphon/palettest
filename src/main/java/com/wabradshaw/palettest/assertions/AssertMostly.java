@@ -11,7 +11,7 @@ import static com.wabradshaw.palettest.assertions.AssertionHelpers.checkDistribu
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.fail;
 
 /**
- * Assertion methods that check that the majority (above 50% of pixels) are part of a certain
+ * Assertion methods that check that the majority (above 50%) of pixels are part of a certain
  * {@link com.wabradshaw.palettest.analysis.Tone}.
  */
 public class AssertMostly {
