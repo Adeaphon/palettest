@@ -39,9 +39,6 @@ public class PaletteReplacer {
 
         Graphics2D g = result.createGraphics();
 
-        int currentX = 0;
-        int currentY = 0;
-
         for(int x = 0; x < image.getWidth(); x++){
             for(int y = 0; y < image.getHeight(); y++){
                 Color original = new Color(image.getRGB(x, y));
