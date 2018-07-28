@@ -25,7 +25,7 @@ import static org.mockito.Mockito.atLeastOnce;
  * A set of tests for the {@link Palettester} class.
  */
 public class PalettesterTest {
-    
+
     /**
      * Tests that the default palette constructor will use that palette as the default.
      *
