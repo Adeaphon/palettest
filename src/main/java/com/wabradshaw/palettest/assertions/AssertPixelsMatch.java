@@ -23,7 +23,7 @@ public class AssertPixelsMatch {
      * If both images are null, then this counts as a match. If one is null, then the assertion will fail.
      * </p>
      * @param expected The {@link BufferedImage} that the user wants to be produced.
-     * @param actual   The {@Link BufferedImage} that was produced.
+     * @param actual   The {@link BufferedImage} that was produced.
      */
     public static void assertPixelsMatch(BufferedImage expected, BufferedImage actual){
         if(expected != actual) {
