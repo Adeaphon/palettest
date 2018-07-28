@@ -112,7 +112,7 @@ public class WeightedKMeansClusterer implements ClusteringAlgorithm {
      * @return            The mean color out of all of the colors assigned to the cluster.
      */
     private Tone getAverageColor(Map<Tone, Integer> colorCounts) {
-        int pixels = colorCounts.values().stream().collect(Collectors.summingInt(Integer::intValue));
+        int pixels = colorCounts.values().stream().mapToInt(Integer::intValue).sum();
 
         double averageRed = averageColorChannel(colorCounts, pixels, c -> c.getRed());
         double averageGreen = averageColorChannel(colorCounts, pixels, c -> c.getGreen());
@@ -133,8 +133,8 @@ public class WeightedKMeansClusterer implements ClusteringAlgorithm {
     private double averageColorChannel(Map<Tone, Integer> colorCounts, int pixels, Function<Color, Integer> channelAccessor){
         return colorCounts.entrySet()
                           .stream()
-                          .map(e -> channelAccessor.apply(e.getKey().getColor()) * e.getValue())
-                          .collect(Collectors.summingInt(Integer::intValue)) * 1.0 / pixels;
+                          .mapToInt(e -> channelAccessor.apply(e.getKey().getColor()) * e.getValue())
+                          .sum() * 1.0 / pixels;
     }
 
     /**

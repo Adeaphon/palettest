@@ -64,7 +64,7 @@ public class AssertMostly {
      * @param actualCount  The {@link ToneCount} representing the actual number of times the desired color was used.
      */
     private static void checkMostly(String targetName, PaletteDistribution distribution, ToneCount actualCount) {
-        int totalPixels = distribution.getDistribution().stream().collect(Collectors.summingInt(ToneCount::getCount));
+        int totalPixels = distribution.getDistribution().stream().mapToInt(ToneCount::getCount).sum();
         int targetPixels = totalPixels > 1 ? totalPixels / 2 + 1 : 1;
 
         if(actualCount == null){
