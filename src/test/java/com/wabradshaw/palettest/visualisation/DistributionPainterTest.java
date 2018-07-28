@@ -69,6 +69,8 @@ public class DistributionPainterTest {
         DistributionPainter visualiser = new DistributionPainter();
         BufferedImage result = visualiser.paintTones(originalDistribution.byCount(), 1200, 1280);
         PaletteDistribution newDistribution = tester.analysePalette(palette, result);
+
+        assertEquals(originalDistribution, newDistribution);
     }
 
 }
