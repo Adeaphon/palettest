@@ -521,7 +521,7 @@ public class PalettesterTest {
         List<Tone> palette = tester.definePalette(image, 4);
         PaletteDistribution result = tester.analysePalette(palette, image);
 
-        result.byCount().stream().forEach(
+        result.byCount().forEach(
                 x -> assertTrue(x.getAverageDistance(new EuclideanRgbaDistance()) < 50)
         );
     }
