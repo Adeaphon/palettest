@@ -1,20 +1,20 @@
-# Palettester
+# Palettest
 
-## What is Palettester
+## What is Palettest
 
 A while ago I was working on a project that generated images, but when it came to writing the unit tests, I was stumped.
 It seemed like I was going to have to write more code to write a single test, than I would need to write to generate
-the images in the first place. That's where Palettester comes in.
+the images in the first place. That's where Palettest comes in.
 
-Palettester is a Java library designed to help people test images. It contains a whole suite of functions designed to
+Palettest is a Java library designed to help people test images. It contains a whole suite of functions designed to
 make every part of testing images easier. However, it's main purpose is to let you test the color palette being used in
 the image.
 
 ## Contents
 
-- [What is Palettester](#what-is-palettester)
+- [What is Palettest](#what-is-palettest)
 - [Contents](#contents)
-- [Installing Palettester](#installing-palettester)
+- [Installing Palettest](#installing-palettest)
 - [Terminology](#terminology)
 - [Quick Start Guide](#quick-start-guide)
   * [ImageFileUtils: Save an image to a file](#imagefileutils--save-an-image-to-a-file)
@@ -32,7 +32,7 @@ the image.
   * [PaletteReplacer: Visualising how an image maps to different Tones](#palettereplacer--visualising-how-an-image-maps-to-different-tones)
   * [DistributionPainter: Visualising a distribution](#distributionpainter--visualising-a-distribution)
 
-## Installing Palettester
+## Installing Palettest
 
 ## Terminology
 
