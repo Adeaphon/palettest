@@ -5,7 +5,8 @@ import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 

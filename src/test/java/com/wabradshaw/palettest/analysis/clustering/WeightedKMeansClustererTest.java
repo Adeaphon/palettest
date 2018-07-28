@@ -5,7 +5,7 @@ import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +13,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * A set of tests for the {@link WeightedKMeansClusterer}.

@@ -3,7 +3,7 @@ package com.wabradshaw.palettest.analysis.distance;
 import com.wabradshaw.palettest.analysis.Tone;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

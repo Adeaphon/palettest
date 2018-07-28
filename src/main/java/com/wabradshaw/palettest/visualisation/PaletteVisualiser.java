@@ -1,20 +1,17 @@
 package com.wabradshaw.palettest.visualisation;
 
-import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
 /**
  * A PaletteVisualiser is used to visualise what an input palette looks like. In principal this means it shows your

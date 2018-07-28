@@ -1,8 +1,6 @@
 package com.wabradshaw.palettest.analysis.clustering;
 
-import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.Map;
 

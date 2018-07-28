@@ -2,7 +2,7 @@ package com.wabradshaw.palettest.palettes;
 
 import com.wabradshaw.palettest.analysis.Tone;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 

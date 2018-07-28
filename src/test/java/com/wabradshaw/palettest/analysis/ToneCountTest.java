@@ -4,7 +4,7 @@ import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 

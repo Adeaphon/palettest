@@ -2,11 +2,9 @@ package com.wabradshaw.palettest.analysis;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A set of tests for the {@link Tone} class.

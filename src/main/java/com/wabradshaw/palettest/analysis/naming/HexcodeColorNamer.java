@@ -1,11 +1,9 @@
 package com.wabradshaw.palettest.analysis.naming;
 
 import com.wabradshaw.palettest.analysis.Tone;
-import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
-import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

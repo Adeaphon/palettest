@@ -4,7 +4,7 @@ import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.ToneCount;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 

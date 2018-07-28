@@ -2,12 +2,11 @@ package com.wabradshaw.palettest.utils;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A set of tests for the {@link GraphicsUtils} class

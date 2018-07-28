@@ -7,7 +7,7 @@ import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;

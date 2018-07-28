@@ -4,8 +4,7 @@ import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.ToneCount;
 
-import java.awt.*;
-import java.util.List;
+import java.awt.Color;
 
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.checkDistribution;
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.fail;

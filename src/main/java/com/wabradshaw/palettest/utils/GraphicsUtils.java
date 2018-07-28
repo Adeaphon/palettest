@@ -1,6 +1,7 @@
 package com.wabradshaw.palettest.utils;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**

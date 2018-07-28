@@ -10,10 +10,9 @@ import com.wabradshaw.palettest.analysis.naming.SimplePaletteColorNamer;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.*;
-import java.util.List;
 
 import static java.util.stream.Collectors.*;
 

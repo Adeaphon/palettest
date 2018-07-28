@@ -2,7 +2,7 @@ package com.wabradshaw.palettest.assertions;
 
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;

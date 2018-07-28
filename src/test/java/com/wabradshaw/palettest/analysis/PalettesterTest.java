@@ -7,19 +7,17 @@ import com.wabradshaw.palettest.analysis.naming.ColorNamer;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.AdditionalMatchers.not;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.atLeastOnce;
 
 /**
  * A set of tests for the {@link Palettester} class.

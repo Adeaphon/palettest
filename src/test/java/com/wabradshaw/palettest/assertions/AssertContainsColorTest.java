@@ -6,12 +6,10 @@ import com.wabradshaw.palettest.analysis.ToneCount;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.*;
-import java.util.List;
 
 import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
-import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 

@@ -1,8 +1,7 @@
 package com.wabradshaw.palettest.analysis;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**

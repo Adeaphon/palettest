@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
 import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
 import static com.wabradshaw.palettest.utils.ImageFileUtils.loadImageResource;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * A set of tests for {@link AssertDimensions}

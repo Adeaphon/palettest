@@ -1,16 +1,14 @@
 package com.wabradshaw.palettest.utils;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.migrationsupport.rules.EnableRuleMigrationSupport;
+import org.junit.rules.TemporaryFolder;
 
 import javax.imageio.ImageIO;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import org.junit.jupiter.migrationsupport.rules.EnableRuleMigrationSupport;
-import org.junit.rules.TemporaryFolder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

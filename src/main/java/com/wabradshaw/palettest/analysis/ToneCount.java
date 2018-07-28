@@ -2,12 +2,11 @@ package com.wabradshaw.palettest.analysis;
 
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>

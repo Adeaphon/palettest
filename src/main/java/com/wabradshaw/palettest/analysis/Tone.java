@@ -1,6 +1,6 @@
 package com.wabradshaw.palettest.analysis;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Objects;
 
 /**

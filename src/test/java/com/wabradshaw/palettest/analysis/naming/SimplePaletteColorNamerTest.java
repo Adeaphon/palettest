@@ -3,9 +3,8 @@ package com.wabradshaw.palettest.analysis.naming;
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

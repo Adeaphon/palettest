@@ -4,9 +4,8 @@ import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.CompuPhaseDistance;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.*;
-import java.util.List;
 
 /**
  * <p>

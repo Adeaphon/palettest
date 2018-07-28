@@ -1,6 +1,5 @@
 package com.wabradshaw.palettest.visualisation;
 
-import com.sun.xml.internal.bind.api.impl.NameConverter;
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Palettester;
 import com.wabradshaw.palettest.analysis.Tone;
@@ -8,10 +7,9 @@ import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;

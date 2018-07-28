@@ -2,7 +2,7 @@ package com.wabradshaw.palettest.analysis;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

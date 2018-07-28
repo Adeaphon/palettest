@@ -3,7 +3,7 @@ package com.wabradshaw.palettest.analysis.naming;
 import com.wabradshaw.palettest.analysis.Tone;
 import org.junit.Test;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
