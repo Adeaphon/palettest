@@ -5,7 +5,6 @@ import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.ToneCount;
 
 import java.awt.Color;
-import java.util.stream.Collectors;
 
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.checkDistribution;
 import static com.wabradshaw.palettest.assertions.AssertionHelpers.fail;
