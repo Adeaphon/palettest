@@ -28,12 +28,28 @@ public class ExamplesTest {
         graphics.setColor(Color.RED);
         graphics.drawString("Hello, World!", 15, 28);
 
-        ImageFileUtils.save(myImage, "src/test/resources/resultImages/examples/SaveExample.png", "png");
+        ImageFileUtils.save(myImage, "src/test/resources/resultImages/examples/saveExample.png", "png");
 
         // Validation
 
-        BufferedImage result = ImageFileUtils.loadImageResource("/resultImages/examples/SaveExample.png");
+        BufferedImage result = ImageFileUtils.loadImageResource("/resultImages/examples/saveExample.png");
         AssertDimensions.assertDimensions(result, 100, 50);
 
     }
+
+    /**
+     * A test for the example showing people how {@link ImageFileUtils#loadImageResource(String)} works.
+     */
+    @Test
+    public void loadExampleTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/helloWorld.png");
+
+        // Validation
+
+        AssertDimensions.assertDimensions(exampleImage, 100, 50);
+    }
+
 }

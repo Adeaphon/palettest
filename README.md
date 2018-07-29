@@ -54,6 +54,12 @@ but the bit that is unique is the ability to easily test the color palette being
 
 ### ImageFileUtils: Load an image from a file
 
+`import com.wabradshaw.palettest.utils.ImageFileUtils`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/helloWorld.png");
+```
+
 ### AssertDimensions: Asserting the image is the right size
 
 ### AssertPixelsMatch: Asserting an image matches exactly
