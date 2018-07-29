@@ -116,7 +116,37 @@ public class ExamplesTest {
 
         assertEquals(4829, distribution.get(Color.WHITE).getCount());
         assertEquals(171, distribution.get(Color.RED).getCount());
+    }
 
+    /**
+     * A test for the example showing people how details of a {@link PaletteDistribution} can be accessed.
+     */
+    @Test
+    public void paletteDistributionByCount(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+        System.out.println("Original Distribution: " + distribution.getDistribution());
+        System.out.println("By Count: " + distribution.byCount());
+        System.out.println("By Name: " + distribution.byName());
+
+        System.out.println("Red by name: " + distribution.get("#ff0000"));
+        System.out.println("White by color: " + distribution.get(Color.WHITE));
+        System.out.println("Blue by color: " + distribution.get(Color.BLUE));
+
+        // Validation
+
+        assertEquals("[#ffffff: 4829, #ff0000: 171]", distribution.getDistribution().toString());
+        assertEquals("[#ffffff: 4829, #ff0000: 171]", distribution.byCount().toString());
+        assertEquals("[#ff0000: 171, #ffffff: 4829]", distribution.byName().toString());
+
+        assertEquals("#ff0000: 171", distribution.get("#ff0000").toString());
+        assertEquals("#ffffff: 4829", distribution.get(Color.WHITE).toString());
+        assertEquals(null, distribution.get(Color.BLUE));
     }
 
 }

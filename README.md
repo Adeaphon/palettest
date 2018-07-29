@@ -90,6 +90,7 @@ but the bit that is unique is the ability to easily test the color palette being
 ### Palettester: Getting the exact colors in an image
 
 `import com.wabradshaw.palettest.analysis.Palettester;`
+`import com.wabradshaw.palettest.analysis.PaletteDistribution;`
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
@@ -103,6 +104,33 @@ but the bit that is unique is the ability to easily test the color palette being
 `[#ffffff: 4829, #ff0000: 171]`
 
 ### PaletteDistribution: Checking what's in the image
+
+`import com.wabradshaw.palettest.analysis.Palettester;`
+`import com.wabradshaw.palettest.analysis.PaletteDistribution;`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+        System.out.println("Original Distribution: " + distribution.getDistribution());
+        System.out.println("By Count: " + distribution.byCount());
+        System.out.println("By Name: " + distribution.byName());
+
+        System.out.println("Red by name: " + distribution.get("#ff0000"));
+        System.out.println("White by color: " + distribution.get(Color.WHITE));
+        System.out.println("Blue by color: " + distribution.get(Color.BLUE));
+```
+
+```
+Original Distribution: [#ffffff: 4829, #ff0000: 171]
+By Count: [#ffffff: 4829, #ff0000: 171]
+By Name: [#ff0000: 171, #ffffff: 4829]
+Red by name: #ff0000: 171
+White by color: #ffffff: 4829
+Blue by color: null
+```
 
 ### Assertions: Asserting what's in the image
 
