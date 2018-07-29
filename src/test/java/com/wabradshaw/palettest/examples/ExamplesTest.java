@@ -317,4 +317,23 @@ public class ExamplesTest {
         assertEquals(2, distribution.getDistribution().size());
     }
 
+    /**
+     * A test showing how to use analysePalette with a custom palette.
+     */
+    @Test
+    public void definePaletteTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        List<Tone> palette = tester.definePalette(exampleImage, 2);
+        System.out.println(palette);
+
+        // Validation
+
+        assertEquals(2, palette.size());
+    }
+
 }

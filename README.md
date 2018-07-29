@@ -281,6 +281,16 @@ Tomato 1: 15, Misty Rose 2: 10, Linen: 6, Light Pink: 6, Rosy Brown 1: 21, Misty
 
 ### Palettester: Defining a palette from an image
 
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        List<Tone> palette = tester.definePalette(exampleImage, 2);
+        System.out.println(palette);
+```
+
+`[Light Red (#ff3c3c), White (#fffcfc)]`
+
 ### PaletteVisualiser: Visualising a palette
 
 ### PaletteReplacer: Visualising how an image maps to different Tones
