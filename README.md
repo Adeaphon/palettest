@@ -40,7 +40,7 @@ but the bit that is unique is the ability to easily test the color palette being
 
 ### ImageFileUtils: Save an image to a file
 
-`import com.wabradshaw.palettest.utils.ImageFileUtils`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
         BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
@@ -54,13 +54,22 @@ but the bit that is unique is the ability to easily test the color palette being
 
 ### ImageFileUtils: Load an image from a file
 
-`import com.wabradshaw.palettest.utils.ImageFileUtils`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/helloWorld.png");
 ```
 
 ### AssertDimensions: Asserting the image is the right size
+
+
+`import com.wabradshaw.palettest.assertions.AssertDimensions;`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+        AssertDimensions.assertDimensions(exampleImage, 100, 50);
+```
 
 ### AssertPixelsMatch: Asserting an image matches exactly
 

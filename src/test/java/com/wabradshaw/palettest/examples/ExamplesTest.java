@@ -45,11 +45,28 @@ public class ExamplesTest {
 
         // Example
 
-        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/helloWorld.png");
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
 
         // Validation
 
         AssertDimensions.assertDimensions(exampleImage, 100, 50);
+    }
+
+    /**
+     * A test for the example showing people how {@link AssertDimensions#assertDimensions(BufferedImage, int, int)}
+     * works.
+     */
+    @Test
+    public void assertDimensionsTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+        AssertDimensions.assertDimensions(exampleImage, 100, 50);
+
+        // Validation
+
+        // None needed, already doing the assert.
     }
 
 }
