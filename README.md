@@ -63,18 +63,18 @@ but the bit that is unique is the ability to easily test the color palette being
 ### AssertDimensions: Asserting the image is the right size
 
 
-`import com.wabradshaw.palettest.assertions.AssertDimensions;`
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
+`import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;`
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
-        AssertDimensions.assertDimensions(exampleImage, 100, 50);
+        assertDimensions(exampleImage, 100, 50);
 ```
 
 ### AssertPixelsMatch: Asserting an image matches exactly
 
-`import com.wabradshaw.palettest.assertions.AssertPixelsMatch;`
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
+`import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;`
 
 ```java
         BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
@@ -84,7 +84,7 @@ but the bit that is unique is the ability to easily test the color palette being
         graphics.drawString("Hello, World!", 15, 28);
 
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
-        AssertPixelsMatch.assertPixelsMatch(exampleImage, myImage);
+        assertPixelsMatch(exampleImage, myImage);
 ```
 
 ### Palettester: Getting the exact colors in an image
@@ -149,9 +149,9 @@ Blue by color: null
 `import com.wabradshaw.palettest.analysis.Palettester;`
 `import com.wabradshaw.palettest.analysis.PaletteDistribution;`
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
-`import com.wabradshaw.palettest.assertions.AssertMostly;`
-`import com.wabradshaw.palettest.assertions.AssertMainColor;`
-`import com.wabradshaw.palettest.assertions.AssertContainsColor;`
+`import static com.wabradshaw.palettest.assertions.AssertMostly.assertMostly;`
+`import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;`
+`import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;`
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -159,11 +159,10 @@ Blue by color: null
         Palettester tester = new Palettester();
         PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
 
-        AssertMainColor.assertMainColor(Color.WHITE, distribution);
-        AssertMostly.assertMostly(Color.WHITE, distribution);
-        AssertContainsColor.assertContainsColor(Color.RED, distribution);
+        assertMainColor(Color.WHITE, distribution);
+        assertMostly(Color.WHITE, distribution);
+        assertContainsColor(Color.RED, distribution);
 ```
-
 
 ### Palettester: Getting similar colors to an image
 

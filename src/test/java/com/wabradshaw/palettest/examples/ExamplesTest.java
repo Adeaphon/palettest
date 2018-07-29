@@ -11,6 +11,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
+import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
+import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;
+import static com.wabradshaw.palettest.assertions.AssertMostly.assertMostly;
+import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +43,7 @@ public class ExamplesTest {
         // Validation
 
         BufferedImage result = ImageFileUtils.loadImageResource("/resultImages/examples/saveExample.png");
-        AssertDimensions.assertDimensions(result, 100, 50);
+        assertDimensions(result, 100, 50);
 
     }
 
@@ -54,7 +59,7 @@ public class ExamplesTest {
 
         // Validation
 
-        AssertDimensions.assertDimensions(exampleImage, 100, 50);
+        assertDimensions(exampleImage, 100, 50);
     }
 
     /**
@@ -67,7 +72,7 @@ public class ExamplesTest {
         // Example
 
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
-        AssertDimensions.assertDimensions(exampleImage, 100, 50);
+        assertDimensions(exampleImage, 100, 50);
 
         // Validation
 
@@ -90,7 +95,7 @@ public class ExamplesTest {
         graphics.drawString("Hello, World!", 15, 28);
 
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
-        AssertPixelsMatch.assertPixelsMatch(exampleImage, myImage);
+        assertPixelsMatch(exampleImage, myImage);
 
         // Validation
 
@@ -185,9 +190,9 @@ public class ExamplesTest {
         Palettester tester = new Palettester();
         PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
 
-        AssertMostly.assertMostly(Color.WHITE, distribution);
-        AssertMainColor.assertMainColor(Color.WHITE, distribution);
-        AssertContainsColor.assertContainsColor(Color.RED, distribution);
+        assertMostly(Color.WHITE, distribution);
+        assertMainColor(Color.WHITE, distribution);
+        assertContainsColor(Color.RED, distribution);
 
         // Validation
 
