@@ -2,7 +2,10 @@ package com.wabradshaw.palettest.examples;
 
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Palettester;
+import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.assertions.*;
+import com.wabradshaw.palettest.palettes.StandardPalettes;
+import com.wabradshaw.palettest.visualisation.PaletteReplacer;
 import org.junit.jupiter.api.Test;
 
 import com.wabradshaw.palettest.utils.ImageFileUtils;
@@ -10,6 +13,9 @@ import com.wabradshaw.palettest.utils.ImageFileUtils;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
@@ -197,6 +203,44 @@ public class ExamplesTest {
         // Validation
 
         // None needed, already doing the assert.
+    }
+
+    /**
+     * A test showing what happens if you try analyseAllColors on an anti-aliased image.
+     */
+    @Test
+    public void beforeUsingPalettesTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+        System.out.println(distribution);
+
+        // Validation
+
+        assertEquals(186, distribution.getDistribution().size());
+    }
+
+    /**
+     * A test showing how to use analysePalette (with the default settings) on an anti-aliased image.
+     */
+    @Test
+    public void afterUsingPalettesTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(exampleImage);
+        System.out.println(distribution);
+
+        // Validation
+
+        assertEquals(10, distribution.getDistribution().size());
     }
 
 }
