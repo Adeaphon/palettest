@@ -13,6 +13,7 @@ import com.wabradshaw.palettest.utils.ImageFileUtils;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -291,6 +292,29 @@ public class ExamplesTest {
         assertEquals(3, rainbowBWDistribution.getDistribution().size());
         assertEquals(10, pwgDistribution.getDistribution().size());
         assertEquals(21, x11Distribution.getDistribution().size());
+    }
+
+    /**
+     * A test showing how to use analysePalette with a custom palette.
+     */
+    @Test
+    public void customPalettesTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        List<Tone> palette = new ArrayList<>();
+        palette.add(new Tone("Background", Color.WHITE));
+        palette.add(new Tone("Text", new Color(255,200,200)));
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(palette, exampleImage);
+        System.out.println(distribution);
+
+        // Validation
+
+        assertEquals(2, distribution.getDistribution().size());
     }
 
 }

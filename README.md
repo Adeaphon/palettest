@@ -261,6 +261,24 @@ Tomato 1: 15, Misty Rose 2: 10, Linen: 6, Light Pink: 6, Rosy Brown 1: 21, Misty
 
 ### Palettes: Defining a custom palette
 
+`import com.wabradshaw.palettest.analysis.Tone;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        List<Tone> palette = new ArrayList<>();
+        palette.add(new Tone("Background", Color.WHITE));
+        palette.add(new Tone("Text", new Color(255,200,200)));
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(palette, exampleImage);
+        System.out.println(distribution);
+```
+
+```
+[Background: 4520, Text: 480]
+```
+
 ### Palettester: Defining a palette from an image
 
 ### PaletteVisualiser: Visualising a palette
