@@ -7,8 +7,8 @@ It seemed like I was going to have to write more code to write a single test, th
 the images in the first place. That's where Palettest comes in.
 
 Palettest is a Java library designed to help people test images. It contains a whole suite of functions designed to
-make every part of testing images easier. However, it's main purpose is to let you test the color palette being used in
-the image.
+make every part of testing images easier. Some of these functions are designed to save you writing a few lines of code,
+but the bit that is unique is the ability to easily test the color palette being used in the image.
 
 ## Contents
 
@@ -39,6 +39,18 @@ the image.
 ## Quick Start Guide
 
 ### ImageFileUtils: Save an image to a file
+
+`import com.wabradshaw.palettest.utils.ImageFileUtils`
+
+```java
+        BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = myImage.getGraphics();
+        graphics.fillRect(0,0,100,50);
+        graphics.setColor(Color.RED);
+        graphics.drawString("Hello, World!", 15, 28);
+
+        ImageFileUtils.save(myImage, "src/test/resources/resultImages/examples/SaveExample.png", "png");
+```
 
 ### ImageFileUtils: Load an image from a file
 
