@@ -2,8 +2,7 @@ package com.wabradshaw.palettest.examples;
 
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Palettester;
-import com.wabradshaw.palettest.assertions.AssertDimensions;
-import com.wabradshaw.palettest.assertions.AssertPixelsMatch;
+import com.wabradshaw.palettest.assertions.*;
 import org.junit.jupiter.api.Test;
 
 import com.wabradshaw.palettest.utils.ImageFileUtils;
@@ -13,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * A set of tests showing the code used in the examples. Validation is after the comment.
@@ -122,7 +122,7 @@ public class ExamplesTest {
      * A test for the example showing people how details of a {@link PaletteDistribution} can be accessed.
      */
     @Test
-    public void paletteDistributionByCount(){
+    public void paletteDistributionTest(){
 
         // Example
 
@@ -147,6 +147,51 @@ public class ExamplesTest {
         assertEquals("#ff0000: 171", distribution.get("#ff0000").toString());
         assertEquals("#ffffff: 4829", distribution.get(Color.WHITE).toString());
         assertEquals(null, distribution.get(Color.BLUE));
+    }
+
+    /**
+     * A test showing the before example of how to use JUnit to assert facts about the image makeup.
+     */
+    @Test
+    public void beforeUsingAssertsTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+
+        assertTrue(distribution.get(Color.WHITE).getCount() > 2500);
+        assertEquals(Color.WHITE, distribution.byCount().get(0).getTone().getColor());
+        assertTrue(distribution.get(Color.RED) != null);
+
+        // Validation
+
+        // None needed, already doing the assert.
+    }
+
+
+    /**
+     * A test showing the after example showing how to use {@link com.wabradshaw.palettest.assertions.AssertMostly} , of how to use JUnit to assert facts about the image makeup.
+     */
+    @Test
+    public void assertColorsTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+
+        AssertMostly.assertMostly(Color.WHITE, distribution);
+        AssertMainColor.assertMainColor(Color.WHITE, distribution);
+        AssertContainsColor.assertContainsColor(Color.RED, distribution);
+
+        // Validation
+
+        // None needed, already doing the assert.
     }
 
 }

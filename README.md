@@ -134,6 +134,37 @@ Blue by color: null
 
 ### Assertions: Asserting what's in the image
 
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+
+        assertEquals(Color.WHITE, distribution.byCount().get(0).getTone().getColor());
+        assertTrue(distribution.get(Color.WHITE).getCount() > 2500);
+        assertTrue(distribution.get(Color.RED) != null);
+```
+
+`import com.wabradshaw.palettest.analysis.Palettester;`
+`import com.wabradshaw.palettest.analysis.PaletteDistribution;`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+`import com.wabradshaw.palettest.assertions.AssertMostly;`
+`import com.wabradshaw.palettest.assertions.AssertMainColor;`
+`import com.wabradshaw.palettest.assertions.AssertContainsColor;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+
+        AssertMainColor.assertMainColor(Color.WHITE, distribution);
+        AssertMostly.assertMostly(Color.WHITE, distribution);
+        AssertContainsColor.assertContainsColor(Color.RED, distribution);
+```
+
+
 ### Palettester: Getting similar colors to an image
 
 ### StandardPalettes: Choosing a different palette
