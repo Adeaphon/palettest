@@ -216,6 +216,49 @@ Light Yellow: 6, Ivory: 46]
 
 ### StandardPalettes: Choosing a different palette
 
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(StandardPalettes.JAVA_COLORS, exampleImage);
+        System.out.println(distribution);
+```
+
+```
+[Pink: 238, White: 4553, Red: 209]
+```
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution javaDistribution = tester.analysePalette(StandardPalettes.JAVA_COLORS, exampleImage);
+        PaletteDistribution rainbowDistribution = tester.analysePalette(StandardPalettes.RAINBOW, exampleImage);
+        PaletteDistribution rainbowBWDistribution = tester.analysePalette(StandardPalettes.RAINBOW_BW, exampleImage);
+        PaletteDistribution pwgDistribution = tester.analysePalette(StandardPalettes.PWG_STANDARD, exampleImage);
+        PaletteDistribution x11Distribution = tester.analysePalette(StandardPalettes.X11_NUMBERED, exampleImage);
+        System.out.println("JAVA: " + javaDistribution);
+        System.out.println("RAINBOW: " + rainbowDistribution);
+        System.out.println("RAINBOW_BW: " + rainbowBWDistribution);
+        System.out.println("PWG_STANDARD: " + pwgDistribution);
+        System.out.println("X11_NUMBERED: " + x11Distribution);
+```
+
+```
+JAVA: [Pink: 238, White: 4553, Red: 209]
+
+RAINBOW: [Red: 183, Orange: 201, Yellow: 4616]
+
+RAINBOW_BW: [White: 4673, Red: 183, Orange: 144]
+
+PWG_STANDARD: [Light Silver: 36, White: 4459, Pink: 69, Dark Pink: 75, Light Red: 97, Light Orange: 31, Light Pink: 74,
+Red: 107, Light Yellow: 6, Ivory: 46]
+
+X11_NUMBERED: [White: 4449, Firebrick 2: 7, Light Pink 2: 20, Light Salmon 1: 8, Snow 1: 17, Light Pink 1: 37,
+Salmon: 34, Lavender Blush 1: 22, Firebrick 1: 62, Light Coral: 28, Seashell 1: 11, Pink: 37, Indian Red 1: 31,
+Tomato 1: 15, Misty Rose 2: 10, Linen: 6, Light Pink: 6, Rosy Brown 1: 21, Misty Rose 1: 48, Red 1: 103, Brown 1: 28]
+```
+
 ### Palettes: Defining a custom palette
 
 ### Palettester: Defining a palette from an image

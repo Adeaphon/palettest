@@ -243,4 +243,54 @@ public class ExamplesTest {
         assertEquals(10, distribution.getDistribution().size());
     }
 
+    /**
+     * A test showing how to use analysePalette (with the default settings) on an anti-aliased image.
+     */
+    @Test
+    public void specificPalettesTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(StandardPalettes.JAVA_COLORS, exampleImage);
+        System.out.println(distribution);
+
+        // Validation
+
+        assertEquals(3, distribution.getDistribution().size());
+    }
+
+    /**
+     * A test showing how to use analysePalette (with the default settings) on an anti-aliased image.
+     */
+    @Test
+    public void variousPalettesTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution javaDistribution = tester.analysePalette(StandardPalettes.JAVA_COLORS, exampleImage);
+        PaletteDistribution rainbowDistribution = tester.analysePalette(StandardPalettes.RAINBOW, exampleImage);
+        PaletteDistribution rainbowBWDistribution = tester.analysePalette(StandardPalettes.RAINBOW_BW, exampleImage);
+        PaletteDistribution pwgDistribution = tester.analysePalette(StandardPalettes.PWG_STANDARD, exampleImage);
+        PaletteDistribution x11Distribution = tester.analysePalette(StandardPalettes.X11_NUMBERED, exampleImage);
+        System.out.println("JAVA: " + javaDistribution);
+        System.out.println("RAINBOW: " + rainbowDistribution);
+        System.out.println("RAINBOW_BW: " + rainbowBWDistribution);
+        System.out.println("PWG_STANDARD: " + pwgDistribution);
+        System.out.println("X11_NUMBERED: " + x11Distribution);
+
+        // Validation
+
+        assertEquals(3, javaDistribution.getDistribution().size());
+        assertEquals(3, rainbowDistribution.getDistribution().size());
+        assertEquals(3, rainbowBWDistribution.getDistribution().size());
+        assertEquals(10, pwgDistribution.getDistribution().size());
+        assertEquals(21, x11Distribution.getDistribution().size());
+    }
+
 }
