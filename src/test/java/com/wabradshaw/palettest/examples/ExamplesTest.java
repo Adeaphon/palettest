@@ -1,6 +1,9 @@
 package com.wabradshaw.palettest.examples;
 
+import com.wabradshaw.palettest.analysis.PaletteDistribution;
+import com.wabradshaw.palettest.analysis.Palettester;
 import com.wabradshaw.palettest.assertions.AssertDimensions;
+import com.wabradshaw.palettest.assertions.AssertPixelsMatch;
 import org.junit.jupiter.api.Test;
 
 import com.wabradshaw.palettest.utils.ImageFileUtils;
@@ -8,6 +11,8 @@ import com.wabradshaw.palettest.utils.ImageFileUtils;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * A set of tests showing the code used in the examples. Validation is after the comment.
@@ -67,6 +72,50 @@ public class ExamplesTest {
         // Validation
 
         // None needed, already doing the assert.
+    }
+
+    /**
+     * A test for the example showing people how {@link ImageFileUtils#save(BufferedImage, String, String)} works.
+     */
+    @Test
+    public void assertPixelsMatchTest(){
+
+        // Example
+
+        BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = myImage.getGraphics();
+        graphics.fillRect(0,0,100,50);
+        graphics.setColor(Color.RED);
+        graphics.drawString("Hello, World!", 15, 28);
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+        AssertPixelsMatch.assertPixelsMatch(exampleImage, myImage);
+
+        // Validation
+
+        // None needed, already doing the assert.
+
+    }
+
+    /**
+     * A test for the example showing people how {@link ImageFileUtils#save(BufferedImage, String, String)} works.
+     */
+    @Test
+    public void analyseAllColorsTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+        System.out.println(distribution);
+
+        // Validation
+
+        assertEquals(4829, distribution.get(Color.WHITE).getCount());
+        assertEquals(171, distribution.get(Color.RED).getCount());
+
     }
 
 }

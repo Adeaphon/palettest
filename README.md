@@ -73,7 +73,34 @@ but the bit that is unique is the ability to easily test the color palette being
 
 ### AssertPixelsMatch: Asserting an image matches exactly
 
+`import com.wabradshaw.palettest.assertions.AssertPixelsMatch;`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+
+```java
+        BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
+        Graphics graphics = myImage.getGraphics();
+        graphics.fillRect(0,0,100,50);
+        graphics.setColor(Color.RED);
+        graphics.drawString("Hello, World!", 15, 28);
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+        AssertPixelsMatch.assertPixelsMatch(exampleImage, myImage);
+```
+
 ### Palettester: Getting the exact colors in an image
+
+`import com.wabradshaw.palettest.analysis.Palettester;`
+`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+        System.out.println(distribution);
+```
+
+`[#ffffff: 4829, #ff0000: 171]`
 
 ### PaletteDistribution: Checking what's in the image
 
