@@ -6,12 +6,14 @@ import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.assertions.*;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.visualisation.PaletteReplacer;
+import com.wabradshaw.palettest.visualisation.PaletteVisualiser;
 import org.junit.jupiter.api.Test;
 
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -318,10 +320,10 @@ public class ExamplesTest {
     }
 
     /**
-     * A test showing how to use analysePalette with a custom palette.
+     * A test showing how to define a palette using an image.
      */
     @Test
-    public void definePaletteTest(){
+    public void definePaletteTest() {
 
         // Example
 
@@ -334,6 +336,23 @@ public class ExamplesTest {
         // Validation
 
         assertEquals(2, palette.size());
+    }
+
+    @Test
+    public void visualisePaletteTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
+
+        PaletteVisualiser paletteVisualiser = new PaletteVisualiser();
+        BufferedImage paletteImage = paletteVisualiser.visualise(StandardPalettes.JAVA_COLORS, 4);
+
+        ImageFileUtils.save(paletteImage, "src/test/resources/resultImages/examples/examplePalette.png", "png");
+
+        // Validation
+
+        assertDimensions(paletteImage, 400, 200);
     }
 
 }
