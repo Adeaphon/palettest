@@ -75,7 +75,8 @@ public class ExamplesTest {
     }
 
     /**
-     * A test for the example showing people how {@link ImageFileUtils#save(BufferedImage, String, String)} works.
+     * A test for the example showing people how
+     * {@link AssertPixelsMatch#assertPixelsMatch(BufferedImage, BufferedImage)} works.
      */
     @Test
     public void assertPixelsMatchTest(){
@@ -98,7 +99,7 @@ public class ExamplesTest {
     }
 
     /**
-     * A test for the example showing people how {@link ImageFileUtils#save(BufferedImage, String, String)} works.
+     * A test for the example showing people how {@link Palettester#analyseAllColors(BufferedImage)} works.
      */
     @Test
     public void analyseAllColorsTest(){
