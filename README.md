@@ -298,13 +298,24 @@ Tomato 1: 15, Misty Rose 2: 10, Linen: 6, Light Pink: 6, Rosy Brown 1: 21, Misty
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
 
-        Palettester tester = new Palettester();
-        List<Tone> palette = tester.definePalette(exampleImage, 2);
-        System.out.println(palette);
+        PaletteVisualiser paletteVisualiser = new PaletteVisualiser();
+        BufferedImage paletteImage = paletteVisualiser.visualise(StandardPalettes.JAVA_COLORS, 4);
+
+        ImageFileUtils.save(paletteImage, "src/test/resources/resultImages/examples/examplePalette.png", "png");
 ```
 
 ### PaletteReplacer: Visualising how an image maps to different Tones
 
+`import com.wabradshaw.palettest.visualisation.PaletteReplacer;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
+
+PaletteReplacer replacer = new PaletteReplacer();
+        BufferedImage replacedImage = replacer.replace(exampleImage, StandardPalettes.PWG_STANDARD);
+
+        ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/replacedImage.png", "png");
+```
 
 ### DistributionPainter: Visualising a distribution
 
