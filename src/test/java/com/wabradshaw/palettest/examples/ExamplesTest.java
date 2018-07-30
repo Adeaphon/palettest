@@ -3,17 +3,16 @@ package com.wabradshaw.palettest.examples;
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Palettester;
 import com.wabradshaw.palettest.analysis.Tone;
-import com.wabradshaw.palettest.assertions.*;
+import com.wabradshaw.palettest.assertions.AssertDimensions;
+import com.wabradshaw.palettest.assertions.AssertPixelsMatch;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
+import com.wabradshaw.palettest.utils.ImageFileUtils;
 import com.wabradshaw.palettest.visualisation.PaletteReplacer;
 import com.wabradshaw.palettest.visualisation.PaletteVisualiser;
 import org.junit.jupiter.api.Test;
 
-import com.wabradshaw.palettest.utils.ImageFileUtils;
-
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,8 +24,7 @@ import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensi
 import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;
 import static com.wabradshaw.palettest.assertions.AssertMostly.assertMostly;
 import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A set of tests showing the code used in the examples. Validation is after the comment.
@@ -338,6 +336,9 @@ public class ExamplesTest {
         assertEquals(2, palette.size());
     }
 
+    /**
+     * A test showing how the palette visualiser can be used to demonstrate the colors in a palette.
+     */
     @Test
     public void visualisePaletteTest(){
 
@@ -355,4 +356,62 @@ public class ExamplesTest {
         assertDimensions(paletteImage, 400, 200);
     }
 
+    /**
+     * A test showing how you can use the palette replacer to show what colors in an image map to which Tones in a
+     * palette.
+     */
+    @Test
+    public void redrawImageTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
+
+        PaletteReplacer replacer = new PaletteReplacer();
+        BufferedImage replacedImage = replacer.replace(exampleImage, StandardPalettes.PWG_STANDARD);
+
+        ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/replacedImage.png", "png");
+
+        // Validation
+
+        Palettester tester = new Palettester();
+        PaletteDistribution originalDistribution = tester.analysePalette(StandardPalettes.PWG_STANDARD, exampleImage);
+        PaletteDistribution newDistribution = tester.analysePalette(StandardPalettes.PWG_STANDARD, replacedImage);
+        assertEquals(originalDistribution, newDistribution);
+    }
+
+    /**
+     * A test showing how several different replacements look.
+     */
+    @Test
+    public void multipleRedrawImageTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
+
+        PaletteReplacer replacer = new PaletteReplacer();
+
+        Map<String, List<Tone>> palettes = new HashMap<>();
+        palettes.put("java", StandardPalettes.JAVA_COLORS);
+        palettes.put("rainbow", StandardPalettes.RAINBOW);
+        palettes.put("rainbowBw", StandardPalettes.RAINBOW_BW);
+        palettes.put("pwg", StandardPalettes.PWG_STANDARD);
+        palettes.put("x11", StandardPalettes.X11_NUMBERED);
+        palettes.put("custom", new Palettester().definePalette(exampleImage, 20));
+
+        palettes.entrySet().forEach( namedPalette -> {
+            BufferedImage replacedImage = replacer.replace(exampleImage, namedPalette.getValue());
+
+            ImageFileUtils.save(replacedImage,
+                                "src/test/resources/resultImages/examples/" + namedPalette.getKey() +"ReplacedImage.png",
+                                "png");
+        });
+
+        // Validation
+
+        palettes.keySet().forEach( name -> {
+            assertNotNull(ImageFileUtils.loadImageResource("/resultImages/examples/" + name +"ReplacedImage.png"));
+        });
+    }
 }

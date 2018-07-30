@@ -305,6 +305,7 @@ Tomato 1: 15, Misty Rose 2: 10, Linen: 6, Light Pink: 6, Rosy Brown 1: 21, Misty
 
 ### PaletteReplacer: Visualising how an image maps to different Tones
 
+
 ### DistributionPainter: Visualising a distribution
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
