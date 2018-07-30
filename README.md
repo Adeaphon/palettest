@@ -319,4 +319,21 @@ PaletteReplacer replacer = new PaletteReplacer();
 
 ### DistributionPainter: Visualising a distribution
 
+`import com.wabradshaw.palettest.visualisation.DistributionPainter;`
+
+```java
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(exampleImage);
+
+        DistributionPainter painter = new DistributionPainter();
+
+        BufferedImage replacedImage = painter.paintTones(distribution.byCount(),
+                                                         exampleImage.getWidth(),
+                                                         exampleImage.getHeight());
+
+        ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/distribution.png", "png");
+```
+
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>

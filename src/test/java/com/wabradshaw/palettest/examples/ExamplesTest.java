@@ -7,6 +7,7 @@ import com.wabradshaw.palettest.assertions.AssertDimensions;
 import com.wabradshaw.palettest.assertions.AssertPixelsMatch;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
+import com.wabradshaw.palettest.visualisation.DistributionPainter;
 import com.wabradshaw.palettest.visualisation.PaletteReplacer;
 import com.wabradshaw.palettest.visualisation.PaletteVisualiser;
 import org.junit.jupiter.api.Test;
@@ -413,5 +414,33 @@ public class ExamplesTest {
         palettes.keySet().forEach( name -> {
             assertNotNull(ImageFileUtils.loadImageResource("/resultImages/examples/" + name +"ReplacedImage.png"));
         });
+    }
+
+    /**
+     * A test showing how you can use the distribution painter to visualise a distribution.
+     */
+    @Test
+    public void visualiseDistributionTest(){
+
+        // Example
+
+        BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
+
+        Palettester tester = new Palettester();
+        PaletteDistribution distribution = tester.analysePalette(exampleImage);
+
+        DistributionPainter painter = new DistributionPainter();
+
+        BufferedImage replacedImage = painter.paintTones(distribution.byCount(),
+                                                         exampleImage.getWidth(),
+                                                         exampleImage.getHeight());
+
+        ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/distribution.png", "png");
+
+        // Validation
+
+        PaletteDistribution originalDistribution = tester.analysePalette(StandardPalettes.PWG_STANDARD, exampleImage);
+        PaletteDistribution newDistribution = tester.analysePalette(StandardPalettes.PWG_STANDARD, replacedImage);
+        assertEquals(originalDistribution, newDistribution);
     }
 }
