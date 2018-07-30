@@ -1,15 +1,19 @@
 package com.wabradshaw.palettest.visualisation;
 
+import com.wabradshaw.palettest.analysis.PaletteDistribution;
+import com.wabradshaw.palettest.analysis.Palettester;
 import com.wabradshaw.palettest.analysis.Tone;
+import com.wabradshaw.palettest.analysis.ToneCount;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.analysis.distance.CompuPhaseDistance;
-import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * A palette replacement is a type of visualisation where an image is recolored according to its palette. Every pixel in
@@ -49,13 +53,15 @@ public class PaletteReplacer {
 
         BufferedImage result = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
+        Map<Color, Color> closestTones = getClosestTonesCache(image, palette);
+
         Graphics2D g = result.createGraphics();
 
         for(int x = 0; x < image.getWidth(); x++){
             for(int y = 0; y < image.getHeight(); y++){
                 Color original = new Color(image.getRGB(x, y));
-                Tone target = getClosestTone(palette, new Tone("", original));
-                g.setPaint(target.getColor());
+                Color target = closestTones.get(original);
+                g.setPaint(target);
                 g.drawLine(x, y, x+1, y+1);
             }
         }
@@ -63,6 +69,26 @@ public class PaletteReplacer {
         g.dispose();
 
         return result;
+    }
+
+    /**
+     * Creates a cache of which {@link Color} in the image should be replaced by which Color from a {@link Tone} in the
+     * palette.
+     *
+     * @param image   The image to analyse.
+     * @param palette The list of {@link Tone}s that can be used.
+     * @return        A map of original {@link Color} to target {@link Color}.
+     */
+    private Map<Color,Color> getClosestTonesCache(BufferedImage image, List<Tone> palette) {
+        Palettester tester = new Palettester(this.distanceFunction);
+        PaletteDistribution colors = tester.analyseAllColors(image);
+        return colors.getDistribution()
+                     .stream()
+                     .map(ToneCount::getTone)
+                     .collect(Collectors.toMap(
+                             Tone::getColor,
+                             x -> getClosestTone(palette, x).getColor()
+                     ));
     }
 
 
