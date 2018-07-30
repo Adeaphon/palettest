@@ -3,6 +3,7 @@ package com.wabradshaw.palettest.visualisation;
 import com.wabradshaw.palettest.analysis.PaletteDistribution;
 import com.wabradshaw.palettest.analysis.Palettester;
 import com.wabradshaw.palettest.analysis.Tone;
+import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
 import com.wabradshaw.palettest.palettes.StandardPalettes;
 import com.wabradshaw.palettest.utils.ImageFileUtils;
 import org.junit.jupiter.api.Test;
@@ -12,14 +13,46 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
 import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
 import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.AdditionalMatchers.not;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * A set of tests for the {@link PaletteVisualiser} class.
  */
 public class PaletteReplacerTest {
+
+
+    /**
+     * Tests that the configurable constructor can supply a custom distance function to use when replacing colors.
+     *
+     * Done by forcing the replacer to color red pixels blue.
+     */
+    @Test
+    public void testConfigurableConstructor(){
+        ColorDistanceFunction distanceFunction = mock(ColorDistanceFunction.class);
+        when(distanceFunction.getDistance(not(eq(new Tone(Color.BLUE))), any())).thenReturn(99.9);
+        when(distanceFunction.getDistance(eq(new Tone(Color.BLUE)), any())).thenReturn(0.0);
+
+        List<Tone> palette = Arrays.asList(new Tone(Color.RED), new Tone(Color.BLUE));
+
+        BufferedImage image = ImageFileUtils.loadImageResource("/sampleImages/dimensions/2x4.png");
+
+        PaletteReplacer replacer = new PaletteReplacer(distanceFunction);
+
+        BufferedImage result = replacer.replace(image, palette);
+
+        PaletteDistribution analysis = new Palettester().analyseAllColors(result);
+
+        assertEquals(1, analysis.byCount().size());
+        assertContainsColor(Color.BLUE, analysis);
+    }
 
     /**
      * Tests that the image returned is the same size as the input image.

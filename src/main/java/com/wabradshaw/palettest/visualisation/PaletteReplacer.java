@@ -20,10 +20,21 @@ public class PaletteReplacer {
     private final ColorDistanceFunction distanceFunction;
 
     /**
-     * Default constructor. Sets up a {@link PaletteReplacer} using {@link EuclideanRgbaDistance} to measure distance.
+     * Default constructor. Sets up a {@link PaletteReplacer} using {@link CompuPhaseDistance} to measure the distance
+     * between colors.
      */
     public PaletteReplacer(){
-        this.distanceFunction = new CompuPhaseDistance();
+        this(new CompuPhaseDistance());
+    }
+
+    /**
+     * Configurable constructor. Sets up a {@link PaletteReplacer} that will use the supplied distance function to
+     * measure the distance between colors.
+     *
+     * @param distanceFunction The distance function to use to find the nearest color.
+     */
+    public PaletteReplacer(ColorDistanceFunction distanceFunction){
+        this.distanceFunction = distanceFunction;
     }
 
     /**
