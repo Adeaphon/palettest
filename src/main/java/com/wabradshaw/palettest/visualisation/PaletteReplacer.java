@@ -2,6 +2,7 @@ package com.wabradshaw.palettest.visualisation;
 
 import com.wabradshaw.palettest.analysis.Tone;
 import com.wabradshaw.palettest.analysis.distance.ColorDistanceFunction;
+import com.wabradshaw.palettest.analysis.distance.CompuPhaseDistance;
 import com.wabradshaw.palettest.analysis.distance.EuclideanRgbaDistance;
 import com.wabradshaw.palettest.utils.GraphicsUtils;
 
@@ -22,7 +23,7 @@ public class PaletteReplacer {
      * Default constructor. Sets up a {@link PaletteReplacer} using {@link EuclideanRgbaDistance} to measure distance.
      */
     public PaletteReplacer(){
-        this.distanceFunction = new EuclideanRgbaDistance();
+        this.distanceFunction = new CompuPhaseDistance();
     }
 
     /**
