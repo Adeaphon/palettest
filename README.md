@@ -16,7 +16,7 @@ but the bit that is unique is the ability to easily test the color palette being
 - [Contents](#contents)
 - [Installing Palettest](#installing-palettest)
 - [Terminology](#terminology)
-- [Quick Start Guide](#quick-start-guide)
+- [How To Use It](#quick-start-guide)
   * [ImageFileUtils: Save an image to a file](#imagefileutils--save-an-image-to-a-file)
   * [ImageFileUtils: Load an image from a file](#imagefileutils--load-an-image-from-a-file)
   * [AssertDimensions: Asserting the image is the right size](#assertdimensions--asserting-the-image-is-the-right-size)
@@ -34,9 +34,39 @@ but the bit that is unique is the ability to easily test the color palette being
 
 ## Installing Palettest
 
+Palettest is provided as a Maven Build, with the following coordinates:
+
+```xml
+    <groupId>com.wabradshaw</groupId>
+    <artifactId>palettest</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+```
+
+As Palettest is currently in development, it has not yet been released to Maven central. To incorporate it into your
+projects, download the codebase and use `mvn install` to build a local copy.
+
 ## Terminology
 
-## Quick Start Guide
+**Color** - Color with a capital C, the Java representation of a color. This is defined as a particular combination of
+red, blue, green and transparency (alpha).
+
+**Tone** - A `Tone` is a specific named `Color`. The idea is that you can define what "Red" means to you, then map
+different exact `Color`s to your Red `Tone`. Sometimes `Tone`s are named based on the Color (e.g. "Red", "Purple",
+"Lime Green"), other times you may want to name them semantically (e.g. "Background", "Font", "Alert").
+
+**Palette** - A pre-defined list of `Tone`s. These are the `Tone`s that are, or could be, in one of your images.
+`Palette`s can be chosen from the standard library of `Palette`s, created as a custom list of `Tone`s, or even
+generated from an image.
+
+**Tone Count** - A count of the number of times a particular `Tone` was used in an image. It also stores which exact
+`Color`s were mapped to the `Tone`.
+
+**Palette Distribution** - A representation of how a `Palette` was used in an image. This is stored as a collection of
+`ToneCount`s, that can be retrieved in various orders (e.g. by frequency or alphabetically).
+
+**Palettester** - The main class used to analyse the color `Palette` of an image.
+
+## How To Use It
 
 ### ImageFileUtils: Save an image to a file
 
