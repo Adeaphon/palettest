@@ -77,8 +77,8 @@ Palettest adds a one liner that lets you save `BufferedImages` to files. Use the
 `save`. The arguments are the image itself, the location where you want to save it, and the image type.
 
 ```java
-        import com.wabradshaw.palettest.utils.ImageFileUtils;
-`
+    import com.wabradshaw.palettest.utils.ImageFileUtils;
+```
 
 ```java
         BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
