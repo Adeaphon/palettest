@@ -76,7 +76,9 @@ automated tests you create, remember to periodically check what you're producing
 Palettest adds a one liner that lets you save `BufferedImages` to files. Use the `ImageFileUtils` class and call
 `save`. The arguments are the image itself, the location where you want to save it, and the image type.
 
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+```java
+        import com.wabradshaw.palettest.utils.ImageFileUtils;
+`
 
 ```java
         BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
@@ -98,7 +100,9 @@ If you want to test a generated image, it can be useful to load an existing imag
 `ImageFileUtils` also adds a convenient one liner to load image resources. Call 'loadImageResource' with the desired
 image resource to create a `BufferedImage` from disk.
 
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+```java
+    import com.wabradshaw.palettest.utils.ImageFileUtils;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/helloWorld.png");
@@ -113,7 +117,9 @@ One of the first automated tests for a generated image is to make sure that it h
 provides a number of ready to use assertions for testing, including `assertDimensions`. This method takes the image
 under test and it's desired width & height (in that order).
 
-`import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;`
+```java
+    import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -128,7 +134,9 @@ If your image generator is deterministic, you are able to check that the generat
 To do this you can use the `assertPixelsMatch` method, which takes the target image and the actual image, and asserts
 that they both use the same pixels.
 
-`import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;`
+```java
+    import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;
+```
 
 ```java
         BufferedImage myImage = new BufferedImage(100, 50, BufferedImage.TYPE_INT_ARGB);
@@ -154,8 +162,10 @@ The main analysis class for Palettest is the `Palettester` class. This class is 
 that make up your images. The basic test method is `analyseAllColors` which returns a `PaletteDistribution` that lists
 every single `Color` used in an image, and the number of times it appeared.
 
-`import com.wabradshaw.palettest.analysis.Palettester;`
-`import com.wabradshaw.palettest.analysis.PaletteDistribution;`
+```java
+    import com.wabradshaw.palettest.analysis.Palettester;
+    import com.wabradshaw.palettest.analysis.PaletteDistribution;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -188,7 +198,9 @@ To get the list sorted by name, use `byName`. This returns the `ToneCount`s in a
 You can also use the `get` methods to return the `ToneCount` for a particular `Color`, or the name of particular `Tone`.
 If you call get on a `Tone` that wasn't used in the image, it will return null.
 
-`import com.wabradshaw.palettest.analysis.PaletteDistribution;`
+```java
+    import com.wabradshaw.palettest.analysis.PaletteDistribution;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -249,9 +261,11 @@ more than 50% of the image.
 The `assertContainsColor` method is a quick way to check that an image contains a certain `Tone`. It will be true if
 there's at least one pixel of the specified `Tone`.
 
-`import static com.wabradshaw.palettest.assertions.AssertMostly.assertMostly;`
-`import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;`
-`import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;`
+```java
+    import static com.wabradshaw.palettest.assertions.AssertMostly.assertMostly;
+    import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;
+    import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -279,6 +293,10 @@ real images are often more inconvenient because they use lots of different `Colo
 The two images look pretty similar, but if we try and run the same image analysis, we get a very different picture.
 Rather than only showing two colors, the real example contains hundreds. This is what makes it so difficult to test
 images.
+
+```java
+    import com.wabradshaw.palettest.analysis.Palettester;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
@@ -357,6 +375,10 @@ example.
 You can choose which `Palette` the `analysePalette` method will use by supplying it as an argument.
 
 ```java
+    import com.wabradshaw.palettest.palettes.StandardPalettes;
+```
+
+```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
 
         Palettester tester = new Palettester();
@@ -414,7 +436,9 @@ of the different colors in each `Palette`, and what an image looks like when it 
 If you want more fine-grained control over `Palette` analysis, you can define your own `Palette`. A `Palette` is just
 a list of `Tone`s, which are just specific named `Color`s.
 
-`import com.wabradshaw.palettest.analysis.Tone;`
+```java
+    import com.wabradshaw.palettest.analysis.Tone;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
@@ -447,6 +471,10 @@ Please note that the `Palette`s created by Palettester are typically non-determi
 run `definePalette`.
 
 ```java
+    import com.wabradshaw.palettest.analysis.Palettester;
+```
+
+```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
 
         Palettester tester = new Palettester();
@@ -466,7 +494,10 @@ When you have defined a `Palette`, it can be useful to visualise it to get an id
 covers. `Palettest` provides the `PaletteVisualiser` to do just that. Call the `visualise` method with the `Palette` to
 visualise, and the number of columns in the visualisation, and it will produce a BufferedImage drawing the `Palette`.
 
-`import com.wabradshaw.palettest.visualisation.PaletteVisualiser;`
+
+```java
+    import com.wabradshaw.palettest.visualisation.PaletteVisualiser;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
@@ -490,12 +521,14 @@ takes an image and a target `Palette`, then produces a new image where every pix
 replaced by the closest color in the `Palette`. This shows you how the `Palettester` is viewing your image when
 analysing the `Palette`.
 
-`import com.wabradshaw.palettest.visualisation.PaletteReplacer;`
+```java
+    import com.wabradshaw.palettest.visualisation.PaletteReplacer;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
 
-PaletteReplacer replacer = new PaletteReplacer();
+        PaletteReplacer replacer = new PaletteReplacer();
         BufferedImage replacedImage = replacer.replace(exampleImage, StandardPalettes.PWG_STANDARD);
 
         ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/replacedImage.png", "png");
@@ -527,7 +560,9 @@ method paints a new image that contains all of the pixels in a list of `ToneCoun
 This allows you to produce different visualisations byCount, byName, or using the original distribution. The other
 arguments for `paintTones` are the number of pixels wide and the number of pixels tall it should be.
 
-`import com.wabradshaw.palettest.visualisation.DistributionPainter;`
+```java
+    import com.wabradshaw.palettest.visualisation.DistributionPainter;
+```
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/complex/smallSheep.jpg");
