@@ -88,7 +88,7 @@ the image itself, the location where you want to save it, and the image type.
 
 In the above example we set up a simple "Hello, World!" image. Running that will create the following file:
 
-![The image file this generates](src/test/resources/resultImages/examples/SaveExample.png?raw=true "Hello, World!")
+![The image file this generates](src/test/resources/resultImages/examples/SaveExample.png")
 
 ### ImageFileUtils: Load an image from a file
 
