@@ -146,9 +146,16 @@ images folder.
 
 ### Palettester: Getting the exact colors in an image
 
+It isn't always convenient to produce the target image for each test. In particular, it makes TDD almost impossible.
+Instead, it's often easier to analyse what the generated image should be like, rather than saying exactly what it should
+be.
+
+The main analysis class for Palettest is the `Palettester` class. This class is used to analyse the colors and `Tone`s
+that make up your images. The basic test method is `analyseAllColors` which returns a `PaletteDistribution` that lists
+every single `Color` used in an image, and the number of times it appeared.
+
 `import com.wabradshaw.palettest.analysis.Palettester;`
 `import com.wabradshaw.palettest.analysis.PaletteDistribution;`
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -158,7 +165,11 @@ images folder.
         System.out.println(distribution);
 ```
 
+Result:
 `[#ffffff: 4829, #ff0000: 171]`
+
+This example produces a `PaletteDistribution` containing a list of all of the colors in the image, and the number of
+times they appeared. Specifically, white (#ffffff) appeared nearly 4829 times, and red (#ff0000) appeared 171 times.
 
 ### PaletteDistribution: Checking what's in the image
 
