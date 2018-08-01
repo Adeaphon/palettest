@@ -462,6 +462,10 @@ are reasonably close to the ones in our custom `Palette`.
 
 ### PaletteVisualiser: Visualising a palette
 
+When you have defined a `Palette`, it can be useful to visualise it to get an idea of how much of the color spectrum it
+covers. `Palettest` provides the `PaletteVisualiser` to do just that. Call the `visualise` method with the `Palette` to
+visualise, and the number of columns in the visualisation, and it will produce a BufferedImage drawing the `Palette`.
+
 `import com.wabradshaw.palettest.visualisation.PaletteVisualiser;`
 
 ```java
@@ -472,6 +476,12 @@ are reasonably close to the ones in our custom `Palette`.
 
         ImageFileUtils.save(paletteImage, "src/test/resources/resultImages/examples/examplePalette.png", "png");
 ```
+
+This example produces a four column visualisation of the standard Java `Palette`. The image looks like this:
+
+![Java Palette](src/test/resources/resultImages/examples/examplePalette.png)
+
+You can take a look [here](src/test/resources/palettes) for visualisations of all of the standard `Palette`s.
 
 ### PaletteReplacer: Visualising how an image maps to different Tones
 
