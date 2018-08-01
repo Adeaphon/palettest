@@ -485,6 +485,11 @@ You can take a look [here](src/test/resources/palettes) for visualisations of al
 
 ### PaletteReplacer: Visualising how an image maps to different Tones
 
+The second type of visualisation offered by Palettest is a PaletteReplacement. The `PaletteReplacer`'s `replace` method
+takes an image and a target `Palette`, then produces a new image where every pixel in the original image has been
+replaced by the closest color in the `Palette`. This shows you how the `Palettester` is viewing your image when
+analysing the `Palette`.
+
 `import com.wabradshaw.palettest.visualisation.PaletteReplacer;`
 
 ```java
@@ -495,6 +500,25 @@ PaletteReplacer replacer = new PaletteReplacer();
 
         ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/replacedImage.png", "png");
 ```
+
+This example takes in a picture of some sheep, and shows how it looks when it is mapped to the PWG palette. You can try
+supplying different `Palette`s to see how they affect the image.
+
+| Palette | Number of Tones | Result |
+|---------|-----------------|--------|
+| Original | - | ![Original](src/test/resources/sampleImages/complex/smallSheep.jpg) |
+| PWG_STANDARD | 78 | ![PWG replaced](src/test/resources/resultImages/examples/pwgReplacedImage.png) |
+| JAVA_COLORS | 13 | ![Java replaced](src/test/resources/resultImages/examples/javaReplacedImage.png) |
+| RAINBOW | 7 | ![Rainbow replaced](src/test/resources/resultImages/examples/rainbowReplacedImage.png) |
+| RAINBOW_BW | 9 | ![Rainbow_BW replaced](src/test/resources/resultImages/examples/rainbowBwReplacedImage.png) |
+| X11_NUMBERED | 505 | ![X11_numbered replaced](src/test/resources/resultImages/examples/x11ReplacedImage.png) |
+| Custom | 20 | ![A palette generated using definedPalette](src/test/resources/resultImages/examples/customReplacedImage.png) |
+
+Here the custom `Palette` is an example created using definePalette with a max of 20 `Tone`s.
+
+Because the sheep photo is a more complex image than the hello world images we were using earlier, it makes sense to
+use a more granular `Palette`. You will find that a custom `Palette` is almost always more accurate than a standard
+`Palette`.
 
 ### DistributionPainter: Visualising a distribution
 
