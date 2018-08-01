@@ -173,15 +173,29 @@ times they appeared. Specifically, white (#ffffff) appeared nearly 4829 times, a
 
 ### PaletteDistribution: Checking what's in the image
 
-`import com.wabradshaw.palettest.analysis.Palettester;`
+A `PaletteDistribution` gives you all of the details on the `Color`s and `Tone`s used in an image. The number of times
+a particular `Tone` was used is known as a `ToneCount`. The distribution can is a list of `ToneCount`s, which can be
+retrieved three ways: `getDistribution`, `byCount`, and `byName`.
+
+If you do not need a particular order, use `getDistribution`. This returns the underlying distribution list, which is
+typically sorted by the order that different `Tone`s were encountered in the image.
+
+To get the list sorted based on how many times each `Tone` was used, use `byCount`. The first `ToneCount` will be the
+one that appeared most often, and the number of appearances will descrease beyond that.
+
+To get the list sorted by name, use `byName`. This returns the `ToneCount`s in alphabetical order.
+
+You can also use the `get` methods to return the `ToneCount` for a particular `Color`, or the name of particular `Tone`.
+If you call get on a `Tone` that wasn't used in the image, it will return null.
+
 `import com.wabradshaw.palettest.analysis.PaletteDistribution;`
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
 
         Palettester tester = new Palettester();
         PaletteDistribution distribution = tester.analyseAllColors(exampleImage);
+
         System.out.println("Original Distribution: " + distribution.getDistribution());
         System.out.println("By Count: " + distribution.byCount());
         System.out.println("By Name: " + distribution.byName());
@@ -191,6 +205,7 @@ times they appeared. Specifically, white (#ffffff) appeared nearly 4829 times, a
         System.out.println("Blue by color: " + distribution.get(Color.BLUE));
 ```
 
+Result:
 ```
 Original Distribution: [#ffffff: 4829, #ff0000: 171]
 By Count: [#ffffff: 4829, #ff0000: 171]
@@ -199,6 +214,8 @@ Red by name: #ff0000: 171
 White by color: #ffffff: 4829
 Blue by color: null
 ```
+
+This example shows the different ways of accessing a `PaletteDistribution`.
 
 ### Assertions: Asserting what's in the image
 
