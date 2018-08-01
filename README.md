@@ -70,6 +70,10 @@ generated from an image.
 
 ### ImageFileUtils: Save an image to a file
 
+If you're generating images, the most important thing to test is that they actually look right. Palettest adds a one
+liner that lets you save `BufferedImages` to files. Use the `ImageFileUtils` class and call `save`. The arguments are
+the image itself, the location where you want to save it, and the image type.
+
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
@@ -81,6 +85,10 @@ generated from an image.
 
         ImageFileUtils.save(myImage, "src/test/resources/resultImages/examples/SaveExample.png", "png");
 ```
+
+In the above example we set up a simple "Hello, World!" image. Running that will create the following file:
+
+![The image file this generates](src/test/resources/resultImages/examples/SaveExample.png?raw=true "Hello, World!")
 
 ### ImageFileUtils: Load an image from a file
 
