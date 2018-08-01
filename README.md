@@ -70,9 +70,11 @@ generated from an image.
 
 ### ImageFileUtils: Save an image to a file
 
-If you're generating images, the most important thing to test is that they actually look right. Palettest adds a one
-liner that lets you save `BufferedImages` to files. Use the `ImageFileUtils` class and call `save`. The arguments are
-the image itself, the location where you want to save it, and the image type.
+If you're generating images, the most important thing to test is that they actually look right. No matter how many
+automated tests you create, remember to periodically check what you're producing.
+
+Palettest adds a one liner that lets you save `BufferedImages` to files. Use the `ImageFileUtils` class and call
+`save`. The arguments are the image itself, the location where you want to save it, and the image type.
 
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
@@ -92,6 +94,10 @@ In the above example we set up a simple "Hello, World!" image. Running that will
 
 ### ImageFileUtils: Load an image from a file
 
+If you want to test a generated image, it can be useful to load an existing image to make comparisons. Like saving,
+`ImageFileUtils` also adds a convenient one liner to load image resources. Call 'loadImageResource' with the desired
+image resource to create a `BufferedImage` from disk.
+
 `import com.wabradshaw.palettest.utils.ImageFileUtils;`
 
 ```java
@@ -100,8 +106,6 @@ In the above example we set up a simple "Hello, World!" image. Running that will
 
 ### AssertDimensions: Asserting the image is the right size
 
-
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
 `import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;`
 
 ```java
