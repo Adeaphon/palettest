@@ -124,7 +124,10 @@ This example checks that our hello world image is 100 pixels wide, and 50 pixels
 
 ### AssertPixelsMatch: Asserting an image matches exactly
 
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+If your image generator is deterministic, you are able to check that the generated image exactly matches a saved image.
+To do this you can use the `assertPixelsMatch` method, which takes the target image and the actual image, and asserts
+that they both use the same pixels.
+
 `import static com.wabradshaw.palettest.assertions.AssertPixelsMatch.assertPixelsMatch;`
 
 ```java
@@ -137,6 +140,9 @@ This example checks that our hello world image is 100 pixels wide, and 50 pixels
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
         assertPixelsMatch(exampleImage, myImage);
 ```
+
+This example checks that the hello world image generated using Java graphics is the same as the one in the sample
+images folder.
 
 ### Palettester: Getting the exact colors in an image
 
