@@ -411,6 +411,9 @@ of the different colors in each `Palette`, and what an image looks like when it 
 
 ### Palettes: Defining a custom palette
 
+If you want more fine-grained control over `Palette` analysis, you can define your own `Palette`. A `Palette` is just
+a list of `Tone`s, which are just specific named `Color`s.
+
 `import com.wabradshaw.palettest.analysis.Tone;`
 
 ```java
@@ -425,9 +428,14 @@ of the different colors in each `Palette`, and what an image looks like when it 
         System.out.println(distribution);
 ```
 
+Result:
 ```
 [Background: 4520, Text: 480]
 ```
+
+In this example we have created a custom palette that contains two `Tone`s: a white `Color` called "Background", and a
+pinkish `Color` called "Text". The reason this `Palette` uses light pink rather than red is that we want all of the
+pinks and reds to map to the "Text" `Tone`.
 
 ### Palettester: Defining a palette from an image
 
