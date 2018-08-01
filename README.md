@@ -104,7 +104,14 @@ image resource to create a `BufferedImage` from disk.
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/helloWorld.png");
 ```
 
+This example loads a copy of our hello world image so that it can be tested (or compared with a programmatically
+generated version).
+
 ### AssertDimensions: Asserting the image is the right size
+
+One of the first automated tests for a generated image is to make sure that it has the correct dimensions. Palettest
+provides a number of ready to use assertions for testing, including `assertDimensions`. This method takes the image
+under test and it's desired width & height (in that order).
 
 `import static com.wabradshaw.palettest.assertions.AssertDimensions.assertDimensions;`
 
@@ -112,6 +119,8 @@ image resource to create a `BufferedImage` from disk.
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
         assertDimensions(exampleImage, 100, 50);
 ```
+
+This example checks that our hello world image is 100 pixels wide, and 50 pixels tall.
 
 ### AssertPixelsMatch: Asserting an image matches exactly
 
