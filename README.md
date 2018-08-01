@@ -341,6 +341,21 @@ perfect, but it's definitely better.
 
 ### StandardPalettes: Choosing a different palette
 
+When you are testing an image's `Palette`, it's incredibly important to choose a `Palette` that suits the image.
+Typically, the more complex the image, the larger the palette you should use. Out of the box, Palettest offers five
+different `Palette`s:
+
+ * JAVA_COLORS - The standard colors available through the Color class. 13 colors.
+ * RAINBOW - The colors of the rainbow. 7 colors.
+ * RAINBOW_BW - The colors of the rainbow, as well as black and white. 9 colors.
+ * PWG_STANDARD - The colors of the Printer Working Group 5101.1 standard. 78 colors.
+ * X11_NUMBERED - The colors of the X11 standard, including numbered variants. 505 colors.
+
+The default is the PWG standard, which contains 78 colors. This is too granular a `Palette` for our simple Hello World
+example.
+
+You can choose which `Palette` the `analysePalette` method will use by supplying it as an argument.
+
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
 
@@ -349,9 +364,15 @@ perfect, but it's definitely better.
         System.out.println(distribution);
 ```
 
+Result:
 ```
 [Pink: 238, White: 4553, Red: 209]
 ```
+
+In this example, we switched to the Java palette which is a much better fit for our simple image. The result is a
+distribution with only three `Tone`s: Red, White and Pink.
+
+If we try using all of the standard `Palette`s:
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
@@ -369,6 +390,7 @@ perfect, but it's definitely better.
         System.out.println("X11_NUMBERED: " + x11Distribution);
 ```
 
+Result:
 ```
 JAVA: [Pink: 238, White: 4553, Red: 209]
 
@@ -383,6 +405,9 @@ X11_NUMBERED: [White: 4449, Firebrick 2: 7, Light Pink 2: 20, Light Salmon 1: 8,
 Salmon: 34, Lavender Blush 1: 22, Firebrick 1: 62, Light Coral: 28, Seashell 1: 11, Pink: 37, Indian Red 1: 31,
 Tomato 1: 15, Misty Rose 2: 10, Linen: 6, Light Pink: 6, Rosy Brown 1: 21, Misty Rose 1: 48, Red 1: 103, Brown 1: 28]
 ```
+
+This example shows how much difference the choice of `Palette` can make. In a later example we'll give a visualisation
+of the different colors in each `Palette`, and what an image looks like when it gets mapped to each.
 
 ### Palettes: Defining a custom palette
 
