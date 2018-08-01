@@ -219,6 +219,8 @@ This example shows the different ways of accessing a `PaletteDistribution`.
 
 ### Assertions: Asserting what's in the image
 
+ Once you know how to access the data within a `PaletteDistribution` you can start writing assertions to test your
+ images.
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/helloWorld.png");
@@ -231,9 +233,22 @@ This example shows the different ways of accessing a `PaletteDistribution`.
         assertTrue(distribution.get(Color.RED) != null);
 ```
 
-`import com.wabradshaw.palettest.analysis.Palettester;`
-`import com.wabradshaw.palettest.analysis.PaletteDistribution;`
-`import com.wabradshaw.palettest.utils.ImageFileUtils;`
+This example uses standard JUnit assertions to check that the most common color is white, white makes up more than half
+of the image, and the image contains red. However, Palettest offers several shortcut assertions to make that easier.
+
+Palettest provides three `PaletteDistribution` assertions: `assertMainColor`, `assertMostly` and `assertContainsColor`.
+All three of these take in a desired `Tone`, either as it's name or its `Color`, as well as the image's
+`PaletteDistribution`.
+
+The `assertMainColor` method asserts that the single largest `Tone` in the image is the one specified. This is the same
+as asserting that it is the first `Tone` returned from `byCount`.
+
+The `assertMostly` method is a more extreme version of `assertMainColor`. It asserts that the specified `Tone` makes up
+more than 50% of the image.
+
+The `assertContainsColor` method is a quick way to check that an image contains a certain `Tone`. It will be true if
+there's at least one pixel of the specified `Tone`.
+
 `import static com.wabradshaw.palettest.assertions.AssertMostly.assertMostly;`
 `import static com.wabradshaw.palettest.assertions.AssertMainColor.assertMainColor;`
 `import static com.wabradshaw.palettest.assertions.AssertContainsColor.assertContainsColor;`
@@ -248,6 +263,9 @@ This example shows the different ways of accessing a `PaletteDistribution`.
         assertMostly(Color.WHITE, distribution);
         assertContainsColor(Color.RED, distribution);
 ```
+
+The above example shows how you can use the Palettest assertions to test the image. They check that the most common
+color is white, white makes up more than half of the image, and the image contains red.
 
 ### Palettester: Getting similar colors to an image
 
