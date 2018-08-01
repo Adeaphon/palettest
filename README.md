@@ -522,6 +522,11 @@ use a more granular `Palette`. You will find that a custom `Palette` is almost a
 
 ### DistributionPainter: Visualising a distribution
 
+The final type of visualisation uses the `DistributionPainter` to visualise a `PaletteDistribution`. Tbe `paintTones`
+method paints a new image that contains all of the pixels in a list of `ToneCount`s retrieved from the distribution.
+This allows you to produce different visualisations byCount, byName, or using the original distribution. The other
+arguments for `paintTones` are the number of pixels wide and the number of pixels tall it should be.
+
 `import com.wabradshaw.palettest.visualisation.DistributionPainter;`
 
 ```java
@@ -538,5 +543,10 @@ use a more granular `Palette`. You will find that a custom `Palette` is almost a
 
         ImageFileUtils.save(replacedImage, "src/test/resources/resultImages/examples/distribution.png", "png");
 ```
+
+This example analyses the palette of the sheep image, and redraws it ordered by largest color. It's easiest to see
+visually:
+
+![Sheep PWG Distribution](src/test/resources/resultImages/examples/distribution.png)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
