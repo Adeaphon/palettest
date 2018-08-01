@@ -83,12 +83,12 @@ the image itself, the location where you want to save it, and the image type.
         graphics.setColor(Color.RED);
         graphics.drawString("Hello, World!", 15, 28);
 
-        ImageFileUtils.save(myImage, "src/test/resources/resultImages/examples/SaveExample.png", "png");
+        ImageFileUtils.save(myImage, "src/test/resources/resultImages/examples/saveExample.png", "png");
 ```
 
 In the above example we set up a simple "Hello, World!" image. Running that will create the following file:
 
-![The image file this generates](src/test/resources/resultImages/examples/SaveExample.png")
+![The image file this generates](src/test/resources/resultImages/examples/saveExample.png?raw=true)
 
 ### ImageFileUtils: Load an image from a file
 
