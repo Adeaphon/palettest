@@ -270,10 +270,15 @@ color is white, white makes up more than half of the image, and the image contai
 ### Palettester: Getting similar colors to an image
 
 The image we've used up to this point is ridiculously simple. It only contains two colors, Red and White. However,
-real images are often more inconvenient because they use lots of different `Color` shades of the same `Tone`. If we
-switch to a different version of "Hello, World!", produced with a standard image generation tool:
+real images are often more inconvenient because they use lots of different `Color` shades of the same `Tone`. Let's use
+ a different version of "Hello, World!", produced with a standard image generation tool:
+
 ![Simple Hello, World!](src/test/resources/resultImages/examples/saveExample.png?raw=true)
 ![Real Hello, World!](src/test/resources/sampleImages/simple/realHelloWorld.png?raw=true)
+
+The two images look pretty similar, but if we try and run the same image analysis, we get a very different picture.
+Rather than only showing two colors, the real example contains hundreds. This is what makes it so difficult to test
+images.
 
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
@@ -283,6 +288,7 @@ switch to a different version of "Hello, World!", produced with a standard image
         System.out.println(distribution.getDistribution());
 ```
 
+Result:
 ```
 [#ffffff: 4440, #fffefe: 5, #fffdfd: 4, #fffcfc: 4, #fffbfb: 3, #fffafa: 1, #fff9f9: 2, #fff7f7: 6, #fff6f6: 1,
 #fff5f5: 11, #fff4f4: 3, #fff3f3: 1, #fff2f2: 1, #fff1f1: 3, #fff0f0: 2, #ffefef: 2, #ffeeee: 2, #ffeded: 8,
@@ -307,6 +313,15 @@ switch to a different version of "Hello, World!", produced with a standard image
 #ff0505: 1, #ff0404: 1, #ff0303: 1, #ff0202: 2, #ff0101: 3, #ff0000: 60]
 ```
 
+This example shows how annoying different shades can be when trying to test an image. If you look at a closeup of the
+image you can see all of the distinct `Color`s.
+
+<img src="src/test/resources/sampleImages/simple/realHelloWorld.png?raw=true" alt="Look at all the colors" width="800px"/>
+
+This is where Palettest really starts to shine. Instead of worrying about exactly which `Color`s are in an image, you
+can use a `Palette` of named `Tone`s, and map each `Color` to the nearest `Tone`. The quickest way to do this is to use
+the `analysePalette` method of the `Palettester`.
+
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
 
@@ -315,10 +330,14 @@ switch to a different version of "Hello, World!", produced with a standard image
         System.out.println(distribution);
 ```
 
+Result:
 ```
 [Light Silver: 36, White: 4459, Pink: 69, Dark Pink: 75, Light Red: 97, Light Orange: 31, Light Pink: 74, Red: 107,
 Light Yellow: 6, Ivory: 46]
 ```
+
+This example shows that you can use the default `Palette` to go from 186 `Color`s to 10 distinct `Tone`s. It isn't
+perfect, but it's definitely better.
 
 ### StandardPalettes: Choosing a different palette
 
