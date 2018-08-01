@@ -439,6 +439,13 @@ pinks and reds to map to the "Text" `Tone`.
 
 ### Palettester: Defining a palette from an image
 
+If you don't want to work out the perfect `Palette` for your image, try getting the `Palettester` to do it.
+`Palettester` provides a definePalette method that uses clustering to try and find a sensible `Palette` for a particular
+image. Supply it with the image and the number of `Tone`s you would like, and it will try and create the `Palette`.
+
+Please note that the `Palette`s created by Palettester are typically non-deterministic, so they may vary every time you
+run `definePalette`.
+
 ```java
         BufferedImage exampleImage = ImageFileUtils.loadImageResource("/sampleImages/simple/realHelloWorld.png");
 
@@ -447,7 +454,11 @@ pinks and reds to map to the "Text" `Tone`.
         System.out.println(palette);
 ```
 
+Result:
 `[Light Red (#ff3c3c), White (#fffcfc)]`
+
+In this example the `Palettester` has automatically defined a `Palette` from the hello world image. The chosen `Tone`s
+are reasonably close to the ones in our custom `Palette`.
 
 ### PaletteVisualiser: Visualising a palette
 
